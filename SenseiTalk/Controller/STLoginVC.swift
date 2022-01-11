@@ -11,7 +11,7 @@ class STLoginVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        print("loginVC")
         // Do any additional setup after loading the view.
     }
     

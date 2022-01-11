@@ -7,15 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		13F0AF9911F05AEA2BE77D33 /* Pods_SenseiTalk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E91BE1FF35AB182E454EF4B /* Pods_SenseiTalk.framework */; };
 		A435B06D278D0B4600BFCAE3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A435B06C278D0B4600BFCAE3 /* AppDelegate.swift */; };
 		A435B06F278D0B4600BFCAE3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A435B06E278D0B4600BFCAE3 /* SceneDelegate.swift */; };
 		A435B071278D0B4600BFCAE3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A435B070278D0B4600BFCAE3 /* ViewController.swift */; };
 		A435B074278D0B4600BFCAE3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A435B072278D0B4600BFCAE3 /* Main.storyboard */; };
 		A435B076278D0B4A00BFCAE3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A435B075278D0B4A00BFCAE3 /* Assets.xcassets */; };
 		A435B079278D0B4A00BFCAE3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A435B077278D0B4A00BFCAE3 /* LaunchScreen.storyboard */; };
+		A435B084278D0BC400BFCAE3 /* STLoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A435B083278D0BC400BFCAE3 /* STLoginVC.swift */; };
+		A435B086278D0D2F00BFCAE3 /* STTimeLineVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A435B085278D0D2F00BFCAE3 /* STTimeLineVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4459126A1CD587F5AD27E5AD /* Pods-SenseiTalk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SenseiTalk.release.xcconfig"; path = "Target Support Files/Pods-SenseiTalk/Pods-SenseiTalk.release.xcconfig"; sourceTree = "<group>"; };
+		7E91BE1FF35AB182E454EF4B /* Pods_SenseiTalk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SenseiTalk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		86F8EF1DD8DB9A6ACA2A178F /* Pods-SenseiTalk.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SenseiTalk.debug.xcconfig"; path = "Target Support Files/Pods-SenseiTalk/Pods-SenseiTalk.debug.xcconfig"; sourceTree = "<group>"; };
 		A435B069278D0B4600BFCAE3 /* SenseiTalk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SenseiTalk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A435B06C278D0B4600BFCAE3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A435B06E278D0B4600BFCAE3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -24,6 +30,8 @@
 		A435B075278D0B4A00BFCAE3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A435B078278D0B4A00BFCAE3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A435B07A278D0B4A00BFCAE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A435B083278D0BC400BFCAE3 /* STLoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STLoginVC.swift; sourceTree = "<group>"; };
+		A435B085278D0D2F00BFCAE3 /* STTimeLineVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STTimeLineVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,17 +39,38 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				13F0AF9911F05AEA2BE77D33 /* Pods_SenseiTalk.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0C8DEFAABD0D65DC61263A88 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7E91BE1FF35AB182E454EF4B /* Pods_SenseiTalk.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2366A64A2799E01AD9E98B9D /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				86F8EF1DD8DB9A6ACA2A178F /* Pods-SenseiTalk.debug.xcconfig */,
+				4459126A1CD587F5AD27E5AD /* Pods-SenseiTalk.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		A435B060278D0B4500BFCAE3 = {
 			isa = PBXGroup;
 			children = (
 				A435B06B278D0B4600BFCAE3 /* SenseiTalk */,
 				A435B06A278D0B4600BFCAE3 /* Products */,
+				2366A64A2799E01AD9E98B9D /* Pods */,
+				0C8DEFAABD0D65DC61263A88 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -58,13 +87,39 @@
 			children = (
 				A435B06C278D0B4600BFCAE3 /* AppDelegate.swift */,
 				A435B06E278D0B4600BFCAE3 /* SceneDelegate.swift */,
-				A435B070278D0B4600BFCAE3 /* ViewController.swift */,
-				A435B072278D0B4600BFCAE3 /* Main.storyboard */,
+				A435B082278D0B8000BFCAE3 /* Model */,
+				A435B080278D0B6700BFCAE3 /* Controller */,
+				A435B081278D0B7400BFCAE3 /* View */,
 				A435B075278D0B4A00BFCAE3 /* Assets.xcassets */,
 				A435B077278D0B4A00BFCAE3 /* LaunchScreen.storyboard */,
 				A435B07A278D0B4A00BFCAE3 /* Info.plist */,
 			);
 			path = SenseiTalk;
+			sourceTree = "<group>";
+		};
+		A435B080278D0B6700BFCAE3 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				A435B070278D0B4600BFCAE3 /* ViewController.swift */,
+				A435B083278D0BC400BFCAE3 /* STLoginVC.swift */,
+				A435B085278D0D2F00BFCAE3 /* STTimeLineVC.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		A435B081278D0B7400BFCAE3 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				A435B072278D0B4600BFCAE3 /* Main.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		A435B082278D0B8000BFCAE3 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -74,9 +129,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A435B07D278D0B4A00BFCAE3 /* Build configuration list for PBXNativeTarget "SenseiTalk" */;
 			buildPhases = (
+				63D25854A98F30B5D286EE27 /* [CP] Check Pods Manifest.lock */,
 				A435B065278D0B4600BFCAE3 /* Sources */,
 				A435B066278D0B4600BFCAE3 /* Frameworks */,
 				A435B067278D0B4600BFCAE3 /* Resources */,
+				AB852AE15E574BAF638F7A17 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -133,6 +190,48 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		63D25854A98F30B5D286EE27 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SenseiTalk-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AB852AE15E574BAF638F7A17 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SenseiTalk/Pods-SenseiTalk-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SenseiTalk/Pods-SenseiTalk-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SenseiTalk/Pods-SenseiTalk-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		A435B065278D0B4600BFCAE3 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -141,6 +240,8 @@
 				A435B071278D0B4600BFCAE3 /* ViewController.swift in Sources */,
 				A435B06D278D0B4600BFCAE3 /* AppDelegate.swift in Sources */,
 				A435B06F278D0B4600BFCAE3 /* SceneDelegate.swift in Sources */,
+				A435B086278D0D2F00BFCAE3 /* STTimeLineVC.swift in Sources */,
+				A435B084278D0BC400BFCAE3 /* STLoginVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -284,6 +385,7 @@
 		};
 		A435B07E278D0B4A00BFCAE3 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 86F8EF1DD8DB9A6ACA2A178F /* Pods-SenseiTalk.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -306,12 +408,13 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
 		A435B07F278D0B4A00BFCAE3 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4459126A1CD587F5AD27E5AD /* Pods-SenseiTalk.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -334,7 +437,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

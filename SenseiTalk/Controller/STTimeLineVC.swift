@@ -21,8 +21,6 @@ class STTimeLineVC: UIViewController {
         view.backgroundColor = .systemGray
         title = "タイトル"
         
-//        title = "タイトル"
-        
     }
     
 

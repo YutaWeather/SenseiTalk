@@ -31,9 +31,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func createTopMenuNav2() -> UINavigationController{
-        let timeLineVC = STTimeLineVC()
-        let nav = UINavigationController(rootViewController: timeLineVC)
-        nav.tabBarItem = UITabBarItem(title: "タイムライン", image:UIImage(named: ""), tag: 1)
+        let newsVC = STNewsVC()
+        let nav = UINavigationController(rootViewController: newsVC)
+        nav.tabBarItem = UITabBarItem(title: "ニュース", image:UIImage(named: ""), tag: 1)
         return nav
     }
 

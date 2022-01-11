@@ -6,24 +6,48 @@
 //
 
 import UIKit
+import SDWebImage
 
 class ContentsCell: UITableViewCell {
 
     static let identifier = "ContentsCell"
-    
+    var titleLabel = STTitleLabel(textAlignment: .left, fontSize: 12)
+    var subTitleLabel = STTitleLabel(textAlignment: .left, fontSize: 10)
+    var urlToImageView = STImageView(frame: .zero)
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
     
+    func configure(newsContentsModel:NewsContentsModel){
+        urlToImageView.sd_setImage(with: URL(string: newsContentsModel.urlToImage!))
+        titleLabel.text = newsContentsModel.title
+        
+        layoutUI()
+    }
+
     func layoutUI(){
+        addSubview(urlToImageView)
+        addSubview(titleLabel)
+        
+        let padding:CGFloat = 10
+        NSLayoutConstraint.activate([
+            
+            urlToImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor,constant: padding),
+            urlToImageView.topAnchor.constraint(equalTo: self.topAnchor,constant: padding),
+            urlToImageView.widthAnchor.constraint(equalToConstant: 50),
+            urlToImageView.heightAnchor.constraint(equalToConstant: self.frame.height - padding),
+            
+            titleLabel.leadingAnchor.constraint(equalTo: urlToImageView.trailingAnchor,constant: padding),
+            titleLabel.topAnchor.constraint(equalTo: self.topAnchor,constant: padding),
+            titleLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor,constant: -padding),
+            titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor,constant: -padding),
+
+        ])
         
     }
     
-    func configure(newsContentsModel:NewsContentsModel){
-
-    }
-
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 

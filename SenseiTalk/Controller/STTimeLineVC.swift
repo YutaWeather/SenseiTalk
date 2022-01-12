@@ -6,14 +6,13 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class STTimeLineVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        
-        showLoginVC()
         configure()
         // Do any additional setup after loading the view.
     }
@@ -27,6 +26,13 @@ class STTimeLineVC: UIViewController {
     
     
     func configure(){
+        if Auth.auth().currentUser?.uid != nil{
+            
+        }else{
+            showLoginVC()
+            
+        }
+
         view.backgroundColor = .systemGray
         title = "タイトル"
         

@@ -17,7 +17,7 @@ protocol DoneSend{
 class STSendDBModel{
     
     let db = Firestore.firestore()
-    let doneSend:DoneSend?
+    var doneSend:DoneSend?
     
 //    func createProfileData(userModel:UserModel){
 //
@@ -27,7 +27,7 @@ class STSendDBModel{
 //
 //    }
     
-    func sendProfileData(userName:String,userID:String,profileImageData:Data){
+    func sendProfileData(userName:String,profileImageData:Data){
         
         let imageRef = Storage.storage().reference().child("ProfileImage").child("\(UUID().uuidString + String(Date().timeIntervalSince1970)).jpeg")
         
@@ -40,7 +40,7 @@ class STSendDBModel{
                     return
                 }
                 if url != nil{
-                    let userModel = UserModel(userName:userName, profileImageURL: url?.absoluteString, userID: userID)
+                    let userModel = UserModel(userName:userName, profileImageURL: url?.absoluteString, userID: Auth.auth().currentUser!.uid)
                     self.db.collection("Users").document(Auth.auth().currentUser!.uid).setData(
                         ["userName":userModel.userName!,"userID":userModel.userID!,"profileImageURL":url?.absoluteString]
                     )

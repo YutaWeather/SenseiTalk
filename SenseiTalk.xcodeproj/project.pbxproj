@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		13F0AF9911F05AEA2BE77D33 /* Pods_SenseiTalk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E91BE1FF35AB182E454EF4B /* Pods_SenseiTalk.framework */; };
+		A4284D0D278E6E4300F26AAC /* STTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4284D0C278E6E4300F26AAC /* STTextField.swift */; };
+		A4284D10278E753600F26AAC /* STButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4284D0F278E753600F26AAC /* STButton.swift */; };
+		A4284D12278E80AF00F26AAC /* STCameraVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4284D11278E80AF00F26AAC /* STCameraVC.swift */; };
+		A4284D14278E854800F26AAC /* STSendDBModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4284D13278E854800F26AAC /* STSendDBModel.swift */; };
+		A4284D16278E866000F26AAC /* STUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4284D15278E866000F26AAC /* STUserModel.swift */; };
 		A435B06D278D0B4600BFCAE3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A435B06C278D0B4600BFCAE3 /* AppDelegate.swift */; };
 		A435B06F278D0B4600BFCAE3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A435B06E278D0B4600BFCAE3 /* SceneDelegate.swift */; };
 		A435B071278D0B4600BFCAE3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A435B070278D0B4600BFCAE3 /* ViewController.swift */; };
@@ -28,6 +33,11 @@
 		4459126A1CD587F5AD27E5AD /* Pods-SenseiTalk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SenseiTalk.release.xcconfig"; path = "Target Support Files/Pods-SenseiTalk/Pods-SenseiTalk.release.xcconfig"; sourceTree = "<group>"; };
 		7E91BE1FF35AB182E454EF4B /* Pods_SenseiTalk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SenseiTalk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		86F8EF1DD8DB9A6ACA2A178F /* Pods-SenseiTalk.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SenseiTalk.debug.xcconfig"; path = "Target Support Files/Pods-SenseiTalk/Pods-SenseiTalk.debug.xcconfig"; sourceTree = "<group>"; };
+		A4284D0C278E6E4300F26AAC /* STTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STTextField.swift; sourceTree = "<group>"; };
+		A4284D0F278E753600F26AAC /* STButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STButton.swift; sourceTree = "<group>"; };
+		A4284D11278E80AF00F26AAC /* STCameraVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STCameraVC.swift; sourceTree = "<group>"; };
+		A4284D13278E854800F26AAC /* STSendDBModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STSendDBModel.swift; sourceTree = "<group>"; };
+		A4284D15278E866000F26AAC /* STUserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STUserModel.swift; sourceTree = "<group>"; };
 		A435B069278D0B4600BFCAE3 /* SenseiTalk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SenseiTalk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A435B06C278D0B4600BFCAE3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A435B06E278D0B4600BFCAE3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -75,6 +85,14 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		A4284D0E278E751900F26AAC /* UIButton */ = {
+			isa = PBXGroup;
+			children = (
+				A4284D0F278E753600F26AAC /* STButton.swift */,
+			);
+			path = UIButton;
+			sourceTree = "<group>";
+		};
 		A435B060278D0B4500BFCAE3 = {
 			isa = PBXGroup;
 			children = (
@@ -105,6 +123,8 @@
 				A435B075278D0B4A00BFCAE3 /* Assets.xcassets */,
 				A435B095278D39C400BFCAE3 /* UIImageView */,
 				A435B091278D381C00BFCAE3 /* UILabel */,
+				A435B098278E6D8300BFCAE3 /* UITextField */,
+				A4284D0E278E751900F26AAC /* UIButton */,
 				A435B077278D0B4A00BFCAE3 /* LaunchScreen.storyboard */,
 				A435B07A278D0B4A00BFCAE3 /* Info.plist */,
 			);
@@ -118,6 +138,7 @@
 				A435B083278D0BC400BFCAE3 /* STLoginVC.swift */,
 				A435B085278D0D2F00BFCAE3 /* STTimeLineVC.swift */,
 				A435B088278D2EE000BFCAE3 /* STNewsVC.swift */,
+				A4284D11278E80AF00F26AAC /* STCameraVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -135,6 +156,8 @@
 			isa = PBXGroup;
 			children = (
 				A435B08C278D30A200BFCAE3 /* NewsContentsModel.swift */,
+				A4284D13278E854800F26AAC /* STSendDBModel.swift */,
+				A4284D15278E866000F26AAC /* STUserModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -161,6 +184,14 @@
 				A435B096278D39ED00BFCAE3 /* STImageView.swift */,
 			);
 			path = UIImageView;
+			sourceTree = "<group>";
+		};
+		A435B098278E6D8300BFCAE3 /* UITextField */ = {
+			isa = PBXGroup;
+			children = (
+				A4284D0C278E6E4300F26AAC /* STTextField.swift */,
+			);
+			path = UITextField;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -281,12 +312,17 @@
 				A435B090278D32DC00BFCAE3 /* NetworkManager.swift in Sources */,
 				A435B08B278D2F7F00BFCAE3 /* ContentsCell.swift in Sources */,
 				A435B071278D0B4600BFCAE3 /* ViewController.swift in Sources */,
+				A4284D16278E866000F26AAC /* STUserModel.swift in Sources */,
 				A435B097278D39ED00BFCAE3 /* STImageView.swift in Sources */,
+				A4284D0D278E6E4300F26AAC /* STTextField.swift in Sources */,
 				A435B06D278D0B4600BFCAE3 /* AppDelegate.swift in Sources */,
+				A4284D14278E854800F26AAC /* STSendDBModel.swift in Sources */,
 				A435B06F278D0B4600BFCAE3 /* SceneDelegate.swift in Sources */,
 				A435B093278D383C00BFCAE3 /* STTitleLabel.swift in Sources */,
 				A435B086278D0D2F00BFCAE3 /* STTimeLineVC.swift in Sources */,
 				A435B089278D2EE000BFCAE3 /* STNewsVC.swift in Sources */,
+				A4284D12278E80AF00F26AAC /* STCameraVC.swift in Sources */,
+				A4284D10278E753600F26AAC /* STButton.swift in Sources */,
 				A435B08D278D30A200BFCAE3 /* NewsContentsModel.swift in Sources */,
 				A435B084278D0BC400BFCAE3 /* STLoginVC.swift in Sources */,
 			);

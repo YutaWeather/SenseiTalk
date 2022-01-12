@@ -6,8 +6,9 @@
 //
 
 import UIKit
+import Firebase
 
-class STLoginVC: STCameraVC {
+class STLoginVC: STCameraVC,DoneSend {
 
     var profileImageView = STImageView(frame: .zero, image: UIImage(named: "avatar-placeholder")!)
     var userNameTextField = STTextField(textAlignment: .left, fontSize: 10)
@@ -63,12 +64,22 @@ class STLoginVC: STCameraVC {
     @objc func register(){
         
         //firebase
-        
+        Auth.auth().signInAnonymously { (result, error) in
+            let sendDBModel = STSendDBModel()
+            sendDBModel.doneSend = self
+            sendDBModel.sendProfileData(userName: self.userNameTextField.text!, profileImageData: (self.profileImageView.image?.jpegData(compressionQuality: 0.3))!)
+        }
     }
     
     @objc func tapped(_ sender: UITapGestureRecognizer){
 
         openActionSheet()
+    }
+    
+    func doneSendData() {
+        
+        dismiss(animated: true, completion: nil)
+        
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {

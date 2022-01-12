@@ -13,6 +13,7 @@
 		A4284D12278E80AF00F26AAC /* STCameraVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4284D11278E80AF00F26AAC /* STCameraVC.swift */; };
 		A4284D14278E854800F26AAC /* STSendDBModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4284D13278E854800F26AAC /* STSendDBModel.swift */; };
 		A4284D16278E866000F26AAC /* STUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4284D15278E866000F26AAC /* STUserModel.swift */; };
+		A4284D18278E8B8F00F26AAC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A4284D17278E8B8F00F26AAC /* GoogleService-Info.plist */; };
 		A435B06D278D0B4600BFCAE3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A435B06C278D0B4600BFCAE3 /* AppDelegate.swift */; };
 		A435B06F278D0B4600BFCAE3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A435B06E278D0B4600BFCAE3 /* SceneDelegate.swift */; };
 		A435B071278D0B4600BFCAE3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A435B070278D0B4600BFCAE3 /* ViewController.swift */; };
@@ -38,6 +39,7 @@
 		A4284D11278E80AF00F26AAC /* STCameraVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STCameraVC.swift; sourceTree = "<group>"; };
 		A4284D13278E854800F26AAC /* STSendDBModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STSendDBModel.swift; sourceTree = "<group>"; };
 		A4284D15278E866000F26AAC /* STUserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STUserModel.swift; sourceTree = "<group>"; };
+		A4284D17278E8B8F00F26AAC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A435B069278D0B4600BFCAE3 /* SenseiTalk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SenseiTalk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A435B06C278D0B4600BFCAE3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A435B06E278D0B4600BFCAE3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -127,6 +129,7 @@
 				A4284D0E278E751900F26AAC /* UIButton */,
 				A435B077278D0B4A00BFCAE3 /* LaunchScreen.storyboard */,
 				A435B07A278D0B4A00BFCAE3 /* Info.plist */,
+				A4284D17278E8B8F00F26AAC /* GoogleService-Info.plist */,
 			);
 			path = SenseiTalk;
 			sourceTree = "<group>";
@@ -255,6 +258,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A435B079278D0B4A00BFCAE3 /* LaunchScreen.storyboard in Resources */,
+				A4284D18278E8B8F00F26AAC /* GoogleService-Info.plist in Resources */,
 				A435B076278D0B4A00BFCAE3 /* Assets.xcassets in Resources */,
 				A435B074278D0B4600BFCAE3 /* Main.storyboard in Resources */,
 			);

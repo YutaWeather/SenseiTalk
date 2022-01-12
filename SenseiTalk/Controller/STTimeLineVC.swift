@@ -12,8 +12,17 @@ class STTimeLineVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        
+        showLoginVC()
         configure()
         // Do any additional setup after loading the view.
+    }
+    
+    private func showLoginVC(){
+        let loginVC = STLoginVC()
+        loginVC.modalPresentationStyle = .fullScreen
+        present(loginVC, animated: true, completion: nil)
+
     }
     
     

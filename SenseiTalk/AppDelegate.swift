@@ -8,12 +8,10 @@
 import UIKit
 import IQKeyboardManagerSwift
 import Firebase
-
+import KeychainSwift
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
-
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -25,6 +23,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        } catch let signOutError as NSError {
 //            print ("Error signing out: %@", signOutError)
 //        }
+//        let keychain = KeychainSwift()
+//        keychain.clear() // Delete everything from app's Keychain. Does not work on macOS.
 
         IQKeyboardManager.shared.enable = true
 

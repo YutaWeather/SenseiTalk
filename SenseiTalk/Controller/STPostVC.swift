@@ -11,6 +11,7 @@ class STPostVC: UIViewController {
 
     var categoryName = String()
     var textView = STTextView()
+    var textField = STTextField(textAlignment: .left, fontSize: 12)
     var postBarButtonItem: UIBarButtonItem!
     
     override func viewDidLoad() {
@@ -26,12 +27,18 @@ class STPostVC: UIViewController {
     
     func layoutUI(){
         
+        view.addSubview(textField)
         view.addSubview(textView)
         let padding:CGFloat = 20
         NSLayoutConstraint.activate([
         
+            textField.leadingAnchor.constraint(equalTo: view.leadingAnchor,constant: padding),
+            textField.topAnchor.constraint(equalTo: view.topAnchor,constant: (self.navigationController?.navigationBar.frame.size.height)! + padding * 2),
+            textField.trailingAnchor.constraint(equalTo: view.trailingAnchor,constant: -padding),
+            textField.heightAnchor.constraint(equalToConstant: 20),
+            
             textView.leadingAnchor.constraint(equalTo:view.leadingAnchor,constant: padding),
-            textView.topAnchor.constraint(equalTo: view.topAnchor,constant: (self.navigationController?.navigationBar.frame.size.height)! + padding * 2),
+            textView.topAnchor.constraint(equalTo: textField.bottomAnchor,constant: padding),
             textView.trailingAnchor.constraint(equalTo:view.trailingAnchor,constant: -padding),
             textView.bottomAnchor.constraint(equalTo: view.bottomAnchor,constant: -100)
             
@@ -49,7 +56,7 @@ class STPostVC: UIViewController {
     @objc func postContents(_ sender: UIBarButtonItem) {
         //1000文字まで
         let sendDBModel = STSendDBModel()
-        sendDBModel.sendContents(category: "カテゴリー", title: "タイトル", body: "本文")
+        sendDBModel.sendContents(category: categoryName, title: textField.text!, body: textView.text!)
     }
     
 

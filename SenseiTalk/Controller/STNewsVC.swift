@@ -23,7 +23,6 @@ class STNewsVC: UIViewController,UITableViewDelegate,UITableViewDataSource,DoneJ
         tableView.frame = view.bounds
     }
     
-    
 
     func configure(){
         view.backgroundColor = .white

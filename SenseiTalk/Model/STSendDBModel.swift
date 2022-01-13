@@ -44,20 +44,21 @@ class STSendDBModel{
                     self.db.collection("Users").document(Auth.auth().currentUser!.uid).setData(
                         ["userName":userModel.userName!,"userID":userModel.userID!,"profileImageURL":url?.absoluteString]
                     )
-//                    KeyChainConfig.setKeyData(userValue: User(userId: Auth.auth().currentUser!.uid, urlString: url!.absoluteString, userName: userName), key: "userData")
+                    KeyChainConfig.setKeyData(userValue:UserModel(userName: userName, profileImageURL: url?.absoluteString, userID: Auth.auth().currentUser!.uid), key: "userData")
                 }
                 self.doneSend?.doneSendData()
             }
         }
-    }
+    } 
 
     
     func sendContents(category:String,title:String,body:String){
 
         //アプリ内からUserData取り出し
-        self.db.collection("Contents").document("categoryID").collection("detail").document().setData(
-//            ["userName":userModel.userName!,"userID":userModel.userID!,"profileImageURL":url?.absoluteString,"category":category,"title":title,"body":body]
-            ["userName":"userName","userID":"userID","profileImageURL":"profileImageURL","category":category,"title":title,"body":body]
+        let userModel:UserModel = KeyChainConfig.getKeyData(key: "userData")
+        
+        self.db.collection("Contents").document(category).collection("detail").document().setData(
+            ["userName":userModel.userName!,"userID":userModel.userID!,"profileImageURL":userModel.profileImageURL!,"category":category,"title":title,"body":body]
         )
         
     }

@@ -14,3 +14,12 @@ struct UserModel:Codable{
     let userID:String?
     
 }
+
+struct ContentsModel{
+    
+    let userModel:UserModel?
+    let category:String?
+    let title:String?
+    let body:String?
+    
+}

@@ -15,7 +15,7 @@ class STNewsVC: UIViewController,UITableViewDelegate,UITableViewDataSource,DoneJ
     override func viewDidLoad() {
         super.viewDidLoad()
         configure()
-
+        
     }
     
     override func viewWillLayoutSubviews() {
@@ -32,7 +32,7 @@ class STNewsVC: UIViewController,UITableViewDelegate,UITableViewDataSource,DoneJ
         tableView.register(ContentsCell.self, forCellReuseIdentifier: ContentsCell.identifier)
 
         view.addSubview(tableView)
-        var networkManager = NetworkManager()
+        let networkManager = NetworkManager()
         networkManager.doneJsonProtocol = self
         networkManager.analyticsStart()
     }
@@ -65,7 +65,6 @@ class STNewsVC: UIViewController,UITableViewDelegate,UITableViewDataSource,DoneJ
     func doneJsonAnalytics(newsContentsArray: [NewsContentsModel]) {
         self.newsContentsArray = []
         self.newsContentsArray = newsContentsArray
-        print(self.newsContentsArray.debugDescription)
         tableView.reloadData()
     }
     

@@ -38,18 +38,6 @@ class STCameraVC: UIViewController,UIImagePickerControllerDelegate, UINavigation
         }
     }
     
-//    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-//        
-//        if let pickedImage = info[.editedImage] as? UIImage
-//        {
-//            imageView.image = pickedImage
-//            picker.dismiss(animated: true, completion: nil)
-//            
-//        }
-//
-//        
-//    }
-    
 
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)

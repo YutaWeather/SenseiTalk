@@ -51,4 +51,15 @@ class STSendDBModel{
         }
     }
 
+    
+    func sendContents(category:String,title:String,body:String){
+
+        //アプリ内からUserData取り出し
+        self.db.collection("Contents").document("categoryID").collection("detail").document().setData(
+//            ["userName":userModel.userName!,"userID":userModel.userID!,"profileImageURL":url?.absoluteString,"category":category,"title":title,"body":body]
+            ["userName":"userName","userID":"userID","profileImageURL":"profileImageURL","category":category,"title":title,"body":body]
+        )
+        
+    }
+    
 }

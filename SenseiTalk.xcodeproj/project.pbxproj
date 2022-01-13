@@ -14,6 +14,7 @@
 		A4284D14278E854800F26AAC /* STSendDBModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4284D13278E854800F26AAC /* STSendDBModel.swift */; };
 		A4284D16278E866000F26AAC /* STUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4284D15278E866000F26AAC /* STUserModel.swift */; };
 		A4284D18278E8B8F00F26AAC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A4284D17278E8B8F00F26AAC /* GoogleService-Info.plist */; };
+		A4284D1A278FE05600F26AAC /* STPostVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4284D19278FE05500F26AAC /* STPostVC.swift */; };
 		A435B06D278D0B4600BFCAE3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A435B06C278D0B4600BFCAE3 /* AppDelegate.swift */; };
 		A435B06F278D0B4600BFCAE3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A435B06E278D0B4600BFCAE3 /* SceneDelegate.swift */; };
 		A435B071278D0B4600BFCAE3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A435B070278D0B4600BFCAE3 /* ViewController.swift */; };
@@ -28,6 +29,7 @@
 		A435B090278D32DC00BFCAE3 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A435B08F278D32DC00BFCAE3 /* NetworkManager.swift */; };
 		A435B093278D383C00BFCAE3 /* STTitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A435B092278D383C00BFCAE3 /* STTitleLabel.swift */; };
 		A435B097278D39ED00BFCAE3 /* STImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A435B096278D39ED00BFCAE3 /* STImageView.swift */; };
+		A4AC5915278FE40A00AADE0F /* STTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4AC5914278FE40A00AADE0F /* STTextView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +42,7 @@
 		A4284D13278E854800F26AAC /* STSendDBModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STSendDBModel.swift; sourceTree = "<group>"; };
 		A4284D15278E866000F26AAC /* STUserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STUserModel.swift; sourceTree = "<group>"; };
 		A4284D17278E8B8F00F26AAC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		A4284D19278FE05500F26AAC /* STPostVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STPostVC.swift; sourceTree = "<group>"; };
 		A435B069278D0B4600BFCAE3 /* SenseiTalk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SenseiTalk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A435B06C278D0B4600BFCAE3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A435B06E278D0B4600BFCAE3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -56,6 +59,7 @@
 		A435B08F278D32DC00BFCAE3 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		A435B092278D383C00BFCAE3 /* STTitleLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STTitleLabel.swift; sourceTree = "<group>"; };
 		A435B096278D39ED00BFCAE3 /* STImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STImageView.swift; sourceTree = "<group>"; };
+		A4AC5914278FE40A00AADE0F /* STTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STTextView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +99,14 @@
 			path = UIButton;
 			sourceTree = "<group>";
 		};
+		A4284D1B278FE3A300F26AAC /* UITextView */ = {
+			isa = PBXGroup;
+			children = (
+				A4AC5914278FE40A00AADE0F /* STTextView.swift */,
+			);
+			path = UITextView;
+			sourceTree = "<group>";
+		};
 		A435B060278D0B4500BFCAE3 = {
 			isa = PBXGroup;
 			children = (
@@ -127,6 +139,7 @@
 				A435B091278D381C00BFCAE3 /* UILabel */,
 				A435B098278E6D8300BFCAE3 /* UITextField */,
 				A4284D0E278E751900F26AAC /* UIButton */,
+				A4284D1B278FE3A300F26AAC /* UITextView */,
 				A435B077278D0B4A00BFCAE3 /* LaunchScreen.storyboard */,
 				A435B07A278D0B4A00BFCAE3 /* Info.plist */,
 				A4284D17278E8B8F00F26AAC /* GoogleService-Info.plist */,
@@ -142,6 +155,7 @@
 				A435B085278D0D2F00BFCAE3 /* STTimeLineVC.swift */,
 				A435B088278D2EE000BFCAE3 /* STNewsVC.swift */,
 				A4284D11278E80AF00F26AAC /* STCameraVC.swift */,
+				A4284D19278FE05500F26AAC /* STPostVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -319,12 +333,14 @@
 				A4284D16278E866000F26AAC /* STUserModel.swift in Sources */,
 				A435B097278D39ED00BFCAE3 /* STImageView.swift in Sources */,
 				A4284D0D278E6E4300F26AAC /* STTextField.swift in Sources */,
+				A4AC5915278FE40A00AADE0F /* STTextView.swift in Sources */,
 				A435B06D278D0B4600BFCAE3 /* AppDelegate.swift in Sources */,
 				A4284D14278E854800F26AAC /* STSendDBModel.swift in Sources */,
 				A435B06F278D0B4600BFCAE3 /* SceneDelegate.swift in Sources */,
 				A435B093278D383C00BFCAE3 /* STTitleLabel.swift in Sources */,
 				A435B086278D0D2F00BFCAE3 /* STTimeLineVC.swift in Sources */,
 				A435B089278D2EE000BFCAE3 /* STNewsVC.swift in Sources */,
+				A4284D1A278FE05600F26AAC /* STPostVC.swift in Sources */,
 				A4284D12278E80AF00F26AAC /* STCameraVC.swift in Sources */,
 				A4284D10278E753600F26AAC /* STButton.swift in Sources */,
 				A435B08D278D30A200BFCAE3 /* NewsContentsModel.swift in Sources */,

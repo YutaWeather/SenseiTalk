@@ -24,8 +24,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let timeLineVC = STTimeLineVC()
         let nav = UINavigationController(rootViewController: timeLineVC)
         nav.tabBarItem = UITabBarItem(title: "タイムライン", image:UIImage(named: ""), tag: 0)
-        nav.navigationBar.backgroundColor = .white
-        nav.navigationBar.barTintColor = .black
+//        nav.navigationBar.backgroundColor = .white
+//        nav.navigationBar.barTintColor = .black
         
         return nav
     }

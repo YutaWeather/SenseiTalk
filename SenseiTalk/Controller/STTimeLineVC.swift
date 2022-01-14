@@ -27,6 +27,7 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.isNavigationBarHidden = true
+        tabBarController?.tabBar.isHidden = false
     }
     
     override func viewWillLayoutSubviews() {
@@ -53,7 +54,6 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
             showLoginVC()
             
         }
-        
         
         setUpScroolViewAndTableView()
         postButton.addTarget(self, action: #selector(tapPost), for: .touchUpInside)

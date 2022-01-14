@@ -34,9 +34,25 @@ class ContentsCell: UITableViewCell {
         userNameLabel.text = contentsModel.userModel?.userName
         titleLabel.text = contentsModel.title
         subTitleLabel.text = contentsModel.body
-        
-        print(contentsModel.title,contentsModel.body)
         layoutUIForTimeline()
+    }
+    
+    func configure(contentsModel:ContentsModel){
+        
+        subTitleLabel.text = contentsModel.body
+        layoutUIForContents()
+        
+    }
+
+    func layoutUIForContents(){
+        addSubview(subTitleLabel)
+        let padding:CGFloat = 20
+        NSLayoutConstraint.activate([
+            subTitleLabel.leadingAnchor.constraint(equalTo:self.leadingAnchor,constant: padding),
+            subTitleLabel.topAnchor.constraint(equalTo: self.topAnchor,constant: padding),
+            subTitleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor,constant: -padding),
+            subTitleLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor,constant: -padding)
+        ])
     }
     
     func layoutUIForTimeline(){

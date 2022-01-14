@@ -158,10 +158,17 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
         }
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let contentsVC = STContentsVC()
+        contentsVC.contentsModel = self.contentsArray[indexPath.row]
+        self.navigationController?.pushViewController(contentsVC, animated: true)
+        
+    }
+    
     func loadContents(contentsArray: [ContentsModel]) {
       
         if contentsArray.count > 0 && String(pageControl.currentPage) == contentsArray[0].category{
-            
             
             self.contentsArray = []
             self.contentsArray = contentsArray

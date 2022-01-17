@@ -9,6 +9,7 @@ import UIKit
 import FirebaseAuth
 
 class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,DoneLoad,UIScrollViewDelegate {
+   
     
     var scrollView = UIScrollView()
     var tableView:UITableView?
@@ -20,7 +21,6 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        configure()
         // Do any additional setup after loading the view.
     }
     
@@ -28,6 +28,8 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
         super.viewWillAppear(animated)
         self.navigationController?.isNavigationBarHidden = true
         tabBarController?.tabBar.isHidden = false
+        configure()
+
     }
     
     override func viewWillLayoutSubviews() {
@@ -115,6 +117,7 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
         scrollView.addSubview(tableView!)
         let loadDBModel = STLoadDBModel()
         loadDBModel.doneLoad = self
+        print(pageControl.currentPage)
         loadDBModel.loadContent(categroy: String(pageControl.currentPage))
         
         
@@ -168,6 +171,7 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
     
     func loadContents(contentsArray: [ContentsModel]) {
       
+        print(String(pageControl.currentPage),contentsArray.count)
         if contentsArray.count > 0 && String(pageControl.currentPage) == contentsArray[0].category{
             
             self.contentsArray = []
@@ -193,4 +197,11 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
         
     }
     
+    func likeOrNot(likeContents: [LikeContents]) {
+        
+    }
+    
+    func loadComment(commentArray: [CommentContent]) {
+        
+    }
 }

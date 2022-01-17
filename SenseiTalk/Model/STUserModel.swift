@@ -21,5 +21,19 @@ struct ContentsModel{
     let category:String?
     let title:String?
     let body:String?
+    let contentID:String?
     
 }
+
+struct LikeContents{
+    let userID:String?
+    let like:Bool?
+    let contentID:String?
+}
+
+struct CommentContent{
+    let userModel:UserModel?
+    let comment:String?
+    let contentID:String?
+}
+

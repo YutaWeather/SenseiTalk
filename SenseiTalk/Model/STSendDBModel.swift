@@ -56,11 +56,35 @@ class STSendDBModel{
 
         //アプリ内からUserData取り出し
         let userModel:UserModel = KeyChainConfig.getKeyData(key: "userData")
+        let uuid = UUID().uuidString
+        self.db.collection("Contents").document(category).collection("detail").document(uuid).setData(
+            ["userName":userModel.userName!,"userID":userModel.userID!,"profileImageURL":userModel.profileImageURL!,"category":category,"title":title,"body":body,"contentID":uuid]
+        )
+        self.doneSend?.doneSendData()
         
-        self.db.collection("Contents").document(category).collection("detail").document().setData(
-            ["userName":userModel.userName!,"userID":userModel.userID!,"profileImageURL":userModel.profileImageURL!,"category":category,"title":title,"body":body]
+    }
+    
+    //いいね機能
+    func sendLikeContents(category:String,contentID:String,like:Bool){
+        //アプリ内からUserData取り出し
+        let userModel:UserModel = KeyChainConfig.getKeyData(key: "userData")
+        
+        self.db.collection("Contents").document(category).collection("detail").document(contentID).collection("like").document(Auth.auth().currentUser!.uid).setData(
+            ["userID":userModel.userID!,"like":true,"contentID":contentID]
         )
         
+
+    }
+    
+    //コメント機能
+    func sendComment(category:String,contentID:String,comment:String){
+        //アプリ内からUserData取り出し
+        let userModel:UserModel = KeyChainConfig.getKeyData(key: "userData")
+        
+        self.db.collection("Contents").document(category).collection("detail").document(contentID).collection("comment").document(Auth.auth().currentUser!.uid).setData(
+            ["userName":userModel.userName!,"userID":userModel.userID!,"profileImageURL":userModel.profileImageURL!,"category":category,"comment":comment,"contentID":contentID]
+        )
+
     }
     
 }

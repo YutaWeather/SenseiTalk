@@ -7,7 +7,7 @@
 
 import UIKit
 
-class STPostVC: UIViewController {
+class STPostVC: UIViewController,DoneSend {
 
     var categoryName = String()
     var textView = STTextView()
@@ -56,7 +56,12 @@ class STPostVC: UIViewController {
     @objc func postContents(_ sender: UIBarButtonItem) {
         //1000文字まで
         let sendDBModel = STSendDBModel()
+        sendDBModel.doneSend = self
         sendDBModel.sendContents(category: categoryName, title: textField.text!, body: textView.text!)
+    }
+    
+    func doneSendData() {
+        
     }
     
 

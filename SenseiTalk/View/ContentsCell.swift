@@ -43,6 +43,7 @@ class ContentsCell: UITableViewCell {
         layoutUIForContents()
         
     }
+    
 
     func layoutUIForContents(){
         addSubview(subTitleLabel)

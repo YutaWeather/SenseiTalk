@@ -29,6 +29,7 @@
 		A435B090278D32DC00BFCAE3 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A435B08F278D32DC00BFCAE3 /* NetworkManager.swift */; };
 		A435B093278D383C00BFCAE3 /* STTitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A435B092278D383C00BFCAE3 /* STTitleLabel.swift */; };
 		A435B097278D39ED00BFCAE3 /* STImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A435B096278D39ED00BFCAE3 /* STImageView.swift */; };
+		A45229E5279560510094C176 /* STCommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A45229E4279560510094C176 /* STCommentCell.swift */; };
 		A4AC5915278FE40A00AADE0F /* STTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4AC5914278FE40A00AADE0F /* STTextView.swift */; };
 		A4AC5917278FEF3500AADE0F /* KeyChainConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4AC5916278FEF3500AADE0F /* KeyChainConfig.swift */; };
 		A4AC5919278FF41900AADE0F /* STLoadDBModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4AC5918278FF41900AADE0F /* STLoadDBModel.swift */; };
@@ -64,6 +65,7 @@
 		A435B08F278D32DC00BFCAE3 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		A435B092278D383C00BFCAE3 /* STTitleLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STTitleLabel.swift; sourceTree = "<group>"; };
 		A435B096278D39ED00BFCAE3 /* STImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STImageView.swift; sourceTree = "<group>"; };
+		A45229E4279560510094C176 /* STCommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STCommentCell.swift; sourceTree = "<group>"; };
 		A4AC5914278FE40A00AADE0F /* STTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STTextView.swift; sourceTree = "<group>"; };
 		A4AC5916278FEF3500AADE0F /* KeyChainConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChainConfig.swift; sourceTree = "<group>"; };
 		A4AC5918278FF41900AADE0F /* STLoadDBModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STLoadDBModel.swift; sourceTree = "<group>"; };
@@ -178,6 +180,7 @@
 				A435B08A278D2F7F00BFCAE3 /* ContentsCell.swift */,
 				A4AC591E27911F6800AADE0F /* STHeaderView.swift */,
 				A4AC5920279159E800AADE0F /* STFooterView.swift */,
+				A45229E4279560510094C176 /* STCommentCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -342,6 +345,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A45229E5279560510094C176 /* STCommentCell.swift in Sources */,
 				A435B090278D32DC00BFCAE3 /* NetworkManager.swift in Sources */,
 				A435B08B278D2F7F00BFCAE3 /* ContentsCell.swift in Sources */,
 				A435B071278D0B4600BFCAE3 /* ViewController.swift in Sources */,

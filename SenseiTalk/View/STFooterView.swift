@@ -16,7 +16,9 @@ class STFooterView: UIView {
     var commentCountLabel = STTitleLabel(textAlignment: .left, fontSize: 10)
     
     //コメントTextField
+    var commentTextField = STTextField(textAlignment: .left, fontSize: 10)
     //投稿Button
+    var postButton = STButton(backgroundColor: .white, title: "投稿")
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -32,6 +34,9 @@ class STFooterView: UIView {
         addSubview(likeCountLabel)
         addSubview(commentIconButton)
         addSubview(commentCountLabel)
+        
+        addSubview(commentTextField)
+        addSubview(postButton)
 
         let padding:CGFloat = 5
         NSLayoutConstraint.activate([
@@ -53,7 +58,19 @@ class STFooterView: UIView {
             commentCountLabel.leadingAnchor.constraint(equalTo: commentIconButton.trailingAnchor,constant: padding),
             commentCountLabel.topAnchor.constraint(equalTo: commentIconButton.topAnchor),
             commentCountLabel.widthAnchor.constraint(equalToConstant: 30),
-            commentCountLabel.heightAnchor.constraint(equalToConstant: 30)
+            commentCountLabel.heightAnchor.constraint(equalToConstant: 30),
+            
+            commentTextField.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: padding),
+            commentTextField.topAnchor.constraint(equalTo: likeButton.bottomAnchor, constant: padding),
+            commentTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor,constant: -80),
+            commentTextField.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -padding),
+            
+            postButton.leadingAnchor.constraint(equalTo: commentTextField.trailingAnchor, constant: padding),
+            postButton.topAnchor.constraint(equalTo: commentTextField.topAnchor),
+            postButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -padding),
+            postButton.bottomAnchor.constraint(equalTo: self.bottomAnchor,constant: -padding)
+            
+            
         ])
         
     }

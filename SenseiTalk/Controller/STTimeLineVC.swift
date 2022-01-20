@@ -9,14 +9,20 @@ import UIKit
 import FirebaseAuth
 
 class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,DoneLoad,UIScrollViewDelegate {
-   
-    
+  
     var scrollView = UIScrollView()
     var tableView:UITableView?
     var postButton = STButton()
     var contentsArray = [ContentsModel]()
     var pageNum = String()
     var pageControl = UIPageControl()
+    let loadDBModel = STLoadDBModel()
+    let sendDBModel = STSendDBModel()
+    var likeContentsArray = [LikeContents]()
+    var commentArrays = [[CommentContent]]()
+    var commentArray = [CommentContent]()
+    var checkLike = Bool()
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -77,6 +83,10 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
         pageControl.currentPage = 0 //現在地
         pageControl.isUserInteractionEnabled = false //アニメーション中のユーザー操作を無効
         view.addSubview(pageControl)
+        loadDBModel.doneLoad = self
+        
+
+
         
     }
     
@@ -147,8 +157,18 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
             switch self.contentsArray[indexPath.row].category{
             case String(pageControl.currentPage):
                 let cell = tableView.dequeueReusableCell(withIdentifier: ContentsCell.identifier, for: indexPath) as! ContentsCell
-                cell.configureContents(contentsModel: self.contentsArray[indexPath.row])
-                print(self.contentsArray.debugDescription)
+                let footerView = STFooterView()
+                footerView.configureForTimeLine()
+                footerView.backgroundColor = .yellow
+                cell.configureContents(contentsModel: self.contentsArray[indexPath.row], footerView: footerView)
+                
+                cell.footerBaseView.likeButton.tag = indexPath.row
+                cell.footerBaseView.commentIconButton.tag = indexPath.row
+                
+                cell.footerBaseView.likeButton.addTarget(self, action: #selector(tapLikeButton(sender:)), for: .touchUpInside)
+                loadDBModel.loadLike(categroy: (self.contentsArray[indexPath.row].category)!, contentID: (self.contentsArray[indexPath.row].contentID)!,cell:cell,indexPath: indexPath)
+                loadDBModel.loadComment(categroy: self.contentsArray[indexPath.row].category!, contentID:self.contentsArray[indexPath.row].contentID!,cell:cell,indexPath: indexPath)
+
                 
                 return cell
                 
@@ -161,10 +181,33 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
         }
     }
     
+    @objc func tapLikeButton(sender:STButton){
+        //いいね送信
+        sendDBModel.sendLikeContents(category: String(pageControl.currentPage), contentID: self.contentsArray[sender.tag].contentID!, checkLike: checkLike)
+    }
+    
+//    @objc func tapCommentIconButton(sender:STButton){
+//        //コメント送信
+////        sendDBModel.sendComment(category: String(pageControl.currentPage), contentID:self.contentsArray[sender.tag].contentID!, comment: commentArray[sender.tag].comment!)
+//
+//    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let contentsVC = STContentsVC()
         contentsVC.contentsModel = self.contentsArray[indexPath.row]
+        self.commentArray = []
+        
+        //self.contentsArray[indexPath.row].contentIDを含んでいるcommentArraysの中の配列のcommentArrayを出す
+        
+        for i in 0 ... self.commentArrays.count - 1{
+            //            if self.commentArrays[i].contains(where: self.contentsArray[indexPath.row].contentID) == true{
+            if self.commentArrays[i].contains(where: { $0.contentID == self.contentsArray[indexPath.row].contentID }) == true{
+                self.commentArray = self.commentArrays[i]
+            }
+            
+        }
+        contentsVC.commentArray = self.commentArray
         self.navigationController?.pushViewController(contentsVC, animated: true)
         
     }
@@ -179,6 +222,7 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
             print(self.contentsArray.debugDescription)
             
         }
+
         tableView?.reloadData()
         
     }
@@ -193,15 +237,40 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
             let loadDBModel = STLoadDBModel()
             loadDBModel.doneLoad = self
             loadDBModel.loadContent(categroy: String(pageControl.currentPage))
+
+//            loadDBModel.loadLike(categroy: (self.contentsArray[indexPath.row].category)!, contentID: (self.contentsArray[indexPath.row].contentID)!,cell:cell,indexPath: indexPath)
+//            loadDBModel.loadComment(categroy: self.contentsArray[indexPath.row].category!, contentID:self.contentsArray[indexPath.row].contentID!,cell:cell,indexPath: indexPath)
+
         }
         
     }
     
-    func likeOrNot(likeContents: [LikeContents]) {
+    func likeOrNot(likeContents: [LikeContents],cell:ContentsCell,indexPath:IndexPath) {
+        
+        self.likeContentsArray = []
+        self.likeContentsArray = likeContents
+        cell.footerBaseView.likeCountLabel.text = String(self.likeContentsArray.count)
+        checkLike =  self.likeContentsArray.filter{ $0.userID == Auth.auth().currentUser!.uid}.count > 0
+        if checkLike == true{
+            cell.footerBaseView.likeButton.setImage(UIImage(named: "like"), for: .normal)
+        }else{
+            cell.footerBaseView.likeButton.setImage(UIImage(named: "notLike"), for: .normal)
+        }
+
+
+    }
+
+    func loadComment(commentArray: [CommentContent], cell: ContentsCell, indexPath: IndexPath) {
+
+//        self.commentArrays = []
+        self.commentArrays.append(commentArray)
+        
+        cell.footerBaseView.commentCountLabel.text = String(commentArray.count)
+//        self.tableView?.reloadData()
         
     }
     
-    func loadComment(commentArray: [CommentContent]) {
+    func likeOrNotForContents(likeContents: [LikeContents]) {
         
     }
 }

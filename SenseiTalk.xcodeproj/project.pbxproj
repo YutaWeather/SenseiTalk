@@ -30,6 +30,8 @@
 		A435B093278D383C00BFCAE3 /* STTitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A435B092278D383C00BFCAE3 /* STTitleLabel.swift */; };
 		A435B097278D39ED00BFCAE3 /* STImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A435B096278D39ED00BFCAE3 /* STImageView.swift */; };
 		A45229E5279560510094C176 /* STCommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A45229E4279560510094C176 /* STCommentCell.swift */; };
+		A48CB04C2796AF3000644270 /* loading.json in Resources */ = {isa = PBXBuildFile; fileRef = A48CB04B2796AF3000644270 /* loading.json */; };
+		A48CB04E2796B59D00644270 /* STDetailContentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A48CB04D2796B59D00644270 /* STDetailContentVC.swift */; };
 		A4AC5915278FE40A00AADE0F /* STTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4AC5914278FE40A00AADE0F /* STTextView.swift */; };
 		A4AC5917278FEF3500AADE0F /* KeyChainConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4AC5916278FEF3500AADE0F /* KeyChainConfig.swift */; };
 		A4AC5919278FF41900AADE0F /* STLoadDBModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4AC5918278FF41900AADE0F /* STLoadDBModel.swift */; };
@@ -66,6 +68,8 @@
 		A435B092278D383C00BFCAE3 /* STTitleLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STTitleLabel.swift; sourceTree = "<group>"; };
 		A435B096278D39ED00BFCAE3 /* STImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STImageView.swift; sourceTree = "<group>"; };
 		A45229E4279560510094C176 /* STCommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STCommentCell.swift; sourceTree = "<group>"; };
+		A48CB04B2796AF3000644270 /* loading.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = loading.json; sourceTree = "<group>"; };
+		A48CB04D2796B59D00644270 /* STDetailContentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STDetailContentVC.swift; sourceTree = "<group>"; };
 		A4AC5914278FE40A00AADE0F /* STTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STTextView.swift; sourceTree = "<group>"; };
 		A4AC5916278FEF3500AADE0F /* KeyChainConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChainConfig.swift; sourceTree = "<group>"; };
 		A4AC5918278FF41900AADE0F /* STLoadDBModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STLoadDBModel.swift; sourceTree = "<group>"; };
@@ -152,6 +156,7 @@
 				A435B098278E6D8300BFCAE3 /* UITextField */,
 				A4284D0E278E751900F26AAC /* UIButton */,
 				A4284D1B278FE3A300F26AAC /* UITextView */,
+				A45229E92796AE200094C176 /* Lottie */,
 				A435B077278D0B4A00BFCAE3 /* LaunchScreen.storyboard */,
 				A435B07A278D0B4A00BFCAE3 /* Info.plist */,
 				A4284D17278E8B8F00F26AAC /* GoogleService-Info.plist */,
@@ -169,6 +174,7 @@
 				A4284D11278E80AF00F26AAC /* STCameraVC.swift */,
 				A4284D19278FE05500F26AAC /* STPostVC.swift */,
 				A4AC591A27910A4D00AADE0F /* STContentsVC.swift */,
+				A48CB04D2796B59D00644270 /* STDetailContentVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -227,6 +233,14 @@
 				A4284D0C278E6E4300F26AAC /* STTextField.swift */,
 			);
 			path = UITextField;
+			sourceTree = "<group>";
+		};
+		A45229E92796AE200094C176 /* Lottie */ = {
+			isa = PBXGroup;
+			children = (
+				A48CB04B2796AF3000644270 /* loading.json */,
+			);
+			path = Lottie;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -293,6 +307,7 @@
 				A4284D18278E8B8F00F26AAC /* GoogleService-Info.plist in Resources */,
 				A435B076278D0B4A00BFCAE3 /* Assets.xcassets in Resources */,
 				A435B074278D0B4600BFCAE3 /* Main.storyboard in Resources */,
+				A48CB04C2796AF3000644270 /* loading.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -359,6 +374,7 @@
 				A4284D14278E854800F26AAC /* STSendDBModel.swift in Sources */,
 				A435B06F278D0B4600BFCAE3 /* SceneDelegate.swift in Sources */,
 				A435B093278D383C00BFCAE3 /* STTitleLabel.swift in Sources */,
+				A48CB04E2796B59D00644270 /* STDetailContentVC.swift in Sources */,
 				A435B086278D0D2F00BFCAE3 /* STTimeLineVC.swift in Sources */,
 				A4AC591F27911F6800AADE0F /* STHeaderView.swift in Sources */,
 				A435B089278D2EE000BFCAE3 /* STNewsVC.swift in Sources */,

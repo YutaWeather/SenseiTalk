@@ -36,6 +36,7 @@ class STCommentCell: UITableViewCell {
     }
     
     func layoutUI(){
+//        commentCellにfooterViewをつける
         addSubview(urlToImageView)
         addSubview(userNameLabel)
         addSubview(titleLabel)

@@ -15,6 +15,7 @@ class ContentsCell: UITableViewCell {
     var subTitleLabel = STTitleLabel(textAlignment: .left, fontSize: 10)
     var urlToImageView = STImageView(frame: .zero)
     var userNameLabel = STTitleLabel(textAlignment: .left, fontSize: 10)
+    var footerBaseView = STFooterView()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -28,39 +29,59 @@ class ContentsCell: UITableViewCell {
         layoutUIForNews()
     }
     
-    func configureContents(contentsModel:ContentsModel){
+    func configureContents(contentsModel:ContentsModel,footerView:STFooterView){
+        
+        footerBaseView = footerView
         
         urlToImageView.sd_setImage(with: URL(string: (contentsModel.userModel?.profileImageURL)!))
         userNameLabel.text = contentsModel.userModel?.userName
         titleLabel.text = contentsModel.title
         subTitleLabel.text = contentsModel.body
-        layoutUIForTimeline()
+        footerBaseView.translatesAutoresizingMaskIntoConstraints = false
+
+        layoutUIForTimeline(footerView:footerView)
     }
     
     func configure(contentsModel:ContentsModel){
         
         subTitleLabel.text = contentsModel.body
+        
         layoutUIForContents()
         
     }
     
+    
 
     func layoutUIForContents(){
         addSubview(subTitleLabel)
+//        addSubview(footerBaseView)
+//        footerBaseView.backgroundColor = .yellow
+
         let padding:CGFloat = 20
         NSLayoutConstraint.activate([
             subTitleLabel.leadingAnchor.constraint(equalTo:self.leadingAnchor,constant: padding),
             subTitleLabel.topAnchor.constraint(equalTo: self.topAnchor,constant: padding),
             subTitleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor,constant: -padding),
             subTitleLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor,constant: -padding)
+//            subTitleLabel.heightAnchor.constraint(equalToConstant: 10),
+            
+//            footerBaseView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+//            footerBaseView.topAnchor.constraint(equalTo: subTitleLabel.bottomAnchor,constant: padding),
+//            footerBaseView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+//            footerBaseView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+
         ])
     }
     
-    func layoutUIForTimeline(){
+    func layoutUIForTimeline(footerView:STFooterView){
+        footerBaseView = footerView
         addSubview(urlToImageView)
         addSubview(userNameLabel)
         addSubview(titleLabel)
         addSubview(subTitleLabel)
+        addSubview(footerBaseView)
+//        footerView.frame = self.frame
+        footerBaseView.backgroundColor = .yellow
         
         let padding:CGFloat = 10
         NSLayoutConstraint.activate([
@@ -83,9 +104,14 @@ class ContentsCell: UITableViewCell {
             subTitleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor,constant: padding),
             subTitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor,constant: padding),
             subTitleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor,constant: -padding),
-            subTitleLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor,constant: -padding)
+            subTitleLabel.heightAnchor.constraint(equalToConstant: 80),
             
-            
+            footerBaseView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            footerBaseView.topAnchor.constraint(equalTo: subTitleLabel.bottomAnchor),
+            footerBaseView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            footerBaseView.heightAnchor.constraint(equalToConstant: 25),
+            footerBaseView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+
             
         ])
         

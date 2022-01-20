@@ -58,7 +58,7 @@ class STSendDBModel{
         let userModel:UserModel = KeyChainConfig.getKeyData(key: "userData")
         let uuid = UUID().uuidString
         self.db.collection("Contents").document(category).collection("detail").document(uuid).setData(
-            ["userName":userModel.userName!,"userID":userModel.userID!,"profileImageURL":userModel.profileImageURL!,"category":category,"title":title,"body":body,"contentID":uuid]
+            ["userName":userModel.userName!,"userID":userModel.userID!,"profileImageURL":userModel.profileImageURL!,"category":category,"title":title,"body":body,"contentID":uuid,"date":Date().timeIntervalSince1970]
         )
         self.doneSend?.doneSendData()
         
@@ -103,7 +103,7 @@ class STSendDBModel{
         let userModel:UserModel = KeyChainConfig.getKeyData(key: "userData")
         
         self.db.collection("Contents").document(category).collection("detail").document(contentID).collection("comment").document(Auth.auth().currentUser!.uid).setData(
-            ["userName":userModel.userName!,"userID":userModel.userID!,"profileImageURL":userModel.profileImageURL!,"category":category,"comment":comment,"contentID":contentID]
+            ["userName":userModel.userName!,"userID":userModel.userID!,"profileImageURL":userModel.profileImageURL!,"category":category,"comment":comment,"contentID":contentID,"date":Date().timeIntervalSince1970]
         )
 
     }

@@ -27,7 +27,7 @@ class STLoadDBModel{
     func loadContent(categroy:String){
         
         print(categroy)
-        db.collection("Contents").document(categroy).collection("detail").addSnapshotListener { snapShot, error in
+        db.collection("Contents").document(categroy).collection("detail").order(by: "date").addSnapshotListener { snapShot, error in
             
             if error != nil{
                 return
@@ -82,13 +82,15 @@ class STLoadDBModel{
     func loadLike(categroy:String,contentID:String,cell:ContentsCell,indexPath:IndexPath){
         
         db.collection("Contents").document(categroy).collection("detail").document(contentID).collection("like").addSnapshotListener { snapShot, error in
-            
+
+
             if error != nil{
                 return
             }
             
             if let snapShotDoc = snapShot?.documents{
                 self.likeFlagArray = []
+
                 for doc in snapShotDoc{
                     let data = doc.data()
                     if let userID = data["userID"] as? String,let like = data["like"] as? Bool,let contentID = data["contentID"] as? String{
@@ -99,6 +101,9 @@ class STLoadDBModel{
                     
                 }
                
+//                print(self.likeFlagArray.debugDescription)
+                print("タグ")
+                print(cell.footerBaseView.likeButton.tag)
                 self.doneLoad?.likeOrNot(likeContents: self.likeFlagArray,cell:cell,indexPath:indexPath)
 
             }
@@ -107,7 +112,7 @@ class STLoadDBModel{
     }
     
     func loadComment(categroy:String,contentID:String,cell:ContentsCell,indexPath:IndexPath){
-        db.collection("Contents").document(categroy).collection("detail").document(contentID).collection("comment").addSnapshotListener { snapShot, error in
+        db.collection("Contents").document(categroy).collection("detail").document(contentID).collection("comment").order(by: "date").addSnapshotListener { snapShot, error in
             
             if error != nil{
                 return

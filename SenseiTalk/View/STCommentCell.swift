@@ -13,7 +13,8 @@ class STCommentCell: UITableViewCell {
     var urlToImageView = STImageView(frame: .zero)
     var userNameLabel = STTitleLabel(textAlignment: .left, fontSize: 10)
     var titleLabel = STTitleLabel(textAlignment: .left, fontSize: 12)
-
+    var footerBaseView = STFooterView()
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -26,13 +27,49 @@ class STCommentCell: UITableViewCell {
     }
 
 
-    func configure(commentModel:CommentContent){
-        print(commentModel)
+    func configure(commentModel:CommentContent,footerView:STFooterView){
+        
+        footerBaseView = footerView
         urlToImageView.sd_setImage(with: URL(string: (commentModel.userModel?.profileImageURL)!))
         userNameLabel.text = commentModel.userModel?.userName
         titleLabel.text = commentModel.comment
         
-        layoutUI()
+//        layoutUI()
+        footerBaseView.translatesAutoresizingMaskIntoConstraints = false
+        layoutUIForTimeline(footerView:footerBaseView)
+    }
+    
+    func layoutUIForTimeline(footerView:STFooterView){
+        addSubview(urlToImageView)
+        addSubview(userNameLabel)
+        addSubview(titleLabel)
+        addSubview(footerView)
+        
+        let padding:CGFloat = 10
+        NSLayoutConstraint.activate([
+            
+            urlToImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor,constant: padding),
+            urlToImageView.topAnchor.constraint(equalTo: self.topAnchor,constant: padding/2),
+            urlToImageView.widthAnchor.constraint(equalToConstant: 50),
+            urlToImageView.heightAnchor.constraint(equalToConstant: self.frame.height - padding),
+            
+            userNameLabel.leadingAnchor.constraint(equalTo: urlToImageView.trailingAnchor,constant: padding),
+            userNameLabel.topAnchor.constraint(equalTo: urlToImageView.topAnchor),
+            userNameLabel.widthAnchor.constraint(equalToConstant: self.frame.size.width - urlToImageView.frame.size.width - padding),
+            userNameLabel.heightAnchor.constraint(equalToConstant: 15),
+            
+            titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor,constant: padding),
+            titleLabel.topAnchor.constraint(equalTo: urlToImageView.bottomAnchor,constant: padding),
+            titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor,constant: -padding),
+            titleLabel.heightAnchor.constraint(equalToConstant: 15),
+
+            footerView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            footerView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor),
+            footerView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            footerView.heightAnchor.constraint(equalToConstant: 25),
+            footerView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+
+        ])
     }
     
     func layoutUI(){
@@ -58,7 +95,10 @@ class STCommentCell: UITableViewCell {
             titleLabel.topAnchor.constraint(equalTo: urlToImageView.bottomAnchor,constant: padding),
             titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor,constant: -padding),
             titleLabel.heightAnchor.constraint(equalToConstant: 15),
-            titleLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+//            titleLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+            
+       
+
             
         ])
 

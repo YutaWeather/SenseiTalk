@@ -11,6 +11,7 @@ import Firebase
 protocol DoneLoad{
     func loadContents(contentsArray:[ContentsModel])
     func likeOrNot(likeContents:[LikeContents],cell:ContentsCell,indexPath:IndexPath)
+    func likeOrNot(likeContents:[LikeContents],cell:STCommentCell,indexPath:IndexPath)
     func likeOrNotForContents(likeContents:[LikeContents])
     func loadComment(commentArray:[CommentContent],cell:ContentsCell,indexPath:IndexPath)
 }
@@ -79,8 +80,6 @@ class STLoadDBModel{
     }
     
     func loadLike(categroy:String,contentID:String,cell:ContentsCell,indexPath:IndexPath){
-
-//    func loadLike(categroy:String,contentID:String){
         
         db.collection("Contents").document(categroy).collection("detail").document(contentID).collection("like").addSnapshotListener { snapShot, error in
             
@@ -133,5 +132,60 @@ class STLoadDBModel{
             }
         }
     }
+    
+    func loadLike(categroy:String,contentID:String,cell:STCommentCell,indexPath:IndexPath){
+        
+        db.collection("Contents").document(categroy).collection("detail").document(contentID).collection("like").addSnapshotListener { snapShot, error in
+            
+            if error != nil{
+                return
+            }
+            
+            if let snapShotDoc = snapShot?.documents{
+                self.likeFlagArray = []
+                for doc in snapShotDoc{
+                    let data = doc.data()
+                    if let userID = data["userID"] as? String,let like = data["like"] as? Bool,let contentID = data["contentID"] as? String{
+                        let likeContents = LikeContents(userID: userID, like: like, contentID: contentID)
+                        self.likeFlagArray.append(likeContents)
+                    
+                    }
+                    
+                }
+               
+                self.doneLoad?.likeOrNot(likeContents: self.likeFlagArray,cell:cell,indexPath:indexPath)
+
+            }
+        }
+        
+    }
+    
+    func loadCommentLike(categroy:String,contentID:String,cell:STCommentCell,indexPath:IndexPath,commentModel:CommentContent){
+
+        db.collection("Contents").document(categroy).collection("detail").document(contentID).collection("comment").document((commentModel.userModel?.userID)!).collection("like").addSnapshotListener { snapShot, error in
+            
+            if error != nil{
+                return
+            }
+            
+            if let snapShotDoc = snapShot?.documents{
+                self.likeFlagArray = []
+                for doc in snapShotDoc{
+                    let data = doc.data()
+                    if let userID = data["userID"] as? String,let like = data["like"] as? Bool,let contentID = data["contentID"] as? String{
+                        let likeContents = LikeContents(userID: userID, like: like, contentID: contentID)
+                        self.likeFlagArray.append(likeContents)
+                    
+                    }
+                    
+                }
+               
+                self.doneLoad?.likeOrNot(likeContents: self.likeFlagArray,cell:cell,indexPath:indexPath)
+
+            }
+        }
+        
+    }
+
     
 }

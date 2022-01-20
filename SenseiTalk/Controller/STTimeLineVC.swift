@@ -10,8 +10,9 @@ import FirebaseAuth
 
 class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,DoneLoad,UIScrollViewDelegate {
   
+  
     var scrollView = UIScrollView()
-    var tableView:UITableView?
+    var tableView = UITableView()
     var postButton = STButton()
     var contentsArray = [ContentsModel]()
     var pageNum = String()
@@ -21,7 +22,7 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
     var likeContentsArray = [LikeContents]()
     var commentArrays = [[CommentContent]]()
     var commentArray = [CommentContent]()
-    var checkLike = Bool()
+    var checkLike = false
 
     
     override func viewDidLoad() {
@@ -37,6 +38,7 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
         configure()
 
     }
+    
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
@@ -62,8 +64,7 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
             showLoginVC()
             
         }
-        
-        setUpScroolViewAndTableView()
+
         postButton.addTarget(self, action: #selector(tapPost), for: .touchUpInside)
         postButton.setImage(UIImage(named: "plus"), for: .normal)
         view.addSubview(scrollView)
@@ -84,10 +85,8 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
         pageControl.isUserInteractionEnabled = false //アニメーション中のユーザー操作を無効
         view.addSubview(pageControl)
         loadDBModel.doneLoad = self
-        
+        setUpScroolViewAndTableView()
 
-
-        
     }
     
     @objc func tapPost(){
@@ -113,23 +112,19 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
         
         setTableView(x: CGFloat(pageControl.currentPage))
         
-        
     }
     
     func setTableView(x:CGFloat){
-        
-        tableView = UITableView()
-        tableView!.delegate = self
-        tableView!.dataSource = self
-        //            tableView!.tag = i
-        tableView!.register(ContentsCell.self, forCellReuseIdentifier: ContentsCell.identifier)
-        tableView!.frame = CGRect(x: view.frame.size.width * CGFloat(x), y: (self.navigationController?.navigationBar.frame.size.height)!, width: view.frame.size.width, height: view.frame.size.height)
-        scrollView.addSubview(tableView!)
+
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.separatorStyle = .none
+        tableView.register(ContentsCell.self, forCellReuseIdentifier: ContentsCell.identifier)
+        tableView.frame = CGRect(x: view.frame.size.width * CGFloat(x), y: (self.navigationController?.navigationBar.frame.size.height)!, width: view.frame.size.width, height: view.frame.size.height)
+        scrollView.addSubview(tableView)
         let loadDBModel = STLoadDBModel()
         loadDBModel.doneLoad = self
-        print(pageControl.currentPage)
         loadDBModel.loadContent(categroy: String(pageControl.currentPage))
-        
         
     }
     
@@ -161,7 +156,6 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
                 footerView.configureForTimeLine()
                 footerView.backgroundColor = .yellow
                 cell.configureContents(contentsModel: self.contentsArray[indexPath.row], footerView: footerView)
-                
                 cell.footerBaseView.likeButton.tag = indexPath.row
                 cell.footerBaseView.commentIconButton.tag = indexPath.row
                 
@@ -183,14 +177,14 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
     
     @objc func tapLikeButton(sender:STButton){
         //いいね送信
+        if sender.imageView?.image == UIImage(named: "like"){
+            checkLike = true
+        }else{
+            checkLike = false
+        }
+
         sendDBModel.sendLikeContents(category: String(pageControl.currentPage), contentID: self.contentsArray[sender.tag].contentID!, checkLike: checkLike)
     }
-    
-//    @objc func tapCommentIconButton(sender:STButton){
-//        //コメント送信
-////        sendDBModel.sendComment(category: String(pageControl.currentPage), contentID:self.contentsArray[sender.tag].contentID!, comment: commentArray[sender.tag].comment!)
-//
-//    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
@@ -198,15 +192,13 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
         contentsVC.contentsModel = self.contentsArray[indexPath.row]
         self.commentArray = []
         
-        //self.contentsArray[indexPath.row].contentIDを含んでいるcommentArraysの中の配列のcommentArrayを出す
-        
-        for i in 0 ... self.commentArrays.count - 1{
-            //            if self.commentArrays[i].contains(where: self.contentsArray[indexPath.row].contentID) == true{
+        for i in 0...self.commentArrays.count - 1{
             if self.commentArrays[i].contains(where: { $0.contentID == self.contentsArray[indexPath.row].contentID }) == true{
                 self.commentArray = self.commentArrays[i]
             }
             
         }
+
         contentsVC.commentArray = self.commentArray
         self.navigationController?.pushViewController(contentsVC, animated: true)
         
@@ -214,16 +206,13 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
     
     func loadContents(contentsArray: [ContentsModel]) {
       
-        print(String(pageControl.currentPage),contentsArray.count)
         if contentsArray.count > 0 && String(pageControl.currentPage) == contentsArray[0].category{
             
             self.contentsArray = []
             self.contentsArray = contentsArray
-            print(self.contentsArray.debugDescription)
-            
         }
 
-        tableView?.reloadData()
+        tableView.reloadData()
         
     }
     
@@ -237,10 +226,6 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
             let loadDBModel = STLoadDBModel()
             loadDBModel.doneLoad = self
             loadDBModel.loadContent(categroy: String(pageControl.currentPage))
-
-//            loadDBModel.loadLike(categroy: (self.contentsArray[indexPath.row].category)!, contentID: (self.contentsArray[indexPath.row].contentID)!,cell:cell,indexPath: indexPath)
-//            loadDBModel.loadComment(categroy: self.contentsArray[indexPath.row].category!, contentID:self.contentsArray[indexPath.row].contentID!,cell:cell,indexPath: indexPath)
-
         }
         
     }
@@ -250,8 +235,10 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
         self.likeContentsArray = []
         self.likeContentsArray = likeContents
         cell.footerBaseView.likeCountLabel.text = String(self.likeContentsArray.count)
-        checkLike =  self.likeContentsArray.filter{ $0.userID == Auth.auth().currentUser!.uid}.count > 0
-        if checkLike == true{
+        checkLike = self.likeContentsArray.filter{ $0.userID == Auth.auth().currentUser!.uid}.count > 0
+        var check = self.likeContentsArray.filter{$0.userID == Auth.auth().currentUser?.uid}
+        print(check.debugDescription)
+        if check.isEmpty != true{
             cell.footerBaseView.likeButton.setImage(UIImage(named: "like"), for: .normal)
         }else{
             cell.footerBaseView.likeButton.setImage(UIImage(named: "notLike"), for: .normal)
@@ -262,15 +249,17 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
 
     func loadComment(commentArray: [CommentContent], cell: ContentsCell, indexPath: IndexPath) {
 
-//        self.commentArrays = []
         self.commentArrays.append(commentArray)
-        
         cell.footerBaseView.commentCountLabel.text = String(commentArray.count)
-//        self.tableView?.reloadData()
         
     }
     
     func likeOrNotForContents(likeContents: [LikeContents]) {
         
     }
+    
+    func likeOrNot(likeContents: [LikeContents], cell: STCommentCell, indexPath: IndexPath) {
+    
+    }
+    
 }

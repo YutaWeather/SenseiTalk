@@ -65,10 +65,9 @@ class STSendDBModel{
     }
     
     //いいね機能
-//    func sendLikeContents(category:String,contentID:String,like:Bool,checkLike:Bool){
     func sendLikeContents(category:String,contentID:String,checkLike:Bool){
-
-    //アプリ内からUserData取り出し
+        
+        //アプリ内からUserData取り出し
         let userModel:UserModel = KeyChainConfig.getKeyData(key: "userData")
         
         if checkLike == true{
@@ -78,10 +77,26 @@ class STSendDBModel{
                 ["userID":userModel.userID!,"like":true,"contentID":contentID]
             )
         }
-
+        
         
     }
-    
+
+    func sendLikeForCommentContents(category:String,contentID:String,checkLike:Bool,commentModel:CommentContent){
+        
+        //アプリ内からUserData取り出し
+        let userModel:UserModel = KeyChainConfig.getKeyData(key: "userData")
+        
+        if checkLike == true{
+            self.db.collection("Contents").document(category).collection("detail").document(contentID).collection("comment").document((commentModel.userModel?.userID)!).collection("like").document(Auth.auth().currentUser!.uid).delete()
+        }else{
+            self.db.collection("Contents").document(category).collection("detail").document(contentID).collection("comment").document((commentModel.userModel?.userID)!).collection("like").document(Auth.auth().currentUser!.uid).setData(
+                ["userID":userModel.userID!,"like":true,"contentID":contentID]
+            )
+        }
+        
+        
+    }
+
     //コメント機能
     func sendComment(category:String,contentID:String,comment:String){
         //アプリ内からUserData取り出し

@@ -175,15 +175,22 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
         }
     }
     
+//    @objc func tapLikeButton(sender:STButton,indexPath:IndexPath){
     @objc func tapLikeButton(sender:STButton){
-        //いいね送信
+
+    //いいね送信
+//        if sender.imageView?.image == UIImage(named: "like") && sender.tag == indexPath.row{
+        print("センダーのタグ")
+        print(sender.tag)
+        var checkFlag = Bool()
         if sender.imageView?.image == UIImage(named: "like"){
-            checkLike = true
+
+            checkFlag = true
         }else{
-            checkLike = false
+            checkFlag = false
         }
 
-        sendDBModel.sendLikeContents(category: String(pageControl.currentPage), contentID: self.contentsArray[sender.tag].contentID!, checkLike: checkLike)
+        sendDBModel.sendLikeContents(category: String(pageControl.currentPage), contentID: self.contentsArray[sender.tag].contentID!, checkLike: checkFlag)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -232,18 +239,23 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
     
     func likeOrNot(likeContents: [LikeContents],cell:ContentsCell,indexPath:IndexPath) {
         
-        self.likeContentsArray = []
-        self.likeContentsArray = likeContents
-        cell.footerBaseView.likeCountLabel.text = String(self.likeContentsArray.count)
-        checkLike = self.likeContentsArray.filter{ $0.userID == Auth.auth().currentUser!.uid}.count > 0
-        var check = self.likeContentsArray.filter{$0.userID == Auth.auth().currentUser?.uid}
-        print(check.debugDescription)
-        if check.isEmpty != true{
+        print(cell.footerBaseView.likeButton.tag,indexPath.row)
+        if cell.footerBaseView.likeButton.tag == indexPath.row{
+            
+        cell.footerBaseView.likeCountLabel.text = String(likeContents.count)
+       
+        //ここが問題 自分がこのLike配列の中にいるかどうかチェック
+        let check = likeContents.filter{ $0.userID == Auth.auth().currentUser!.uid}.count > 0
+        
+        print(check)
+//        if self.checkLike == true && cell.footerBaseView.likeButton.tag == indexPath.row{
+        if check == true{
+
             cell.footerBaseView.likeButton.setImage(UIImage(named: "like"), for: .normal)
         }else{
             cell.footerBaseView.likeButton.setImage(UIImage(named: "notLike"), for: .normal)
         }
-
+        }
 
     }
 

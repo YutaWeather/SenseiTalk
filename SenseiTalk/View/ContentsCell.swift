@@ -32,14 +32,15 @@ class ContentsCell: UITableViewCell {
     func configureContents(contentsModel:ContentsModel,footerView:STFooterView){
         
         footerBaseView = footerView
-        
+        footerBaseView.translatesAutoresizingMaskIntoConstraints = false
+
+        layoutUIForTimeline(footerView:footerBaseView)
+
         urlToImageView.sd_setImage(with: URL(string: (contentsModel.userModel?.profileImageURL)!))
         userNameLabel.text = contentsModel.userModel?.userName
         titleLabel.text = contentsModel.title
         subTitleLabel.text = contentsModel.body
-        footerBaseView.translatesAutoresizingMaskIntoConstraints = false
 
-        layoutUIForTimeline(footerView:footerView)
     }
     
     func configure(contentsModel:ContentsModel){
@@ -74,7 +75,7 @@ class ContentsCell: UITableViewCell {
     }
     
     func layoutUIForTimeline(footerView:STFooterView){
-        footerBaseView = footerView
+        footerBaseView.frame = footerView.frame
         addSubview(urlToImageView)
         addSubview(userNameLabel)
         addSubview(titleLabel)

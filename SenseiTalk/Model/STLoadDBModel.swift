@@ -10,8 +10,9 @@ import Firebase
 
 protocol DoneLoad{
     func loadContents(contentsArray:[ContentsModel])
-    func likeOrNot(likeContents:[LikeContents])
-    func loadComment(commentArray:[CommentContent])
+    func likeOrNot(likeContents:[LikeContents],cell:ContentsCell,indexPath:IndexPath)
+    func likeOrNotForContents(likeContents:[LikeContents])
+    func loadComment(commentArray:[CommentContent],cell:ContentsCell,indexPath:IndexPath)
 }
 
 class STLoadDBModel{
@@ -40,6 +41,7 @@ class STLoadDBModel{
                             let userModel = UserModel(userName: userName, profileImageURL: profileImageURL, userID: userID)
                         let contentsModel = ContentsModel(userModel: userModel, category: category, title: title, body: body,contentID:contentID)
                             self.contentsArray.append(contentsModel)
+                        
                     }
                 }
                 
@@ -50,7 +52,35 @@ class STLoadDBModel{
         
     }
     
-    func loadLike(categroy:String,contentID:String){
+    func loadLike(categroy: String, contentID: String){
+        db.collection("Contents").document(categroy).collection("detail").document(contentID).collection("like").addSnapshotListener { snapShot, error in
+            
+            if error != nil{
+                return
+            }
+            
+            if let snapShotDoc = snapShot?.documents{
+                self.likeFlagArray = []
+                for doc in snapShotDoc{
+                    let data = doc.data()
+                    if let userID = data["userID"] as? String,let like = data["like"] as? Bool,let contentID = data["contentID"] as? String{
+                        let likeContents = LikeContents(userID: userID, like: like, contentID: contentID)
+                        self.likeFlagArray.append(likeContents)
+                    
+                    }
+                    
+                }
+               
+                self.doneLoad?.likeOrNotForContents(likeContents: self.likeFlagArray)
+
+            }
+        }
+
+    }
+    
+    func loadLike(categroy:String,contentID:String,cell:ContentsCell,indexPath:IndexPath){
+
+//    func loadLike(categroy:String,contentID:String){
         
         db.collection("Contents").document(categroy).collection("detail").document(contentID).collection("like").addSnapshotListener { snapShot, error in
             
@@ -70,14 +100,14 @@ class STLoadDBModel{
                     
                 }
                
-                self.doneLoad?.likeOrNot(likeContents: self.likeFlagArray)
+                self.doneLoad?.likeOrNot(likeContents: self.likeFlagArray,cell:cell,indexPath:indexPath)
 
             }
         }
         
     }
     
-    func loadComment(categroy:String,contentID:String){
+    func loadComment(categroy:String,contentID:String,cell:ContentsCell,indexPath:IndexPath){
         db.collection("Contents").document(categroy).collection("detail").document(contentID).collection("comment").addSnapshotListener { snapShot, error in
             
             if error != nil{
@@ -98,7 +128,7 @@ class STLoadDBModel{
                         
                     }
                 }
-                self.doneLoad?.loadComment(commentArray:self.commentArray)
+                self.doneLoad?.loadComment(commentArray:self.commentArray,cell:cell,indexPath:indexPath)
 
             }
         }

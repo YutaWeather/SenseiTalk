@@ -6,8 +6,10 @@
 //
 
 import UIKit
+import Firebase
 
-class STContentsVC: UIViewController,UITableViewDelegate,UITableViewDataSource,DoneLoad {
+class STContentsVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
+   
     
     var contentsModel:ContentsModel?
     var tableView = UITableView()
@@ -18,10 +20,13 @@ class STContentsVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
     var contentArray = [ContentsModel]()
     var likeContentsArray = [LikeContents]()
     var commentArray = [CommentContent]()
+    var checkLike = Bool()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configure()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -45,27 +50,32 @@ class STContentsVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
         
         footerView.likeButton.addTarget(self, action: #selector(tapLikeButton), for: .touchUpInside)
         footerView.postButton.addTarget(self, action: #selector(tapCommentIconButton), for: .touchUpInside)
-
-        loadDBModel.doneLoad = self
-        loadDBModel.loadLike(categroy: (contentsModel?.category)!, contentID: (contentsModel?.contentID)!)
-        loadDBModel.loadComment(categroy: (contentsModel?.category)!, contentID: (contentsModel?.contentID)!)
+        footerView.commentIconButton.addTarget(self, action: #selector(tapCommentButton), for: .touchUpInside)
+      
+//        loadDBModel.doneLoad = self
+//        loadDBModel.loadLike(categroy: (contentsModel?.category)!, contentID: (contentsModel?.contentID)!)
+//        loadDBModel.loadComment(categroy: (contentsModel?.category)!, contentID: (contentsModel?.contentID)!)
     }
     
+    
+    
+    @objc func tapCommentButton(){
+        
+//        let detailContentVC = STDetailContentVC()
+//        detailContentVC.commentContent = self.commentArray[]
+//        self.navigationController?.pushViewController(detailContentVC, animated: true)
+        
+    }
     
     @objc func tapLikeButton(){
-        print("タップLike")
         //いいね送信
-        sendDBModel.sendLikeContents(category: (contentsModel?.category)!, contentID: (contentsModel?.contentID)!, like: true)
-        
-        
+        sendDBModel.sendLikeContents(category: (contentsModel?.category)!, contentID: (contentsModel?.contentID)!,checkLike:checkLike)
     }
-    
+
     @objc func tapCommentIconButton(){
-        print("タップComment")
         //コメント送信
         sendDBModel.sendComment(category: (contentsModel?.category)!, contentID: (contentsModel?.contentID)!, comment: footerView.commentTextField.text!)
-        
-   
+
     }
     
     override func viewWillLayoutSubviews() {
@@ -94,41 +104,16 @@ class STContentsVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
             let cell = tableView.dequeueReusableCell(withIdentifier: ContentsCell.identifier, for: indexPath) as! ContentsCell
             cell.configure(contentsModel: contentsModel!)
             return cell
-
-        case 1:
+            
+        default:
             let cell = tableView.dequeueReusableCell(withIdentifier: STCommentCell.identifier, for: indexPath) as! STCommentCell
             cell.configure(commentModel: commentArray[indexPath.row - 1])
             return cell
 
-        default:
-            return UITableViewCell()
         }
         
     }
     
-
-    func loadContents(contentsArray: [ContentsModel]) {
-        self.contentArray = []
-        self.contentArray = contentsArray
-        tableView.reloadData()
-    }
-    
-    
-    
-    func likeOrNot(likeContents: [LikeContents]) {
-        
-        self.likeContentsArray = []
-        self.likeContentsArray = likeContents
-        self.tableView.reloadData()
-    }
-
-    func loadComment(commentArray: [CommentContent]) {
-        self.commentArray = []
-        self.commentArray = commentArray
-        print(self.commentArray.debugDescription)
-        self.tableView.reloadData()
-
-    }
 
 
 }

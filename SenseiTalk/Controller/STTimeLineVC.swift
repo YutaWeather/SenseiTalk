@@ -10,7 +10,6 @@ import FirebaseAuth
 
 class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,DoneLoad,UIScrollViewDelegate {
     
-    
     var scrollView = UIScrollView()
     var tableView = UITableView()
     var postButton = STButton()
@@ -23,6 +22,7 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
     var commentArrays = [[CommentContent]]()
     var commentArray = [CommentContent]()
     var checkLike = false
+    var myUserID = String()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,7 +51,6 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
             topSafeArea = topLayoutGuide.length
             bottomSafeArea = bottomLayoutGuide.length
         }
-//        scrollView.frame = CGRect(x: 0, y: (self.navigationController?.navigationBar.frame.size.height)! + topSafeArea, width: view.frame.size.width, height: view.frame.size.height - (self.navigationController?.navigationBar.frame.size.height)! - (self.tabBarController?.tabBar.frame.size.height)! - topSafeArea)
         scrollView.frame = CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height - (self.navigationController?.navigationBar.frame.size.height)! - (self.tabBarController?.tabBar.frame.size.height)! - topSafeArea + bottomSafeArea)
 
         postButton.frame = CGRect(x: view.frame.size.width - 100, y: view.frame.size.height - (self.tabBarController?.tabBar.frame.height)! - (self.navigationController?.navigationBar.frame.size.height)! - 80, width: 80, height: 80)
@@ -69,7 +68,7 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
     
     func configure(){
         if Auth.auth().currentUser?.uid != nil{
-            
+            myUserID = Auth.auth().currentUser!.uid
         }else{
             showLoginVC()
             
@@ -95,6 +94,7 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
         pageControl.isUserInteractionEnabled = false //アニメーション中のユーザー操作を無効
         view.addSubview(pageControl)
         loadDBModel.doneLoad = self
+
         setUpScroolViewAndTableView()
         
     }
@@ -139,8 +139,6 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
-//        let guide = view.safeAreaLayoutGuide
-//        let height = guide.layoutFrame.size.height
         let topSafeArea: CGFloat
         let bottomSafeArea: CGFloat
         
@@ -158,6 +156,7 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
         let loadDBModel = STLoadDBModel()
         loadDBModel.doneLoad = self
         loadDBModel.loadContent(categroy: String(pageControl.currentPage))
+
         
         
     }
@@ -192,13 +191,27 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
                 cell.configureContents(contentsModel: self.contentsArray[indexPath.row], footerView: footerView)
                 cell.footerBaseView.likeButton.tag = indexPath.row
                 cell.footerBaseView.commentIconButton.tag = indexPath.row
-                
-                cell.footerBaseView.likeButton.addTarget(self, action: #selector(tapLikeButton(sender:)), for: .touchUpInside)
-                
-                self.loadDBModel.loadLike(categroy: (self.contentsArray[indexPath.row].category)!, contentID: (self.contentsArray[indexPath.row].contentID)!,cell:cell,indexPath: indexPath)
-                self.loadDBModel.loadComment(categroy: self.contentsArray[indexPath.row].category!, contentID:self.contentsArray[indexPath.row].contentID!,cell:cell,indexPath: indexPath)
-                
+                if self.contentsArray[indexPath.row].likeIDArray!.count > 0{
+                for i in 0...self.contentsArray[indexPath.row].likeIDArray!.count - 1{
+                    
+                    if self.contentsArray[indexPath.row].likeIDArray![i].contains(myUserID) == true{
+                        
+                        cell.footerBaseView.likeButton.setImage(UIImage(named: "like"), for: .normal)
+                        
+                    }else{
+                        cell.footerBaseView.likeButton.setImage(UIImage(named: "notLike"), for: .normal)
 
+                    }
+                    
+                }
+                    
+                }
+                cell.footerBaseView.likeCountLabel.text = "\(self.contentsArray[indexPath.row].likeIDArray!.count)"
+
+                cell.footerBaseView.likeButton.addTarget(self, action: #selector(tapLikeButton(sender:)), for: .touchUpInside)
+//                print(self.commentArray.count)
+//                cell.footerBaseView.commentCountLabel.text = "\(self.commentArray.count)"
+                
                 
                 return cell
                 
@@ -215,14 +228,15 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
         
         //いいね送信
         var checkFlag = Bool()
-        if sender.imageView?.image == UIImage(named: "like"){
-            
+//
+        if self.contentsArray[sender.tag].likeIDArray?.contains(Auth.auth().currentUser!.uid) == true{
             checkFlag = true
+
         }else{
             checkFlag = false
+
         }
-        
-        sendDBModel.sendLikeContents(category: String(pageControl.currentPage), contentID: self.contentsArray[sender.tag].contentID!, checkLike: checkFlag)
+        sendDBModel.sendLikeContents(category: String(pageControl.currentPage), contentID: self.contentsArray[sender.tag].contentID!,likeIDArray:self.contentsArray[sender.tag].likeIDArray!, checkLike: checkFlag)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -251,7 +265,7 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
             
             self.contentsArray = []
             self.contentsArray = contentsArray
-        
+            
         }
         
         tableView.reloadData()
@@ -295,13 +309,21 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
         
     }
     
-    func loadComment(commentArray: [CommentContent], cell: ContentsCell, indexPath: IndexPath) {
-        
-        print(self.commentArrays.debugDescription)
-        self.commentArrays.append(commentArray)
-        cell.footerBaseView.commentCountLabel.text = String(commentArray.count)
-        
+    func loadComment(commentArray: [CommentContent]) {
+        self.commentArray = []
+        self.commentArray = commentArray
+        tableView.reloadData()
     }
+
+    
+//    func loadComment(commentArray: [CommentContent], cell: ContentsCell, indexPath: IndexPath) {
+//
+//        print(self.commentArrays.debugDescription)
+//        self.commentArrays.append(commentArray)
+//        cell.footerBaseView.commentCountLabel.text = String(commentArray.count)
+//
+//    }
+//
     
     func likeOrNotForContents(likeContents: [LikeContents]) {
         
@@ -310,5 +332,10 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
     func likeOrNot(likeContents: [LikeContents], cell: STCommentCell, indexPath: IndexPath) {
         
     }
+    func loadComment(commentArray: [CommentContent], cell: ContentsCell, indexPath: IndexPath) {
+        
+    }
+
     
 }
+

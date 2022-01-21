@@ -108,6 +108,29 @@ class STFooterView: UIView {
     }
     
     
+    //コメントのコメントに対するリプライUI
+    func layoutUIForCommentToComment(){
+        addSubview(likeButton)
+        addSubview(likeCountLabel)
+        
+        let padding:CGFloat = 5
+        NSLayoutConstraint.activate([
+            likeButton.leadingAnchor.constraint(equalTo: self.trailingAnchor,constant: -70),
+            likeButton.topAnchor.constraint(equalTo: self.topAnchor),
+            likeButton.widthAnchor.constraint(equalToConstant: 30),
+            likeButton.heightAnchor.constraint(equalToConstant: 30),
+            
+            likeCountLabel.leadingAnchor.constraint(equalTo: likeButton.trailingAnchor,constant: padding),
+            likeCountLabel.topAnchor.constraint(equalTo: likeButton.topAnchor),
+            likeCountLabel.widthAnchor.constraint(equalToConstant: 30),
+            likeCountLabel.heightAnchor.constraint(equalToConstant: 30),
+            
+          
+        ])
+        
+    }
+    
+    
     func configure(){
 
         self.backgroundColor = .blue
@@ -126,6 +149,15 @@ class STFooterView: UIView {
         likeCountLabel.text = "0"
         commentCountLabel.text = "0"
         layoutUIForTimeLine()
+    }
+    
+    //コメントのコメントに対するリプライUI
+    func configureForCommentToComment(){
+
+        self.backgroundColor = .blue
+        likeButton.setImage(UIImage(named: "notLike"), for: .normal)
+        likeCountLabel.text = "0"
+        layoutUIForCommentToComment()
     }
     
 }

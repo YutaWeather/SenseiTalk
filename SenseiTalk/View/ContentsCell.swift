@@ -90,15 +90,16 @@ class ContentsCell: UITableViewCell {
             urlToImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor,constant: padding),
             urlToImageView.topAnchor.constraint(equalTo: self.topAnchor,constant: padding/2),
             urlToImageView.widthAnchor.constraint(equalToConstant: 50),
-            urlToImageView.heightAnchor.constraint(equalToConstant: self.frame.height - padding),
-            
+//            urlToImageView.heightAnchor.constraint(equalToConstant: self.frame.height - padding),
+            urlToImageView.heightAnchor.constraint(equalToConstant: 50),
+
             userNameLabel.leadingAnchor.constraint(equalTo: urlToImageView.trailingAnchor,constant: padding),
             userNameLabel.topAnchor.constraint(equalTo: urlToImageView.topAnchor),
             userNameLabel.widthAnchor.constraint(equalToConstant: self.frame.size.width - urlToImageView.frame.size.width - padding),
             userNameLabel.heightAnchor.constraint(equalToConstant: 15),
             
             titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor,constant: padding),
-            titleLabel.topAnchor.constraint(equalTo: userNameLabel.bottomAnchor,constant: padding),
+            titleLabel.topAnchor.constraint(equalTo: urlToImageView.bottomAnchor,constant: padding),
             titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor,constant: -padding),
             titleLabel.heightAnchor.constraint(equalToConstant: 15),
             

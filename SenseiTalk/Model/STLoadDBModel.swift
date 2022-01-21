@@ -138,6 +138,7 @@ class STLoadDBModel{
         }
     }
     
+    
     func loadLike(categroy:String,contentID:String,cell:STCommentCell,indexPath:IndexPath){
         
         db.collection("Contents").document(categroy).collection("detail").document(contentID).collection("like").addSnapshotListener { snapShot, error in
@@ -165,6 +166,8 @@ class STLoadDBModel{
         
     }
     
+    
+    //コメントへの返信に対するいいねの受信
     func loadCommentLike(categroy:String,contentID:String,cell:STCommentCell,indexPath:IndexPath,commentModel:CommentContent){
 
         db.collection("Contents").document(categroy).collection("detail").document(contentID).collection("comment").document((commentModel.userModel?.userID)!).collection("like").addSnapshotListener { snapShot, error in

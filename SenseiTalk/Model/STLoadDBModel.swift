@@ -14,6 +14,8 @@ protocol DoneLoad{
     func likeOrNot(likeContents:[LikeContents],cell:STCommentCell,indexPath:IndexPath)
     func likeOrNotForContents(likeContents:[LikeContents])
     func loadComment(commentArray:[CommentContent],cell:ContentsCell,indexPath:IndexPath)
+    func loadComment(commentArray:[CommentContent])
+
 }
 
 class STLoadDBModel{
@@ -38,10 +40,19 @@ class STLoadDBModel{
                 for doc in snapShotDoc{
                     let data = doc.data()
                     if let userName = data["userName"] as? String,let userID = data["userID"] as? String,let profileImageURL = data["profileImageURL"] as? String,let category = data["category"] as? String,let title = data["title"] as? String,let body = data["body"] as? String,let contentID = data["contentID"] as? String{
-                            
-                            let userModel = UserModel(userName: userName, profileImageURL: profileImageURL, userID: userID)
-                        let contentsModel = ContentsModel(userModel: userModel, category: category, title: title, body: body,contentID:contentID)
+
+                        let userModel = UserModel(userName: userName, profileImageURL: profileImageURL, userID: userID)
+
+                        if let likeIDArray = data["likeID"] as? [String]{
+                            let contentsModel = ContentsModel(userModel: userModel, category: category, title: title, body: body,contentID:contentID, likeIDArray: likeIDArray)
                             self.contentsArray.append(contentsModel)
+
+                        }else{
+                            let contentsModel = ContentsModel(userModel: userModel, category: category, title: title, body: body,contentID:contentID, likeIDArray: [])
+                            self.contentsArray.append(contentsModel)
+
+                        }
+                        
                         
                     }
                 }
@@ -101,9 +112,6 @@ class STLoadDBModel{
                     
                 }
                
-//                print(self.likeFlagArray.debugDescription)
-                print("タグ")
-                print(cell.footerBaseView.likeButton.tag)
                 self.doneLoad?.likeOrNot(likeContents: self.likeFlagArray,cell:cell,indexPath:indexPath)
 
             }
@@ -111,7 +119,9 @@ class STLoadDBModel{
         
     }
     
-    func loadComment(categroy:String,contentID:String,cell:ContentsCell,indexPath:IndexPath){
+    
+    //投稿に対するコメント受信
+    func loadComment(categroy:String,contentID:String){
         db.collection("Contents").document(categroy).collection("detail").document(contentID).collection("comment").order(by: "date").addSnapshotListener { snapShot, error in
             
             if error != nil{
@@ -124,20 +134,24 @@ class STLoadDBModel{
                 for doc in snapShotDoc{
                     let data = doc.data()
                     
-                    if let userName = data["userName"] as? String,let userID = data["userID"] as? String,let profileImageURL = data["profileImageURL"] as? String,let category = data["category"] as? String,let comment = data["comment"] as? String,let contentID = data["contentID"] as? String{
-                        let userModel = UserModel(userName: userName, profileImageURL: profileImageURL, userID: userID)
-                        let commentModel = CommentContent(userModel: userModel, comment: comment, contentID: contentID)
-                        self.commentArray.append(commentModel)
-                        print(self.commentArray.debugDescription)
+                    if let userName = data["userName"] as? String,let userID = data["userID"] as? String,let profileImageURL = data["profileImageURL"] as? String,let category = data["category"] as? String,let comment = data["comment"] as? String,let contentID = data["contentID"] as? String,let uuid = data["uuid"] as? String{
                         
+                        if let likeIDArray = data["likeID"] as? [String]{
+                            let userModel = UserModel(userName: userName, profileImageURL: profileImageURL, userID: userID)
+                            let commentModel = CommentContent(userModel: userModel, comment: comment, contentID: contentID, likeIDArray: likeIDArray,uuid:uuid)
+                            self.commentArray.append(commentModel)
+
+                        }else{
+                            let userModel = UserModel(userName: userName, profileImageURL: profileImageURL, userID: userID)
+                            let commentModel = CommentContent(userModel: userModel, comment: comment, contentID: contentID, likeIDArray: [],uuid: uuid)
+                            self.commentArray.append(commentModel)
+                        }
                     }
                 }
-                self.doneLoad?.loadComment(commentArray:self.commentArray,cell:cell,indexPath:indexPath)
-
+                self.doneLoad?.loadComment(commentArray:self.commentArray)
             }
         }
     }
-    
     
     func loadLike(categroy:String,contentID:String,cell:STCommentCell,indexPath:IndexPath){
         
@@ -197,3 +211,4 @@ class STLoadDBModel{
 
     
 }
+

@@ -49,7 +49,7 @@ class STSendDBModel{
                 self.doneSend?.doneSendData()
             }
         }
-    } 
+    }
 
     
     func sendContents(category:String,title:String,body:String){
@@ -64,37 +64,72 @@ class STSendDBModel{
         
     }
     
-    //いいね機能
-    func sendLikeContents(category:String,contentID:String,checkLike:Bool){
-        
+//    //コンテンツに対するいいね機能
+//    func sendLikeContents(category:String,contentID:String,checkLike:Bool){
+//
+//        //アプリ内からUserData取り出し
+//        let userModel:UserModel = KeyChainConfig.getKeyData(key: "userData")
+//
+//        if checkLike == true{
+//            self.db.collection("Contents").document(category).collection("detail").document(contentID).collection("like").document(Auth.auth().currentUser!.uid).delete()
+//        }else{
+//            self.db.collection("Contents").document(category).collection("detail").document(contentID).collection("like").document(Auth.auth().currentUser!.uid).setData(
+//                ["userID":userModel.userID!,"like":true,"contentID":contentID]
+//            )
+//        }
+//
+//
+//    }
+
+    //コンテンツに対するいいね機能
+//    func sendLikeContents(category:String,contentID:String,checkLike:Bool){
+//
+//        //アプリ内からUserData取り出し
+//        let userModel:UserModel = KeyChainConfig.getKeyData(key: "userData")
+//
+//        if checkLike == true{
+//            self.db.collection("Contents").document(category).collection("detail").document(contentID).delete()
+//        }else{
+//            self.db.collection("Contents").document(category).collection("detail").document(contentID).setData(
+//                ["likeID":[userModel.userID]], merge: true
+//            )
+//        }
+//
+//
+//    }
+
+    //コンテンツに対するいいね機能
+    func sendLikeContents(category:String,contentID:String,likeIDArray:[String],checkLike:Bool){
+        var checkLikeIDArray = likeIDArray
         //アプリ内からUserData取り出し
         let userModel:UserModel = KeyChainConfig.getKeyData(key: "userData")
-        
-        if checkLike == true{
-            self.db.collection("Contents").document(category).collection("detail").document(contentID).collection("like").document(Auth.auth().currentUser!.uid).delete()
+        if let index = checkLikeIDArray.firstIndex(where: { $0 == Auth.auth().currentUser?.uid }) {
+            checkLikeIDArray.remove(at: index)
         }else{
-            self.db.collection("Contents").document(category).collection("detail").document(contentID).collection("like").document(Auth.auth().currentUser!.uid).setData(
-                ["userID":userModel.userID!,"like":true,"contentID":contentID]
-            )
+            checkLikeIDArray.append(userModel.userID!)
         }
-        
+        self.db.collection("Contents").document(category).collection("detail").document(contentID).setData(
+            ["likeID":checkLikeIDArray],merge: true
+        )
         
     }
+
     
     
-    //コメントへの返信に対するいいね
-    func sendLikeContentsToComment(category:String,contentID:String,checkLike:Bool,commentModel:CommentContent){
+    //コメントへの返信に対するいいね☆
+    func sendLikeContentsToComment(category:String,contentID:String,checkLike:Bool,commentModel:CommentContent,likeIDArray:[String]){
         
         //アプリ内からUserData取り出し
         let userModel:UserModel = KeyChainConfig.getKeyData(key: "userData")
-        
-        if checkLike == true{
-            self.db.collection("Contents").document(category).collection("detail").document(contentID).collection("comment").document((commentModel.userModel?.userID)!).collection("like").document(Auth.auth().currentUser!.uid).delete()
+        var checkLikeIDArray = likeIDArray
+        if let index = checkLikeIDArray.firstIndex(where: { $0 == Auth.auth().currentUser?.uid }) {
+            checkLikeIDArray.remove(at: index)
         }else{
-            self.db.collection("Contents").document(category).collection("detail").document(contentID).collection("comment").document((commentModel.userModel?.userID)!).collection("like").document(Auth.auth().currentUser!.uid).setData(
-                ["userID":userModel.userID!,"like":true,"contentID":contentID]
-            )
+            checkLikeIDArray.append(userModel.userID!)
         }
+        self.db.collection("Contents").document(category).collection("detail").document(contentID).collection("comment").document((commentModel.uuid)!).setData(
+            ["likeID":checkLikeIDArray],merge: true
+        )
         
         
     }
@@ -119,17 +154,18 @@ class STSendDBModel{
     }
 
     //コメント機能
-    func sendComment(category:String,contentID:String,comment:String){
+    func sendComment(category:String,contentID:String,comment:String,uuid:String){
         //アプリ内からUserData取り出し
         let userModel:UserModel = KeyChainConfig.getKeyData(key: "userData")
         
         //重複した際用に一旦リセット
-        self.db.collection("Contents").document(category).collection("detail").document(contentID).collection("comment").document(Auth.auth().currentUser!.uid).collection("like").document(Auth.auth().currentUser!.uid).delete()
+//        self.db.collection("Contents").document(category).collection("detail").document(contentID).collection("comment").document(Auth.auth().currentUser!.uid).collection("like").document(Auth.auth().currentUser!.uid).delete()
         
-        self.db.collection("Contents").document(category).collection("detail").document(contentID).collection("comment").document(Auth.auth().currentUser!.uid).setData(
-            ["userName":userModel.userName!,"userID":userModel.userID!,"profileImageURL":userModel.profileImageURL!,"category":category,"comment":comment,"contentID":contentID,"date":Date().timeIntervalSince1970]
+        self.db.collection("Contents").document(category).collection("detail").document(contentID).collection("comment").document(uuid).setData(
+            ["userName":userModel.userName!,"userID":userModel.userID!,"profileImageURL":userModel.profileImageURL!,"category":category,"comment":comment,"contentID":contentID,"uuid":uuid,"date":Date().timeIntervalSince1970]
         )
 
     }
     
 }
+

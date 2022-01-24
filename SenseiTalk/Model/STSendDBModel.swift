@@ -154,7 +154,7 @@ class STSendDBModel{
     }
 
     //コメント機能
-    func sendComment(category:String,contentID:String,comment:String,uuid:String){
+    func sendComment(category:String,contentID:String,comment:String,uuid:String,commentIDArray:[String]){
         //アプリ内からUserData取り出し
         let userModel:UserModel = KeyChainConfig.getKeyData(key: "userData")
         
@@ -164,6 +164,13 @@ class STSendDBModel{
         self.db.collection("Contents").document(category).collection("detail").document(contentID).collection("comment").document(uuid).setData(
             ["userName":userModel.userName!,"userID":userModel.userID!,"profileImageURL":userModel.profileImageURL!,"category":category,"comment":comment,"contentID":contentID,"uuid":uuid,"date":Date().timeIntervalSince1970]
         )
+        print(commentIDArray)
+        
+        self.db.collection("Contents").document(category).collection("detail").document(contentID).setData(
+            ["commentID":commentIDArray],merge: true
+
+        )
+        
 
     }
     

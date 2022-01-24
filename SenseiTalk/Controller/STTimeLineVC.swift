@@ -191,6 +191,12 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
                 cell.configureContents(contentsModel: self.contentsArray[indexPath.row], footerView: footerView)
                 cell.footerBaseView.likeButton.tag = indexPath.row
                 cell.footerBaseView.commentIconButton.tag = indexPath.row
+                
+                if self.contentsArray[indexPath.row].commentIDArray!.count > 0{
+                    cell.footerBaseView.commentCountLabel.text =
+                    String(self.contentsArray[indexPath.row].commentIDArray!.count)
+                }
+                
                 if self.contentsArray[indexPath.row].likeIDArray!.count > 0{
                 for i in 0...self.contentsArray[indexPath.row].likeIDArray!.count - 1{
                     
@@ -209,9 +215,6 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
                 cell.footerBaseView.likeCountLabel.text = "\(self.contentsArray[indexPath.row].likeIDArray!.count)"
 
                 cell.footerBaseView.likeButton.addTarget(self, action: #selector(tapLikeButton(sender:)), for: .touchUpInside)
-//                print(self.commentArray.count)
-//                cell.footerBaseView.commentCountLabel.text = "\(self.commentArray.count)"
-                
                 
                 return cell
                 

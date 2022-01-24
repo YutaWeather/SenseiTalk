@@ -128,23 +128,19 @@ class STContentsVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
 
         let uuid = UUID().uuidString
         //uuidをcommentの後ろのdocumentIDにして重複OKにする
-        print(self.contentArray.debugDescription)
+        print(contentsModel?.commentIDArray?.count)
+
         
-        if self.contentArray.count > 0 && self.contentArray[sender.tag].commentIDArray!.count > 0{
-            
-            self.contentArray[sender.tag].commentIDArray?.append(Auth.auth().currentUser!.uid)
+        if (contentsModel?.commentIDArray)!.count > 0{
 
-            sendDBModel.sendComment(category: (contentsModel?.category)!, contentID: (contentsModel?.contentID)!, comment: textFooterView.commentTextField.text!,uuid:uuid, commentIDArray: self.contentArray[sender.tag].commentIDArray!)
+//            self.commentArray?.append(Auth.auth().currentUser!.uid)
+//            self.commentArray.append(Auth.auth().currentUser!.uid)
+            contentsModel?.commentIDArray?.append(Auth.auth().currentUser!.uid)
+            sendDBModel.sendComment(category: (contentsModel?.category)!, contentID: (contentsModel?.contentID)!, comment: textFooterView.commentTextField.text!,uuid:uuid, commentIDArray: (contentsModel?.commentIDArray)!)
 
-        }else if self.contentArray.count > 0 && self.contentArray[sender.tag].commentIDArray?.isEmpty == true{
+        }else{
             sendDBModel.sendComment(category: (contentsModel?.category)!, contentID: (contentsModel?.contentID)!, comment: textFooterView.commentTextField.text!,uuid:uuid, commentIDArray:[Auth.auth().currentUser!.uid])
-        }else if self.contentArray.isEmpty == true{
-                
-            sendDBModel.sendComment(category: (contentsModel?.category)!, contentID: (contentsModel?.contentID)!, comment: textFooterView.commentTextField.text!,uuid:uuid, commentIDArray:[Auth.auth().currentUser!.uid])
-
-            
         }
-        
         //コメント送信
 //        var checkFlag = Bool()
 //        if sender.imageView?.image == UIImage(named: "like"){

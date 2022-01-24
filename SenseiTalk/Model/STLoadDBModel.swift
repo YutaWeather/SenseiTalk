@@ -25,6 +25,8 @@ class STLoadDBModel{
     var doneLoad:DoneLoad?
     var likeFlagArray = [LikeContents]()
     var commentArray = [CommentContent]()
+    var likeIDArray = [String]()
+    var commentIDArray = [String]()
     
     func loadContent(categroy:String){
         
@@ -43,16 +45,31 @@ class STLoadDBModel{
 
                         let userModel = UserModel(userName: userName, profileImageURL: profileImageURL, userID: userID)
 
-                        if let likeIDArray = data["likeID"] as? [String]{
-                            let contentsModel = ContentsModel(userModel: userModel, category: category, title: title, body: body,contentID:contentID, likeIDArray: likeIDArray)
+//                        if likeIDArray = data["likeID"] as? [String],let commentIDArray = data["commentID"] as? [String]{
+                        if data["likeID"] as? [String] != nil && data["commentID"] as? [String] != nil{
+                            
+                            self.likeIDArray = data["likeID"] as! [String]
+                            self.commentIDArray = data["commentID"] as! [String]
+                            
+                            let contentsModel = ContentsModel(userModel: userModel, category: category, title: title, body: body,contentID:contentID, likeIDArray: self.likeIDArray, commentIDArray: self.commentIDArray)
                             self.contentsArray.append(contentsModel)
 
+                        }else if data["likeID"] as? [String] != nil && data["commentID"] as? [String] == nil{
+                            self.likeIDArray = data["likeID"] as! [String]
+                            let contentsModel = ContentsModel(userModel: userModel, category: category, title: title, body: body,contentID:contentID, likeIDArray: self.likeIDArray, commentIDArray: [])
+                            self.contentsArray.append(contentsModel)
+                            
+                        }else if data["likeID"] as? [String] == nil && data["commentID"] as? [String] != nil{
+                            
+                            self.commentIDArray = data["commentID"] as! [String]
+                            
+                            let contentsModel = ContentsModel(userModel: userModel, category: category, title: title, body: body,contentID:contentID, likeIDArray: [], commentIDArray: self.commentIDArray)
+                            self.contentsArray.append(contentsModel)
                         }else{
-                            let contentsModel = ContentsModel(userModel: userModel, category: category, title: title, body: body,contentID:contentID, likeIDArray: [])
+                            let contentsModel = ContentsModel(userModel: userModel, category: category, title: title, body: body,contentID:contentID, likeIDArray: [], commentIDArray: [])
                             self.contentsArray.append(contentsModel)
 
                         }
-                        
                         
                     }
                 }
@@ -146,6 +163,7 @@ class STLoadDBModel{
                             let commentModel = CommentContent(userModel: userModel, comment: comment, contentID: contentID, likeIDArray: [],uuid: uuid)
                             self.commentArray.append(commentModel)
                         }
+                        
                     }
                 }
                 self.doneLoad?.loadComment(commentArray:self.commentArray)

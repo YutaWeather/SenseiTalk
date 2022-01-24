@@ -128,7 +128,22 @@ class STContentsVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
 
         let uuid = UUID().uuidString
         //uuidをcommentの後ろのdocumentIDにして重複OKにする
-        sendDBModel.sendComment(category: (contentsModel?.category)!, contentID: (contentsModel?.contentID)!, comment: textFooterView.commentTextField.text!,uuid:uuid)
+        print(self.contentArray.debugDescription)
+        
+        if self.contentArray.count > 0 && self.contentArray[sender.tag].commentIDArray!.count > 0{
+            
+            self.contentArray[sender.tag].commentIDArray?.append(Auth.auth().currentUser!.uid)
+
+            sendDBModel.sendComment(category: (contentsModel?.category)!, contentID: (contentsModel?.contentID)!, comment: textFooterView.commentTextField.text!,uuid:uuid, commentIDArray: self.contentArray[sender.tag].commentIDArray!)
+
+        }else if self.contentArray.count > 0 && self.contentArray[sender.tag].commentIDArray?.isEmpty == true{
+            sendDBModel.sendComment(category: (contentsModel?.category)!, contentID: (contentsModel?.contentID)!, comment: textFooterView.commentTextField.text!,uuid:uuid, commentIDArray:[Auth.auth().currentUser!.uid])
+        }else if self.contentArray.isEmpty == true{
+                
+            sendDBModel.sendComment(category: (contentsModel?.category)!, contentID: (contentsModel?.contentID)!, comment: textFooterView.commentTextField.text!,uuid:uuid, commentIDArray:[Auth.auth().currentUser!.uid])
+
+            
+        }
         
         //コメント送信
 //        var checkFlag = Bool()

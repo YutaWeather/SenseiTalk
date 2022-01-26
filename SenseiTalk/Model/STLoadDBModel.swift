@@ -45,7 +45,6 @@ class STLoadDBModel{
 
                         let userModel = UserModel(userName: userName, profileImageURL: profileImageURL, userID: userID)
 
-//                        if likeIDArray = data["likeID"] as? [String],let commentIDArray = data["commentID"] as? [String]{
                         if data["likeID"] as? [String] != nil && data["commentID"] as? [String] != nil{
                             
                             self.likeIDArray = data["likeID"] as! [String]

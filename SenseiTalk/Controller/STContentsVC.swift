@@ -111,7 +111,7 @@ class STContentsVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
     @objc func tapLikeButton(sender:STButton){
       
         var checkFlag = Bool()
-//
+
         if self.commentArray[sender.tag].likeIDArray?.contains(Auth.auth().currentUser!.uid) == true{
             checkFlag = true
 
@@ -128,30 +128,15 @@ class STContentsVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
 
         let uuid = UUID().uuidString
         //uuidをcommentの後ろのdocumentIDにして重複OKにする
-        print(contentsModel?.commentIDArray?.count)
-
         
         if (contentsModel?.commentIDArray)!.count > 0{
 
-//            self.commentArray?.append(Auth.auth().currentUser!.uid)
-//            self.commentArray.append(Auth.auth().currentUser!.uid)
             contentsModel?.commentIDArray?.append(Auth.auth().currentUser!.uid)
             sendDBModel.sendComment(category: (contentsModel?.category)!, contentID: (contentsModel?.contentID)!, comment: textFooterView.commentTextField.text!,uuid:uuid, commentIDArray: (contentsModel?.commentIDArray)!)
 
         }else{
             sendDBModel.sendComment(category: (contentsModel?.category)!, contentID: (contentsModel?.contentID)!, comment: textFooterView.commentTextField.text!,uuid:uuid, commentIDArray:[Auth.auth().currentUser!.uid])
         }
-        //コメント送信
-//        var checkFlag = Bool()
-//        if sender.imageView?.image == UIImage(named: "like"){
-//
-//            checkFlag = true
-//        }else{
-//            checkFlag = false
-//        }
-        
-        
-//        sendDBModel.sendComment(category: (contentsModel?.category)!, contentID: (contentsModel?.contentID)!, comment: textFooterView.commentTextField.text!)
     }
 
     func likeOrNot(likeContents: [LikeContents], cell: STCommentCell, indexPath: IndexPath) {
@@ -169,21 +154,6 @@ class STContentsVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
                 cell.footerBaseView.likeButton.setImage(UIImage(named: "notLike"), for: .normal)
             }
         }
-        
-//        self.likeContentsArray = []
-//        self.likeContentsArray = likeContents
-//
-//        cell.footerBaseView.likeCountLabel.text = String(self.likeContentsArray.count)
-//        checkLike = self.likeContentsArray.filter{ $0.userID == Auth.auth().currentUser!.uid}.count > 0
-//        var check = self.likeContentsArray.filter{$0.userID == Auth.auth().currentUser?.uid}
-//        if check.isEmpty != true{
-//            cell.footerBaseView.likeButton.setImage(UIImage(named: "like"), for: .normal)
-//        }else{
-//            cell.footerBaseView.likeButton.setImage(UIImage(named: "notLike"), for: .normal)
-//        }
-
-
-
         
     }
     

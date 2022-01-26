@@ -79,9 +79,39 @@ class STLoginVC: STCameraVC,DoneSend {
     func doneSendData() {
         
         dismiss(animated: true, completion: nil)
-        
+       
     }
     
+    func createTopMenuNav() -> UINavigationController{
+        let pageVC = PageViewController()
+        let nav = UINavigationController(rootViewController: pageVC)
+        nav.tabBarItem = UITabBarItem(title: "タイムライン", image:UIImage(named: ""), tag: 0)
+        return nav
+    }
+
+    func createTopMenuNav2() -> UINavigationController{
+        let newsVC = STNewsVC()
+        let nav = UINavigationController(rootViewController: newsVC)
+        nav.tabBarItem = UITabBarItem(title: "ニュース", image:UIImage(named: ""), tag: 1)
+        return nav
+    }
+
+    func createTopMenuNav3() -> UINavigationController{
+        let profileVC = STProfileVC()
+        let nav = UINavigationController(rootViewController: profileVC)
+        nav.tabBarItem = UITabBarItem(title: "プロフィール", image:UIImage(named: ""), tag: 2)
+        return nav
+    }
+
+    
+    func createTabbar() -> UITabBarController{
+        
+        let tabbar = UITabBarController()
+        tabbar.tabBar.backgroundColor = .white
+        tabbar.viewControllers = [createTopMenuNav(),createTopMenuNav2(),createTopMenuNav3()]
+        
+        return tabbar
+    }
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         if let pickedImage = info[.editedImage] as? UIImage

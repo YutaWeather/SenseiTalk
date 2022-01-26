@@ -53,12 +53,18 @@ class STSendDBModel{
         self.db.collection("Contents").document(category).collection("detail").document(uuid).setData(
             ["userName":userModel.userName!,"userID":userModel.userID!,"profileImageURL":userModel.profileImageURL!,"category":category,"title":title,"body":body,"contentID":uuid,"date":Date().timeIntervalSince1970]
         )
+
+        //Usersにもコンテンツ入れる
+        self.db.collection("Users").document(Auth.auth().currentUser!.uid).collection("myContents").document(uuid).setData(
+            ["userName":userModel.userName!,"userID":userModel.userID!,"profileImageURL":userModel.profileImageURL!,"category":category,"title":title,"body":body,"contentID":uuid,"date":Date().timeIntervalSince1970]
+        )
+
         self.doneSend?.doneSendData()
         
     }
     
     //コンテンツに対するいいね機能
-    func sendLikeContents(category:String,contentID:String,likeIDArray:[String],checkLike:Bool){
+    func sendLikeContents(category:String,contentID:String,likeIDArray:[String],checkLike:Bool,contentModel:ContentsModel){
         var checkLikeIDArray = likeIDArray
         //アプリ内からUserData取り出し
         let userModel:UserModel = KeyChainConfig.getKeyData(key: "userData")
@@ -70,6 +76,12 @@ class STSendDBModel{
         self.db.collection("Contents").document(category).collection("detail").document(contentID).setData(
             ["likeID":checkLikeIDArray],merge: true
         )
+
+        //自分のCollectionにも入れる
+        self.db.collection("Users").document((contentModel.userModel?.userID)!).collection("userContent").document(contentID).setData(
+            ["likeID":checkLikeIDArray],merge: true
+        )
+
         
     }
 

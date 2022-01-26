@@ -7,6 +7,7 @@
 
 import UIKit
 import TabPageViewController
+import Firebase
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -16,9 +17,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
         guard let _ = (scene as? UIWindowScene) else { return }
-        self.window?.rootViewController = createTabbar()
-        self.window?.makeKeyAndVisible()
-        
+            self.window?.rootViewController = createTabbar()
+            self.window?.makeKeyAndVisible()
     }
 
     func createTopMenuNav() -> UINavigationController{
@@ -36,9 +36,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func createTopMenuNav3() -> UINavigationController{
-        let timeLineVC = STTimeLineVC()
-        let nav = UINavigationController(rootViewController: timeLineVC)
-        nav.tabBarItem = UITabBarItem(title: "タイムライン", image:UIImage(named: ""), tag: 2)
+        let profileVC = STProfileVC()
+        let nav = UINavigationController(rootViewController: profileVC)
+        nav.tabBarItem = UITabBarItem(title: "プロフィール", image:UIImage(named: ""), tag: 2)
         return nav
     }
 

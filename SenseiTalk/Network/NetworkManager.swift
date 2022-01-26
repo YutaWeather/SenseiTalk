@@ -11,6 +11,7 @@ import SwiftyJSON
 
 protocol DoneJsonProtocol{
     func doneJsonAnalytics(newsContentsArray:[NewsContentsModel])
+    func errorString(errotMessage:String)
 }
 
 class NetworkManager{
@@ -35,7 +36,11 @@ class NetworkManager{
         AF.request(encordeUrlString, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON {
             (response) in
             
-          
+            guard let data = response.data else {
+                self.doneJsonProtocol?.errorString(errotMessage: FetchErrors.noResult.title)
+                return
+            }
+            
             switch response.result{
             
             case .success:
@@ -56,10 +61,11 @@ class NetworkManager{
                     self.doneJsonProtocol?.doneJsonAnalytics(newsContentsArray: self.newsContentsArray)
                     
                 }catch{
-                    
+                    self.doneJsonProtocol?.errorString(errotMessage: FetchErrors.someError.title)
                 }
                 
             case .failure(_):
+                self.doneJsonProtocol?.errorString(errotMessage: FetchErrors.someError.title)
                 break
             }
          }

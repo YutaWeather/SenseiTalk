@@ -8,7 +8,7 @@
 import UIKit
 
 class STNewsVC: UIViewController,UITableViewDelegate,UITableViewDataSource,DoneJsonProtocol {
-   
+    
     var tableView = UITableView()
     var newsContentsArray = [NewsContentsModel]()
     
@@ -67,6 +67,11 @@ class STNewsVC: UIViewController,UITableViewDelegate,UITableViewDataSource,DoneJ
         tableView.reloadData()
     }
     
-    
+    func errorString(errotMessage: String) {
+        let alert = UIAlertController(title: errotMessage, message: "", preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alert.addAction(action)
+        present(alert, animated: true, completion: nil)
+    }
 
 }

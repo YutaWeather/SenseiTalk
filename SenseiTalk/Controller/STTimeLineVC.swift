@@ -10,7 +10,6 @@ import FirebaseAuth
 
 class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,DoneLoad {
     
-    var scrollView = UIScrollView()
     var tableView = UITableView()
     var postButton = STButton()
     var contentsArray = [ContentsModel]()
@@ -36,20 +35,19 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.isNavigationBarHidden = true
+        configure()
+        self.navigationController?.isNavigationBarHidden = false
         tabBarController?.tabBar.isHidden = false
 
-        configure()
-        
     }
     
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        
-//        scrollView.frame = CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height - (self.navigationController?.navigationBar.frame.size.height)! - (self.tabBarController?.tabBar.frame.size.height)! - topSafeArea + bottomSafeArea)
-        
-        postButton.frame = CGRect(x: view.frame.size.width - 100, y: view.frame.size.height - 80, width: 80, height: 80)
+//        tableView.frame = CGRect(x: 0, y: 120, width: view.frame.size.width, height: view.frame.size.height)
+        tableView.frame = CGRect(x: 0, y: 120, width: view.frame.size.width, height: view.frame.size.height)
+
+        postButton.frame = CGRect(x: view.frame.size.width - 100, y: view.frame.size.height - 200, width: 80, height: 80)
     }
     
     func checkSafeArea(){
@@ -72,7 +70,6 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
     
     func configure(){
         checkSafeArea()
-//        posY = 0 - (self.navigationController?.navigationBar.frame.size.height)! - topSafeArea
         if Auth.auth().currentUser?.uid != nil{
             myUserID = Auth.auth().currentUser!.uid
         }else{
@@ -82,75 +79,27 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
         
         postButton.addTarget(self, action: #selector(tapPost), for: .touchUpInside)
         postButton.setImage(UIImage(named: "plus"), for: .normal)
-        view.addSubview(scrollView)
         view.backgroundColor = .systemGray
-        view.addSubview(postButton)
-        
-//        pageControl = UIPageControl()
-//        pageControl.frame = CGRect(
-//            x: 0,
-//            y: view.frame.maxY-100,
-//            width: view.frame.maxX,
-//            height: 50
-//        )
-//        pageControl.pageIndicatorTintColor = UIColor.lightGray //点のベースの色
-//        pageControl.currentPageIndicatorTintColor = UIColor.darkGray //現在地を表す点の色
-//        pageControl.numberOfPages = 3
-//        pageControl.currentPage = 0 //現在地
-//        pageControl.isUserInteractionEnabled = false //アニメーション中のユーザー操作を無効
-//        view.addSubview(pageControl)
         loadDBModel.doneLoad = self
 
-        setUpScroolViewAndTableView()
-        
+        setTableView(x: CGFloat(pageNum))
     }
     
     @objc func tapPost(){
         
         //toPostVC
         let postVC = STPostVC()
-//        postVC.categoryName = String(pageControl.currentPage)
         postVC.categoryName = String(pageNum)
         self.navigationController?.pushViewController(postVC, animated: true)
         
     }
     
-    private func setUpScroolViewAndTableView(){
-        
-//        scrollView.delegate = self
-        
-//        pageControl.currentPage = 0
-//        scrollView.backgroundColor = .green
-//        scrollView.isPagingEnabled = true
-        let topSafeArea: CGFloat
-        let bottomSafeArea: CGFloat
-        
-        if #available(iOS 11.0, *) {
-            topSafeArea = view.safeAreaInsets.top
-            bottomSafeArea = view.safeAreaInsets.bottom
-        } else {
-            topSafeArea = topLayoutGuide.length
-            bottomSafeArea = bottomLayoutGuide.length
-        }
-//        scrollView.contentSize = CGSize(
-//            width: view.frame.size.width * 3,
-//            height: view.frame.size.height - (self.navigationController?.navigationBar.frame.size.height)! - (self.tabBarController?.tabBar.frame.size.height)! - topSafeArea + bottomSafeArea
-//        )
-        
-//        setTableView(x: CGFloat(pageControl.currentPage))
-//        setTableView(x: CGFloat(pageNum))
-        print(pageNum)
-        setTableView(x: CGFloat(pageNum))
-
-    }
     
     func setTableView(x:CGFloat){
         
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
-        let topSafeArea: CGFloat
-        let bottomSafeArea: CGFloat
         
         if #available(iOS 11.0, *) {
             topSafeArea = view.safeAreaInsets.top
@@ -159,17 +108,17 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
             topSafeArea = topLayoutGuide.length
             bottomSafeArea = bottomLayoutGuide.length
         }
+        
 
         tableView.register(ContentsCell.self, forCellReuseIdentifier: ContentsCell.identifier)
-//        tableView.frame = CGRect(x: view.frame.size.width * CGFloat(x), y: 0, width: view.frame.size.width, height: view.frame.size.height - (self.navigationController?.navigationBar.frame.size.height)! - (self.tabBarController?.tabBar.frame.size.height)! - topSafeArea + bottomSafeArea)
-        tableView.frame = CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height)
+        tableView.frame = CGRect(x: 0, y: 120, width: view.frame.size.width, height: view.frame.size.height)
 
         view.addSubview(tableView)
         let loadDBModel = STLoadDBModel()
         loadDBModel.doneLoad = self
-//        loadDBModel.loadContent(categroy: String(pageControl.currentPage))
         loadDBModel.loadContent(categroy: String(pageNum))
 
+        view.addSubview(postButton)
         
         
     }
@@ -253,7 +202,6 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
             checkFlag = false
 
         }
-//        sendDBModel.sendLikeContents(category: String(pageControl.currentPage), contentID: self.contentsArray[sender.tag].contentID!,likeIDArray:self.contentsArray[sender.tag].likeIDArray!, checkLike: checkFlag)
         sendDBModel.sendLikeContents(category: String(pageNum), contentID: self.contentsArray[sender.tag].contentID!,likeIDArray:self.contentsArray[sender.tag].likeIDArray!, checkLike: checkFlag)
 
     }
@@ -291,22 +239,6 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
         tableView.reloadData()
         
     }
-    
-//    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-//
-//        if fmod(scrollView.contentOffset.x, scrollView.frame.maxX) == 0 {
-//
-//            pageControl.currentPage = Int(scrollView.contentOffset.x / scrollView.frame.maxX)
-////            setTableView(x: CGFloat(pageControl.currentPage))
-//            setTableView(x: CGFloat(pageNum))
-//            let loadDBModel = STLoadDBModel()
-//            loadDBModel.doneLoad = self
-////            loadDBModel.loadContent(categroy: String(pageControl.currentPage))
-//            loadDBModel.loadContent(categroy: String(pageNum))
-//
-//        }
-//
-//    }
     
     
     func likeOrNot(likeContents: [LikeContents],cell:ContentsCell,indexPath:IndexPath) {
@@ -346,15 +278,6 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
     func loadComment(commentArray: [CommentContent], cell: ContentsCell, indexPath: IndexPath) {
         
     }
-    
-//    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-//        posY = scrollView.contentOffset.y
-//    }
-//
-//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        scrollView.contentOffset.y = posY
-//    }
-    
-    
+
 }
 

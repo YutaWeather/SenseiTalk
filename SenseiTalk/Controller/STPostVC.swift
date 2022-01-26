@@ -61,7 +61,7 @@ class STPostVC: UIViewController,DoneSend {
     }
     
     func doneSendData() {
-        
+        self.navigationController?.popViewController(animated: true)
     }
     
 

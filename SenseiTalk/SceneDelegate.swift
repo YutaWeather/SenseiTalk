@@ -21,8 +21,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func createTopMenuNav() -> UINavigationController{
-        let timeLineVC = STTimeLineVC()
-        let nav = UINavigationController(rootViewController: timeLineVC)
+//        let timeLineVC = STTimeLineVC()
+        let pageVC = PageViewController()
+        let nav = UINavigationController(rootViewController: pageVC)
         nav.tabBarItem = UITabBarItem(title: "タイムライン", image:UIImage(named: ""), tag: 0)
 //        nav.navigationBar.backgroundColor = .white
 //        nav.navigationBar.barTintColor = .black

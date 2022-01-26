@@ -39,6 +39,8 @@
 		A4AC591F27911F6800AADE0F /* STHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4AC591E27911F6800AADE0F /* STHeaderView.swift */; };
 		A4AC5921279159E900AADE0F /* STFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4AC5920279159E800AADE0F /* STFooterView.swift */; };
 		A4AD4E2427A0DA5E00F4C0D5 /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4AD4E2327A0DA5E00F4C0D5 /* PageViewController.swift */; };
+		A4AD4E2827A116D600F4C0D5 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4AD4E2727A116D600F4C0D5 /* Errors.swift */; };
+		A4AD4E2A27A11B6C00F4C0D5 /* STProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4AD4E2927A11B6C00F4C0D5 /* STProfileVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -78,6 +80,8 @@
 		A4AC591E27911F6800AADE0F /* STHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STHeaderView.swift; sourceTree = "<group>"; };
 		A4AC5920279159E800AADE0F /* STFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STFooterView.swift; sourceTree = "<group>"; };
 		A4AD4E2327A0DA5E00F4C0D5 /* PageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
+		A4AD4E2727A116D600F4C0D5 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
+		A4AD4E2927A11B6C00F4C0D5 /* STProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STProfileVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -178,6 +182,7 @@
 				A4AC591A27910A4D00AADE0F /* STContentsVC.swift */,
 				A48CB04D2796B59D00644270 /* STDetailContentVC.swift */,
 				A4AD4E2327A0DA5E00F4C0D5 /* PageViewController.swift */,
+				A4AD4E2927A11B6C00F4C0D5 /* STProfileVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -202,6 +207,7 @@
 				A4284D15278E866000F26AAC /* STUserModel.swift */,
 				A4AC5916278FEF3500AADE0F /* KeyChainConfig.swift */,
 				A4AC5918278FF41900AADE0F /* STLoadDBModel.swift */,
+				A4AD4E2727A116D600F4C0D5 /* Errors.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -370,11 +376,13 @@
 				A4284D16278E866000F26AAC /* STUserModel.swift in Sources */,
 				A435B097278D39ED00BFCAE3 /* STImageView.swift in Sources */,
 				A4284D0D278E6E4300F26AAC /* STTextField.swift in Sources */,
+				A4AD4E2827A116D600F4C0D5 /* Errors.swift in Sources */,
 				A4AC5915278FE40A00AADE0F /* STTextView.swift in Sources */,
 				A435B06D278D0B4600BFCAE3 /* AppDelegate.swift in Sources */,
 				A4AC591B27910A4D00AADE0F /* STContentsVC.swift in Sources */,
 				A4AC5919278FF41900AADE0F /* STLoadDBModel.swift in Sources */,
 				A4284D14278E854800F26AAC /* STSendDBModel.swift in Sources */,
+				A4AD4E2A27A11B6C00F4C0D5 /* STProfileVC.swift in Sources */,
 				A435B06F278D0B4600BFCAE3 /* SceneDelegate.swift in Sources */,
 				A435B093278D383C00BFCAE3 /* STTitleLabel.swift in Sources */,
 				A48CB04E2796B59D00644270 /* STDetailContentVC.swift in Sources */,

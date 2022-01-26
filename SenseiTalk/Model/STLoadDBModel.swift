@@ -29,9 +29,60 @@ class STLoadDBModel{
     var commentIDArray = [String]()
     
     func loadContent(categroy:String){
-        
-        print(categroy)
+     
         db.collection("Contents").document(categroy).collection("detail").order(by: "date").addSnapshotListener { snapShot, error in
+            
+            if error != nil{
+                return
+            }
+            
+            if let snapShotDoc = snapShot?.documents{
+                self.contentsArray = []
+                for doc in snapShotDoc{
+                    let data = doc.data()
+                    if let userName = data["userName"] as? String,let userID = data["userID"] as? String,let profileImageURL = data["profileImageURL"] as? String,let category = data["category"] as? String,let title = data["title"] as? String,let body = data["body"] as? String,let contentID = data["contentID"] as? String{
+
+                        let userModel = UserModel(userName: userName, profileImageURL: profileImageURL, userID: userID)
+
+                        if data["likeID"] as? [String] != nil && data["commentID"] as? [String] != nil{
+                            
+                            self.likeIDArray = data["likeID"] as! [String]
+                            self.commentIDArray = data["commentID"] as! [String]
+                            
+                            let contentsModel = ContentsModel(userModel: userModel, category: category, title: title, body: body,contentID:contentID, likeIDArray: self.likeIDArray, commentIDArray: self.commentIDArray)
+                            self.contentsArray.append(contentsModel)
+
+                        }else if data["likeID"] as? [String] != nil && data["commentID"] as? [String] == nil{
+                            self.likeIDArray = data["likeID"] as! [String]
+                            let contentsModel = ContentsModel(userModel: userModel, category: category, title: title, body: body,contentID:contentID, likeIDArray: self.likeIDArray, commentIDArray: [])
+                            self.contentsArray.append(contentsModel)
+                            
+                        }else if data["likeID"] as? [String] == nil && data["commentID"] as? [String] != nil{
+                            
+                            self.commentIDArray = data["commentID"] as! [String]
+                            
+                            let contentsModel = ContentsModel(userModel: userModel, category: category, title: title, body: body,contentID:contentID, likeIDArray: [], commentIDArray: self.commentIDArray)
+                            self.contentsArray.append(contentsModel)
+                        }else{
+                            let contentsModel = ContentsModel(userModel: userModel, category: category, title: title, body: body,contentID:contentID, likeIDArray: [], commentIDArray: [])
+                            self.contentsArray.append(contentsModel)
+
+                        }
+                        
+                    }
+                }
+                
+                self.doneLoad?.loadContents(contentsArray: self.contentsArray)
+            }
+            
+        }
+        
+    }
+    
+    //Users下へあるコンテンツを受信
+    func loadContent(userID:String){
+     
+        db.collection("Users").document(userID).collection("myContents").order(by: "date").addSnapshotListener { snapShot, error in
             
             if error != nil{
                 return
@@ -225,6 +276,8 @@ class STLoadDBModel{
         }
         
     }
+    
+
 
     
 }

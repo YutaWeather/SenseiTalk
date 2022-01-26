@@ -38,15 +38,13 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
         configure()
         self.navigationController?.isNavigationBarHidden = false
         tabBarController?.tabBar.isHidden = false
-
     }
-    
+     
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-//        tableView.frame = CGRect(x: 0, y: 120, width: view.frame.size.width, height: view.frame.size.height)
+        
         tableView.frame = CGRect(x: 0, y: 120, width: view.frame.size.width, height: view.frame.size.height)
-
         postButton.frame = CGRect(x: view.frame.size.width - 100, y: view.frame.size.height - 200, width: 80, height: 80)
     }
     
@@ -60,26 +58,19 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
         }
     }
     
-    private func showLoginVC(){
-        let loginVC = STLoginVC()
-        loginVC.modalPresentationStyle = .fullScreen
-        present(loginVC, animated: true, completion: nil)
-        
-    }
+//    private func showLoginVC(){
+//        let loginVC = STLoginVC()
+//        loginVC.modalPresentationStyle = .fullScreen
+//        present(loginVC, animated: true, completion: nil)
+//
+//    }
     
     
     func configure(){
         checkSafeArea()
-        if Auth.auth().currentUser?.uid != nil{
-            myUserID = Auth.auth().currentUser!.uid
-        }else{
-            showLoginVC()
-            
-        }
-        
         postButton.addTarget(self, action: #selector(tapPost), for: .touchUpInside)
         postButton.setImage(UIImage(named: "plus"), for: .normal)
-        view.backgroundColor = .systemGray
+        view.backgroundColor = .white
         loadDBModel.doneLoad = self
 
         setTableView(x: CGFloat(pageNum))
@@ -147,7 +138,6 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if self.contentsArray.count > 0{
             switch self.contentsArray[indexPath.row].category{
-//            case String(pageControl.currentPage):
             case String(pageNum):
                 let cell = tableView.dequeueReusableCell(withIdentifier: ContentsCell.identifier, for: indexPath) as! ContentsCell
                 let footerView = STFooterView()
@@ -202,7 +192,7 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
             checkFlag = false
 
         }
-        sendDBModel.sendLikeContents(category: String(pageNum), contentID: self.contentsArray[sender.tag].contentID!,likeIDArray:self.contentsArray[sender.tag].likeIDArray!, checkLike: checkFlag)
+        sendDBModel.sendLikeContents(category: String(pageNum), contentID: self.contentsArray[sender.tag].contentID!,likeIDArray:self.contentsArray[sender.tag].likeIDArray!, checkLike: checkFlag,contentModel:self.contentsArray[sender.tag])
 
     }
     
@@ -227,7 +217,13 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
     }
     
     func loadContents(contentsArray: [ContentsModel]) {
-        
+        if Auth.auth().currentUser?.uid != nil{
+            myUserID = Auth.auth().currentUser!.uid
+        }else{
+            let loginVC = STLoginVC()
+            loginVC.modalPresentationStyle = .fullScreen
+            present(loginVC, animated: true, completion: nil)
+        }
 //        if contentsArray.count > 0 && String(pageControl.currentPage) == contentsArray[0].category{
         if contentsArray.count > 0 && String(pageNum) == contentsArray[0].category{
 

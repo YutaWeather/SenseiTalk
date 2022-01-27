@@ -9,7 +9,7 @@ import UIKit
 import Firebase
 import SDWebImage
 
-class STProfileVC: UIViewController,UITableViewDelegate,UITableViewDataSource,DoneLoad {
+class STProfileVC: UIViewController,UITableViewDelegate,UITableViewDataSource,DoneLoad,UITabBarDelegate {
 
     let profileImageView = STImageView(frame: .zero)
     let userNameLabel = STTitleLabel(textAlignment: .center, fontSize: 15)
@@ -22,6 +22,11 @@ class STProfileVC: UIViewController,UITableViewDelegate,UITableViewDataSource,Do
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        print(userID)
+        print(Auth.auth().currentUser!.uid)
+        if self.tabBarController?.selectedIndex == 2{
+            userID = Auth.auth().currentUser!.uid
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -37,17 +42,18 @@ class STProfileVC: UIViewController,UITableViewDelegate,UITableViewDataSource,Do
         timeLineTableView.delegate = self
         timeLineTableView.dataSource = self
         timeLineTableView.register(ContentsCell.self, forCellReuseIdentifier: ContentsCell.identifier)
-//        timeLineTableView.backgroundColor = .yellow
-//        timeLineTableView.frame = CGRect(x: 0, y: 120, width: view.frame.size.width, height: view.frame.size.height)
 
         let loadDBModel = STLoadDBModel()
         loadDBModel.doneLoad = self
 //        loadDBModel.loadContent(categroy: String(pageNum))
 //        loadDBModel.loadContent(userID:userID)
-        loadDBModel.loadContent(userID: Auth.auth().currentUser!.uid)
+        
+        //もしtabがクリックされていなかったら userID
+        loadDBModel.loadContent(userID:userID)
         layoutUI()
         
     }
+    
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
@@ -79,6 +85,7 @@ class STProfileVC: UIViewController,UITableViewDelegate,UITableViewDataSource,Do
             
         ])
     }
+
 
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -150,29 +157,28 @@ class STProfileVC: UIViewController,UITableViewDelegate,UITableViewDataSource,Do
     func loadContents(contentsArray: [ContentsModel]) {
         self.contentsArray = []
         self.contentsArray = contentsArray
+        print(contentsArray.debugDescription)
         let userModel:UserModel = KeyChainConfig.getKeyData(key: "userData")
-        userNameLabel.text = userModel.userName
-        profileImageView.sd_setImage(with: URL(string: userModel.profileImageURL!))
+        if userID == Auth.auth().currentUser!.uid{
+            userNameLabel.text = userModel.userName
+            profileImageView.sd_setImage(with: URL(string: userModel.profileImageURL!))
+
+        }else{
+    
+            userNameLabel.text = self.contentsArray[0].userModel?.userName
+            profileImageView.sd_setImage(with: URL(string: (self.contentsArray[0].userModel?.profileImageURL!)!), completed: nil)
+        }
         print(self.contentsArray.debugDescription)
         timeLineTableView.reloadData()
     }
     
-    func likeOrNot(likeContents: [LikeContents], cell: ContentsCell, indexPath: IndexPath) {
-        
-    }
+ 
     
     func likeOrNot(likeContents: [LikeContents], cell: STCommentCell, indexPath: IndexPath) {
         
     }
     
-    func likeOrNotForContents(likeContents: [LikeContents]) {
-        
-    }
-    
-    func loadComment(commentArray: [CommentContent], cell: ContentsCell, indexPath: IndexPath) {
-        
-    }
-    
+
     func loadComment(commentArray: [CommentContent]) {
         
     }

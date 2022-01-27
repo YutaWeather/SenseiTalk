@@ -16,6 +16,7 @@ class ContentsCell: UITableViewCell {
     var urlToImageView = STImageView(frame: .zero)
     var userNameLabel = STTitleLabel(textAlignment: .left, fontSize: 10)
     var footerBaseView = STFooterView()
+    var tapGesture = UITapGestureRecognizer()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -35,12 +36,14 @@ class ContentsCell: UITableViewCell {
         footerBaseView.translatesAutoresizingMaskIntoConstraints = false
 
         layoutUIForTimeline(footerView:footerBaseView)
-
+        
         urlToImageView.sd_setImage(with: URL(string: (contentsModel.userModel?.profileImageURL)!))
+        urlToImageView.isUserInteractionEnabled = true
+        urlToImageView.addGestureRecognizer(tapGesture)
         userNameLabel.text = contentsModel.userModel?.userName
         titleLabel.text = contentsModel.title
         subTitleLabel.text = contentsModel.body
-
+        
     }
     
     func configure(contentsModel:ContentsModel){

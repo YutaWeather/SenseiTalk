@@ -33,19 +33,20 @@ class STPostVC: UIViewController,DoneSend {
         NSLayoutConstraint.activate([
         
             textField.leadingAnchor.constraint(equalTo: view.leadingAnchor,constant: padding),
-            textField.topAnchor.constraint(equalTo: view.topAnchor,constant: (self.navigationController?.navigationBar.frame.size.height)! + padding * 2),
+            textField.topAnchor.constraint(equalTo: view.topAnchor,constant: (self.navigationController?.navigationBar.frame.size.height)! + 50),
             textField.trailingAnchor.constraint(equalTo: view.trailingAnchor,constant: -padding),
-            textField.heightAnchor.constraint(equalToConstant: 20),
+            textField.heightAnchor.constraint(equalToConstant: 30),
             
             textView.leadingAnchor.constraint(equalTo:view.leadingAnchor,constant: padding),
             textView.topAnchor.constraint(equalTo: textField.bottomAnchor,constant: padding),
             textView.trailingAnchor.constraint(equalTo:view.trailingAnchor,constant: -padding),
-            textView.bottomAnchor.constraint(equalTo: view.bottomAnchor,constant: -100)
+            textView.bottomAnchor.constraint(equalTo: view.bottomAnchor,constant: -130)
             
         ])
     }
     
     func configure(){
+        self.navigationController?.navigationBar.backgroundColor = .systemGroupedBackground
         view.backgroundColor = .systemGroupedBackground
         title = "投稿を作成"
         postBarButtonItem = UIBarButtonItem(title: "投稿", style: .done, target: self, action: #selector(postContents(_:)))

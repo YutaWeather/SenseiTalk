@@ -163,22 +163,10 @@ class STContentsVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
         tableView.reloadData()
     }
     
-    func loadComment(commentArray: [CommentContent], cell: ContentsCell, indexPath: IndexPath) {
-        
-       
-        
-    }
+
 
     
     func loadContents(contentsArray: [ContentsModel]) {
-        
-    }
-    
-    func likeOrNot(likeContents: [LikeContents], cell: ContentsCell, indexPath: IndexPath) {
-    
-    }
-    
-    func likeOrNotForContents(likeContents: [LikeContents]) {
         
     }
     

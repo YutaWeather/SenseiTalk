@@ -10,12 +10,12 @@ import Firebase
 
 protocol DoneLoad{
     func loadContents(contentsArray:[ContentsModel])
-    func likeOrNot(likeContents:[LikeContents],cell:ContentsCell,indexPath:IndexPath)
+//    func likeOrNot(likeContents:[LikeContents],cell:ContentsCell,indexPath:IndexPath)
     func likeOrNot(likeContents:[LikeContents],cell:STCommentCell,indexPath:IndexPath)
-    func likeOrNotForContents(likeContents:[LikeContents])
-    func loadComment(commentArray:[CommentContent],cell:ContentsCell,indexPath:IndexPath)
+//    func likeOrNotForContents(likeContents:[LikeContents])
+//    func loadComment(commentArray:[CommentContent],cell:ContentsCell,indexPath:IndexPath)
     func loadComment(commentArray:[CommentContent])
-
+    
 }
 
 class STLoadDBModel{
@@ -27,7 +27,6 @@ class STLoadDBModel{
     var commentArray = [CommentContent]()
     var likeIDArray = [String]()
     var commentIDArray = [String]()
-    
     func loadContent(categroy:String){
      
         db.collection("Contents").document(categroy).collection("detail").order(by: "date").addSnapshotListener { snapShot, error in
@@ -150,7 +149,7 @@ class STLoadDBModel{
                     
                 }
                
-                self.doneLoad?.likeOrNotForContents(likeContents: self.likeFlagArray)
+//                self.doneLoad?.likeOrNotForContents(likeContents: self.likeFlagArray)
 
             }
         }
@@ -179,7 +178,7 @@ class STLoadDBModel{
                     
                 }
                
-                self.doneLoad?.likeOrNot(likeContents: self.likeFlagArray,cell:cell,indexPath:indexPath)
+//                self.doneLoad?.likeOrNot(likeContents: self.likeFlagArray,cell:cell,indexPath:indexPath)
 
             }
         }

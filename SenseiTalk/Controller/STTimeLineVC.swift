@@ -58,14 +58,6 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
         }
     }
     
-//    private func showLoginVC(){
-//        let loginVC = STLoginVC()
-//        loginVC.modalPresentationStyle = .fullScreen
-//        present(loginVC, animated: true, completion: nil)
-//
-//    }
-    
-    
     func configure(){
         checkSafeArea()
         postButton.addTarget(self, action: #selector(tapPost), for: .touchUpInside)
@@ -144,6 +136,8 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
                 footerView.configureForTimeLine()
                 footerView.backgroundColor = .yellow
                 cell.configureContents(contentsModel: self.contentsArray[indexPath.row], footerView: footerView)
+                cell.tapGesture.view!.tag = indexPath.row
+                cell.tapGesture.addTarget(self, action: #selector(tapImageView(sender:)))
                 cell.footerBaseView.likeButton.tag = indexPath.row
                 cell.footerBaseView.commentIconButton.tag = indexPath.row
                 
@@ -216,6 +210,15 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
         
     }
     
+    @objc func tapImageView(sender:UITapGestureRecognizer){
+        
+//        sender.tag
+        let profileVC = STProfileVC()
+        print(self.contentsArray[sender.view!.tag].userModel?.userID?.debugDescription)
+        profileVC.userID = (self.contentsArray[sender.view!.tag].userModel?.userID)!
+        self.navigationController?.pushViewController(profileVC, animated: true)
+    }
+    
     func loadContents(contentsArray: [ContentsModel]) {
         if Auth.auth().currentUser?.uid != nil{
             myUserID = Auth.auth().currentUser!.uid
@@ -263,17 +266,10 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
         tableView.reloadData()
     }
 
-    
-    func likeOrNotForContents(likeContents: [LikeContents]) {
-        
-    }
-    
     func likeOrNot(likeContents: [LikeContents], cell: STCommentCell, indexPath: IndexPath) {
         
     }
-    func loadComment(commentArray: [CommentContent], cell: ContentsCell, indexPath: IndexPath) {
-        
-    }
+
 
 }
 

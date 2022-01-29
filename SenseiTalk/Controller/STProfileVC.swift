@@ -18,7 +18,8 @@ class STProfileVC: UIViewController,UITableViewDelegate,UITableViewDataSource,Do
     var contentsArray = [ContentsModel]()
     var userID = String()
     var sendDBModel = STSendDBModel()
-    
+    fileprivate var userDataCollection: STUserDataCollection = STUserDataCollection()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -37,14 +38,28 @@ class STProfileVC: UIViewController,UITableViewDelegate,UITableViewDataSource,Do
         timeLineTableView.delegate = self
         timeLineTableView.dataSource = self
         timeLineTableView.register(ContentsCell.self, forCellReuseIdentifier: ContentsCell.identifier)
-
-        let loadDBModel = STLoadDBModel()
-        loadDBModel.doneLoad = self
         //もしtabがクリックされていなかったら userID
         if self.tabBarController?.selectedIndex == 2{
             userID = Auth.auth().currentUser!.uid
         }
-        loadDBModel.loadContent(userID:userID)
+        
+        print(userID)
+        
+        userDataCollection.fetchUserDataCollection(userID: userID, limit: 4) { [unowned self] in
+            let userModel:UserModel = KeyChainConfig.getKeyData(key: "userData")
+            if userID == Auth.auth().currentUser!.uid{
+                userNameLabel.text = userModel.userName
+                profileImageView.sd_setImage(with: URL(string: userModel.profileImageURL!))
+
+            }else{
+        
+                userNameLabel.text = self.userDataCollection.contentsArray[0].userModel?.userName
+                profileImageView.sd_setImage(with: URL(string: (self.userDataCollection.contentsArray[0].userModel?.profileImageURL!)!), completed: nil)
+            }
+            print(self.userDataCollection.contentsArray.debugDescription)
+            timeLineTableView.reloadData()
+
+        }
         layoutUI()
         
     }
@@ -80,30 +95,29 @@ class STProfileVC: UIViewController,UITableViewDelegate,UITableViewDataSource,Do
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print(self.contentsArray.count)
-        return self.contentsArray.count
+        return self.userDataCollection.contentsArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        if self.contentsArray.count > 0{
+        if self.userDataCollection.contentsArray.count > 0{
                 let cell = tableView.dequeueReusableCell(withIdentifier: ContentsCell.identifier, for: indexPath) as! ContentsCell
                 let footerView = STFooterView()
                 footerView.configureForTimeLine()
                 footerView.backgroundColor = .yellow
-                cell.configureContents(contentsModel: self.contentsArray[indexPath.row], footerView: footerView)
+                cell.configureContents(contentsModel: self.userDataCollection.contentsArray[indexPath.row], footerView: footerView)
                 cell.footerBaseView.likeButton.tag = indexPath.row
                 cell.footerBaseView.commentIconButton.tag = indexPath.row
                 
-                if self.contentsArray[indexPath.row].commentIDArray!.count > 0{
+                if self.userDataCollection.contentsArray[indexPath.row].commentIDArray!.count > 0{
                     cell.footerBaseView.commentCountLabel.text =
-                    String(self.contentsArray[indexPath.row].commentIDArray!.count)
+                    String(self.userDataCollection.contentsArray[indexPath.row].commentIDArray!.count)
                 }
                 
-                if self.contentsArray[indexPath.row].likeIDArray!.count > 0{
-                for i in 0...self.contentsArray[indexPath.row].likeIDArray!.count - 1{
+                if self.userDataCollection.contentsArray[indexPath.row].likeIDArray!.count > 0{
+                for i in 0...self.userDataCollection.contentsArray[indexPath.row].likeIDArray!.count - 1{
                     
-                    if self.contentsArray[indexPath.row].likeIDArray![i].contains(userID) == true{
+                    if self.userDataCollection.contentsArray[indexPath.row].likeIDArray![i].contains(userID) == true{
                         
                         cell.footerBaseView.likeButton.setImage(UIImage(named: "like"), for: .normal)
                         
@@ -115,7 +129,7 @@ class STProfileVC: UIViewController,UITableViewDelegate,UITableViewDataSource,Do
                 }
                     
                 }
-                cell.footerBaseView.likeCountLabel.text = "\(self.contentsArray[indexPath.row].likeIDArray!.count)"
+                cell.footerBaseView.likeCountLabel.text = "\(self.userDataCollection.contentsArray[indexPath.row].likeIDArray!.count)"
 
                 cell.footerBaseView.likeButton.addTarget(self, action: #selector(tapLikeButton(sender:)), for: .touchUpInside)
                 
@@ -131,7 +145,7 @@ class STProfileVC: UIViewController,UITableViewDelegate,UITableViewDataSource,Do
         
         //いいね送信
         var checkFlag = Bool()
-        if self.contentsArray[sender.tag].likeIDArray?.contains(Auth.auth().currentUser!.uid) == true{
+        if self.userDataCollection.contentsArray[sender.tag].likeIDArray?.contains(Auth.auth().currentUser!.uid) == true{
             checkFlag = true
 
         }else{
@@ -139,25 +153,46 @@ class STProfileVC: UIViewController,UITableViewDelegate,UITableViewDataSource,Do
 
         }
         
-        sendDBModel.sendLikeContents(category: self.contentsArray[sender.tag].category!, contentID: self.contentsArray[sender.tag].contentID!,likeIDArray:self.contentsArray[sender.tag].likeIDArray!, checkLike: checkFlag,contentModel:self.contentsArray[sender.tag])
+        sendDBModel.sendLikeContents(category: self.userDataCollection.contentsArray[sender.tag].category!, contentID: self.userDataCollection.contentsArray[sender.tag].contentID!,likeIDArray:self.userDataCollection.contentsArray[sender.tag].likeIDArray!, checkLike: checkFlag,contentModel:self.userDataCollection.contentsArray[sender.tag])
 
     }
-    func loadContents(contentsArray: [ContentsModel]) {
-        self.contentsArray = []
-        self.contentsArray = contentsArray
-        print(contentsArray.debugDescription)
-        let userModel:UserModel = KeyChainConfig.getKeyData(key: "userData")
-        if userID == Auth.auth().currentUser!.uid{
-            userNameLabel.text = userModel.userName
-            profileImageView.sd_setImage(with: URL(string: userModel.profileImageURL!))
-
-        }else{
     
-            userNameLabel.text = self.contentsArray[0].userModel?.userName
-            profileImageView.sd_setImage(with: URL(string: (self.contentsArray[0].userModel?.profileImageURL!)!), completed: nil)
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let currentOffsetY = scrollView.contentOffset.y
+        let maximumOffset = scrollView.contentSize.height - scrollView.frame.height
+        let distanceToBottom = maximumOffset - currentOffsetY
+        print(distanceToBottom)
+        //========== ここから============
+        if(distanceToBottom < 500 && self.userDataCollection.lastDocument != nil){
+        print("ここが呼ばれた回数だけcompleted()が呼ばれる、受信される　↑上の条件を変える")
+            self.userDataCollection.fetchMoreUserDataCollection(userID: userID, limit: 4) {
+                [unowned self] in
+            
+                self.timeLineTableView.reloadData()
+                
+            }
         }
-        print(self.contentsArray.debugDescription)
-        timeLineTableView.reloadData()
+        
+        //========== ここまで============
+        
+    }
+    
+    func loadContents(contentsArray: [ContentsModel]) {
+//        self.contentsArray = []
+//        self.contentsArray = contentsArray
+//        print(contentsArray.debugDescription)
+//        let userModel:UserModel = KeyChainConfig.getKeyData(key: "userData")
+//        if userID == Auth.auth().currentUser!.uid{
+//            userNameLabel.text = userModel.userName
+//            profileImageView.sd_setImage(with: URL(string: userModel.profileImageURL!))
+//
+//        }else{
+//
+//            userNameLabel.text = self.contentsArray[0].userModel?.userName
+//            profileImageView.sd_setImage(with: URL(string: (self.contentsArray[0].userModel?.profileImageURL!)!), completed: nil)
+//        }
+//        print(self.contentsArray.debugDescription)
+//        timeLineTableView.reloadData()
     }
     
  

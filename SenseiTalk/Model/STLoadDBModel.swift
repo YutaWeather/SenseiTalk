@@ -29,6 +29,7 @@ class STLoadDBModel{
     var commentIDArray = [String]()
   
     //配列から引っ張ってこれる
+/*
     func loadContent(categroy:String,fromDate:Double,now:Bool){
      //1643185034.78316
         
@@ -84,7 +85,7 @@ class STLoadDBModel{
             
         }
         
-    }
+    }*/
     
     //Users下へあるコンテンツを受信
     //必要なのは現在時刻、最後の5件目の時刻(date),

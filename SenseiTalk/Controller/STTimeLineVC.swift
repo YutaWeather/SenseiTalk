@@ -12,17 +12,12 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
     
     var tableView = UITableView()
     var postButton = STButton()
-//    var contentsArray = [ContentsModel]()
     var pageNum = Int()
-//    var pageControl = UIPageControl()
-//    let loadDBModel = STLoadDBModel()
     let sendDBModel = STSendDBModel()
-//    var likeContentsArray = [LikeContents]()
     var commentArrays = [[CommentContent]]()
     var commentArray = [CommentContent]()
     var checkLike = false
     var myUserID = String()
-//    var posY: CGFloat!
     var topSafeArea: CGFloat!
     var bottomSafeArea: CGFloat!
     
@@ -64,7 +59,6 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
         postButton.addTarget(self, action: #selector(tapPost), for: .touchUpInside)
         postButton.setImage(UIImage(named: "plus"), for: .normal)
         view.backgroundColor = .white
-//        loadDBModel.doneLoad = self
 
         setTableView(x: CGFloat(pageNum))
     }
@@ -98,13 +92,9 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
         tableView.frame = CGRect(x: 0, y: 120, width: view.frame.size.width, height: view.frame.size.height)
 
         view.addSubview(tableView)
-//        let loadDBModel = STLoadDBModel()
-//        loadDBModel.doneLoad = self
-        
-//        loadDBModel.loadContent(categroy: String(pageNum), fromDate: Date().timeIntervalSince1970,now:true)
-        contentsCollection.fetchContent(categroy: String(pageNum), limit:2) {  [unowned self] in
+
+        contentsCollection.fetchContent(categroy: String(pageNum), limit:4) {  [unowned self] in
             
-//            DispatchQueue.main.async{
                 if Auth.auth().currentUser?.uid != nil{
                     myUserID = Auth.auth().currentUser!.uid
                 }else{
@@ -114,7 +104,6 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
                 }
 
                 self.tableView.reloadData()
-//            }
             
         }
         
@@ -129,14 +118,9 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("カウントチェック")
-        print(self.contentsCollection.contentsArray.count)
-//        return self.contentsCollection.contentsArray.count
         if self.contentsCollection.contentsArray.count > 0{
             switch self.contentsCollection.contentsArray[0].category{
-//            case String(pageControl.currentPage):
             case String(pageNum):
-
                 return self.contentsCollection.contentsArray.count
             default:
                 return 1
@@ -145,19 +129,6 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
         }else{
             return 1
         }
-//        if self.contentsArray.count > 0{
-//            switch self.contentsArray[0].category{
-////            case String(pageControl.currentPage):
-//            case String(pageNum):
-//
-//                return self.contentsArray.count
-//            default:
-//                return 1
-//            }
-//
-//        }else{
-//            return 1
-//        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -170,8 +141,6 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
                 let footerView = STFooterView()
                 footerView.configureForTimeLine()
                 footerView.backgroundColor = .yellow
-//                cell.configureContents(contentsModel: self.contentsArray[indexPath.row], footerView: footerView)
-                
                 cell.configureContents(contentsModel: self.contentsCollection.contentsArray[indexPath.row], footerView: footerView)
 
                 cell.tapGesture.view!.tag = indexPath.row
@@ -213,7 +182,6 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
         
         //いいね送信
         var checkFlag = Bool()
-//        if self.contentsArray[sender.tag].likeIDArray?.contains(Auth.auth().currentUser!.uid) == true{
         if self.contentsCollection.contentsArray[sender.tag].likeIDArray?.contains(Auth.auth().currentUser!.uid) == true{
 
         checkFlag = true
@@ -222,7 +190,7 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
             checkFlag = false
 
         }
-//        sendDBModel.sendLikeContents(category: String(pageNum), contentID: self.contentsArray[sender.tag].contentID!,likeIDArray:self.contentsArray[sender.tag].likeIDArray!, checkLike: checkFlag,contentModel:self.contentsArray[sender.tag])
+
         sendDBModel.sendLikeContents(category: String(pageNum), contentID: self.contentsCollection.contentsArray[sender.tag].contentID!,likeIDArray:self.contentsCollection.contentsArray[sender.tag].likeIDArray!, checkLike: checkFlag,contentModel:self.contentsCollection.contentsArray[sender.tag])
 
     }
@@ -230,13 +198,11 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let contentsVC = STContentsVC()
-//        contentsVC.contentsModel = self.contentsArray[indexPath.row]
         contentsVC.contentsModel = self.contentsCollection.contentsArray[indexPath.row]
 
         self.commentArray = []
         if self.commentArray.count > 0{
             for i in 0...self.commentArrays.count - 1{
-//                if self.commentArrays[i].contains(where: { $0.contentID == self.contentsArray[indexPath.row].contentID }) == true{
                 if self.commentArrays[i].contains(where: { $0.contentID == self.contentsCollection.contentsArray[indexPath.row].contentID }) == true{
 
                 print(self.commentArray.debugDescription)
@@ -253,9 +219,7 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
     
     @objc func tapImageView(sender:UITapGestureRecognizer){
         
-//        sender.tag
         let profileVC = STProfileVC()
-//        profileVC.userID = (self.contentsArray[sender.view!.tag].userModel?.userID)!
         profileVC.userID = (self.contentsCollection.contentsArray[sender.view!.tag].userModel?.userID)!
 
         self.navigationController?.pushViewController(profileVC, animated: true)
@@ -311,12 +275,10 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
         let maximumOffset = scrollView.contentSize.height - scrollView.frame.height
         let distanceToBottom = maximumOffset - currentOffsetY
         print(distanceToBottom)
-        //==========STEP5 ここから============
+        //========== ここから============
         if(distanceToBottom < 500 && self.contentsCollection.lastDocument != nil){
-//        if(distanceToBottom < 500 && self.contentsCollection.lastDocument != nil && statusCheck == false){
-
         print("ここが呼ばれた回数だけcompleted()が呼ばれる、受信される　↑上の条件を変える")
-            self.contentsCollection.fetchMoreContent(categroy: String(pageNum), limit: 2){ [unowned self] in
+            self.contentsCollection.fetchMoreContent(categroy: String(pageNum), limit: 4){ [unowned self] in
                 
                 self.tableView.reloadData()
                 
@@ -326,59 +288,6 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
         //========== ここまで============
         
     }
-    
-//    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-//
-//        print(indexPath.row)
-//        print(self.contentsCollection.contentsArray.count)
-//        if self.contentsCollection.contentsArray.count >= 2 && indexPath.row == self.contentsCollection.contentsArray.count - 1 {
-//
-//                   self.contentsCollection.fetchMoreContent(categroy: String(pageNum), limit: 2){ [unowned self] in
-//
-//                       self.tableView.reloadData()
-//
-//                   }
-//               }
-//
-//    }
-    
-//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        let scrollPosY = scrollView.contentOffset.y //スクロール位置
-//        let maxOffsetY = scrollView.contentSize.height - scrollView.frame.height //スクロール領域の高さからスクロール画面の高さを引いた値
-//        let distanceToBottom = maxOffsetY - scrollPosY //スクロール領域下部までの距離
-//        //スクロール領域下部に近づいたら追加で記事を取得する
-//        print("スクロール")
-//        print(distanceToBottom)
-//        if distanceToBottom < 200 {
-//
-//            print("超えた")
-//            contentsCollection.fetchMoreContent(categroy: String(pageNum), limit:1) {  [unowned self] in
-//
-////                DispatchQueue.main.async{
-//                    if Auth.auth().currentUser?.uid != nil{
-//                        myUserID = Auth.auth().currentUser!.uid
-//                    }else{
-//                        let loginVC = STLoginVC()
-//                        loginVC.modalPresentationStyle = .fullScreen
-//                        present(loginVC, animated: true, completion: nil)
-//                    }
-//
-//                    self.tableView.reloadData()
-////                }
-//
-//            }
-//
-//
-//        }
-//        /*
-//
-//         プロパティ    意味
-//         contentOffset    どれくらいスクロールしているか
-//         contentInset    余分にどれだけスクロールできるか
-//         contentSize    スクロールする中身のサイズ
-//
-//         */
-//    }
     
     func loadComment(commentArray: [CommentContent]) {
         self.commentArray = []

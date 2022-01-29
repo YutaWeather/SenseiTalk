@@ -32,6 +32,7 @@
 		A45229E5279560510094C176 /* STCommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A45229E4279560510094C176 /* STCommentCell.swift */; };
 		A48CB04C2796AF3000644270 /* loading.json in Resources */ = {isa = PBXBuildFile; fileRef = A48CB04B2796AF3000644270 /* loading.json */; };
 		A48CB04E2796B59D00644270 /* STDetailContentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A48CB04D2796B59D00644270 /* STDetailContentVC.swift */; };
+		A4977BA327A3A5D5005C0252 /* STContentsCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4977BA227A3A5D5005C0252 /* STContentsCollection.swift */; };
 		A4AC5915278FE40A00AADE0F /* STTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4AC5914278FE40A00AADE0F /* STTextView.swift */; };
 		A4AC5917278FEF3500AADE0F /* KeyChainConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4AC5916278FEF3500AADE0F /* KeyChainConfig.swift */; };
 		A4AC5919278FF41900AADE0F /* STLoadDBModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4AC5918278FF41900AADE0F /* STLoadDBModel.swift */; };
@@ -73,6 +74,7 @@
 		A45229E4279560510094C176 /* STCommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STCommentCell.swift; sourceTree = "<group>"; };
 		A48CB04B2796AF3000644270 /* loading.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = loading.json; sourceTree = "<group>"; };
 		A48CB04D2796B59D00644270 /* STDetailContentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STDetailContentVC.swift; sourceTree = "<group>"; };
+		A4977BA227A3A5D5005C0252 /* STContentsCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STContentsCollection.swift; sourceTree = "<group>"; };
 		A4AC5914278FE40A00AADE0F /* STTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STTextView.swift; sourceTree = "<group>"; };
 		A4AC5916278FEF3500AADE0F /* KeyChainConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChainConfig.swift; sourceTree = "<group>"; };
 		A4AC5918278FF41900AADE0F /* STLoadDBModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STLoadDBModel.swift; sourceTree = "<group>"; };
@@ -208,6 +210,7 @@
 				A4AC5916278FEF3500AADE0F /* KeyChainConfig.swift */,
 				A4AC5918278FF41900AADE0F /* STLoadDBModel.swift */,
 				A4AD4E2727A116D600F4C0D5 /* Errors.swift */,
+				A4977BA227A3A5D5005C0252 /* STContentsCollection.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -381,6 +384,7 @@
 				A435B06D278D0B4600BFCAE3 /* AppDelegate.swift in Sources */,
 				A4AC591B27910A4D00AADE0F /* STContentsVC.swift in Sources */,
 				A4AC5919278FF41900AADE0F /* STLoadDBModel.swift in Sources */,
+				A4977BA327A3A5D5005C0252 /* STContentsCollection.swift in Sources */,
 				A4284D14278E854800F26AAC /* STSendDBModel.swift in Sources */,
 				A4AD4E2A27A11B6C00F4C0D5 /* STProfileVC.swift in Sources */,
 				A435B06F278D0B4600BFCAE3 /* SceneDelegate.swift in Sources */,

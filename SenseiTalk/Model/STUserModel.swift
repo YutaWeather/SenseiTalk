@@ -26,6 +26,7 @@ struct ContentsModel{
     var commentIDArray:[String]?
 
     
+    
 }
 
 struct LikeContents{

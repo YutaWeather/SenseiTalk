@@ -22,11 +22,6 @@ class STProfileVC: UIViewController,UITableViewDelegate,UITableViewDataSource,Do
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print(userID)
-        print(Auth.auth().currentUser!.uid)
-        if self.tabBarController?.selectedIndex == 2{
-            userID = Auth.auth().currentUser!.uid
-        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -45,10 +40,10 @@ class STProfileVC: UIViewController,UITableViewDelegate,UITableViewDataSource,Do
 
         let loadDBModel = STLoadDBModel()
         loadDBModel.doneLoad = self
-//        loadDBModel.loadContent(categroy: String(pageNum))
-//        loadDBModel.loadContent(userID:userID)
-        
         //もしtabがクリックされていなかったら userID
+        if self.tabBarController?.selectedIndex == 2{
+            userID = Auth.auth().currentUser!.uid
+        }
         loadDBModel.loadContent(userID:userID)
         layoutUI()
         
@@ -76,13 +71,6 @@ class STProfileVC: UIViewController,UITableViewDelegate,UITableViewDataSource,Do
             userNameLabel.topAnchor.constraint(equalTo: profileImageView.bottomAnchor,constant: padding),
             userNameLabel.widthAnchor.constraint(equalToConstant: 100),
             userNameLabel.heightAnchor.constraint(equalToConstant: 20)
-            
-//            timeLineTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-//            timeLineTableView.topAnchor.constraint(equalTo: userNameLabel.bottomAnchor,constant: padding),
-//            timeLineTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-//            timeLineTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor,constant: -(self.tabBarController?.tabBar.frame.size.height)!)
-            
-            
         ])
     }
 

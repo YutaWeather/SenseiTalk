@@ -27,9 +27,15 @@ class STLoadDBModel{
     var commentArray = [CommentContent]()
     var likeIDArray = [String]()
     var commentIDArray = [String]()
-    func loadContent(categroy:String){
-     
-        db.collection("Contents").document(categroy).collection("detail").order(by: "date").addSnapshotListener { snapShot, error in
+  
+    //配列から引っ張ってこれる
+    func loadContent(categroy:String,fromDate:Double,now:Bool){
+     //1643185034.78316
+        
+//        最新の5件を取得(limited)、最後の5件目の時刻を取得して、where(時刻が5件目の時刻よりも昔の時刻で最新5件)
+        //isLessThanOrEqualTo　(~よりも小さい) 時刻が最新に(今日に近づくほど)dateの値が大きくなる
+        db.collection("Contents").document(categroy).collection("detail").order(by: "date").limit(to:5).whereField("date", isLessThanOrEqualTo: fromDate).addSnapshotListener { snapShot, error in
+            
             
             if error != nil{
                 return
@@ -39,8 +45,10 @@ class STLoadDBModel{
                 self.contentsArray = []
                 for doc in snapShotDoc{
                     let data = doc.data()
-                    if let userName = data["userName"] as? String,let userID = data["userID"] as? String,let profileImageURL = data["profileImageURL"] as? String,let category = data["category"] as? String,let title = data["title"] as? String,let body = data["body"] as? String,let contentID = data["contentID"] as? String{
+                    if let userName = data["userName"] as? String,let userID = data["userID"] as? String,let profileImageURL = data["profileImageURL"] as? String,let category = data["category"] as? String,let title = data["title"] as? String,let body = data["body"] as? String,let contentID = data["contentID"] as? String,let date = data["date"] as? Double{
 
+                        print(date.debugDescription)
+                        
                         let userModel = UserModel(userName: userName, profileImageURL: profileImageURL, userID: userID)
 
                         if data["likeID"] as? [String] != nil && data["commentID"] as? [String] != nil{
@@ -79,9 +87,10 @@ class STLoadDBModel{
     }
     
     //Users下へあるコンテンツを受信
+    //必要なのは現在時刻、最後の5件目の時刻(date),
     func loadContent(userID:String){
      
-        db.collection("Users").document(userID).collection("myContents").order(by: "date").addSnapshotListener { snapShot, error in
+        db.collection("Users").document(userID).collection("myContents").order(by: "date").limit(to:5).addSnapshotListener { snapShot, error in
             
             if error != nil{
                 return
@@ -91,8 +100,10 @@ class STLoadDBModel{
                 self.contentsArray = []
                 for doc in snapShotDoc{
                     let data = doc.data()
-                    if let userName = data["userName"] as? String,let userID = data["userID"] as? String,let profileImageURL = data["profileImageURL"] as? String,let category = data["category"] as? String,let title = data["title"] as? String,let body = data["body"] as? String,let contentID = data["contentID"] as? String{
+                    if let userName = data["userName"] as? String,let userID = data["userID"] as? String,let profileImageURL = data["profileImageURL"] as? String,let category = data["category"] as? String,let title = data["title"] as? String,let body = data["body"] as? String,let contentID = data["contentID"] as? String,let date = data["date"] as? Double{
 
+                        print(date.debugDescription)
+                        
                         let userModel = UserModel(userName: userName, profileImageURL: profileImageURL, userID: userID)
 
                         if data["likeID"] as? [String] != nil && data["commentID"] as? [String] != nil{
@@ -122,7 +133,6 @@ class STLoadDBModel{
                         
                     }
                 }
-                
                 self.doneLoad?.loadContents(contentsArray: self.contentsArray)
             }
             
@@ -130,6 +140,19 @@ class STLoadDBModel{
         
     }
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
     func loadLike(categroy: String, contentID: String){
         db.collection("Contents").document(categroy).collection("detail").document(contentID).collection("like").addSnapshotListener { snapShot, error in
             

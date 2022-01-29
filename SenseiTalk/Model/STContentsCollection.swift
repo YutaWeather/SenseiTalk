@@ -9,8 +9,6 @@ import Foundation
 import Firebase
 import FirebaseFirestore
 
-var statusCheck = Bool()
-
 class STContentsCollection{
     
     var commentArray = [CommentContent]()
@@ -40,7 +38,7 @@ class STContentsCollection{
             }
             
             self.lastDocument = snapShot.documents.last
-            print(self.lastDocument?.data())
+
             for doc in snapShot.documents{
                 let data = doc.data()
                 if let userName = data["userName"] as? String,let userID = data["userID"] as? String,let profileImageURL = data["profileImageURL"] as? String,let category = data["category"] as? String,let title = data["title"] as? String,let body = data["body"] as? String,let contentID = data["contentID"] as? String,let date = data["date"] as? Double{
@@ -87,6 +85,7 @@ class STContentsCollection{
             return
         }
         let db = Firestore.firestore()
+        
         db.collection("Contents").document(categroy).collection("detail").order(by: "date").start(afterDocument: self.lastDocument!).limit(to:limit).getDocuments() { (querySnapshot, error) in
             if error != nil{
                 completed()
@@ -103,12 +102,9 @@ class STContentsCollection{
             
             if self.lastDocument == self.checkLastDocument{
                 print("最後がまだ同じ")
-//                statusCheck = true
                 return
             }else{
-                    
                 print("最後が変わった")
-//                statusCheck = false
             
             }
             

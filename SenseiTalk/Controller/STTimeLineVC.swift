@@ -8,7 +8,7 @@
 import UIKit
 import FirebaseAuth
 
-class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,DoneLoad {
+class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
     var tableView = UITableView()
     var postButton = STButton()
@@ -204,8 +204,6 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
         if self.commentArray.count > 0{
             for i in 0...self.commentArrays.count - 1{
                 if self.commentArrays[i].contains(where: { $0.contentID == self.contentsCollection.contentsArray[indexPath.row].contentID }) == true{
-
-                print(self.commentArray.debugDescription)
                     self.commentArray = self.commentArrays[i]
                 }
             }
@@ -224,30 +222,6 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
 
         self.navigationController?.pushViewController(profileVC, animated: true)
     }
-    
-    func loadContents(contentsArray: [ContentsModel]) {
-//        //2,8,1,6,7
-//        print(contentsArray.debugDescription)
-//
-//        if Auth.auth().currentUser?.uid != nil{
-//            myUserID = Auth.auth().currentUser!.uid
-//        }else{
-//            let loginVC = STLoginVC()
-//            loginVC.modalPresentationStyle = .fullScreen
-//            present(loginVC, animated: true, completion: nil)
-//        }
-//        if contentsArray.count > 0 && String(pageNum) == contentsArray[0].category{
-//
-//
-//            self.contentsArray = []
-//            self.contentsArray = contentsArray
-//
-//        }
-//
-//        tableView.reloadData()
-        
-    }
-    
     
     func likeOrNot(likeContents: [LikeContents],cell:ContentsCell,indexPath:IndexPath) {
         

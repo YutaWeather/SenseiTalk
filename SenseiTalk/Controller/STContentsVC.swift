@@ -8,21 +8,15 @@
 import UIKit
 import Firebase
 
-class STContentsVC: UIViewController,UITableViewDelegate,UITableViewDataSource,DoneLoad {
+class STContentsVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
     
     var contentsModel:ContentsModel?
     var tableView = UITableView()
     var headerView = STHeaderView()
-//    var footerView = STFooterView()
     var textFooterView = STFooterView()
     let sendDBModel = STSendDBModel()
-    let loadDBModel = STLoadDBModel()
-    var contentArray = [ContentsModel]()
-    var likeContentsArray = [LikeContents]()
-    var commentArray = [CommentContent]()
-    var checkLike = Bool()
-    
+    var commentCollection = STCommentCollection()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,11 +42,16 @@ class STContentsVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
         headerView.configure(contentsModel: contentsModel!)
         view.addSubview(headerView)
         view.addSubview(tableView)
-        loadDBModel.doneLoad = self
         view.addSubview(textFooterView)
+
         textFooterView.configure()
         textFooterView.postButton.addTarget(self, action: #selector(tapCommentButton(sender:)), for: .touchUpInside)
-        loadDBModel.loadComment(categroy: (contentsModel?.category)!, contentID: (contentsModel?.contentID)!)
+        
+        commentCollection.fetchContent(categroy: (contentsModel?.category)!, contentID: (contentsModel?.contentID)!, limit: 4) { [unowned self] in
+            
+            self.tableView.reloadData()
+        }
+        
     }
     
     
@@ -72,7 +71,7 @@ class STContentsVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
  
-        return 1 + self.commentArray.count
+        return 1 + self.commentCollection.commentArray.count
     }
     
     
@@ -87,20 +86,20 @@ class STContentsVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
         default:
             let cell = tableView.dequeueReusableCell(withIdentifier: STCommentCell.identifier, for: indexPath) as! STCommentCell
             let footerView = STFooterView()
-            cell.configure(commentModel: commentArray[indexPath.row - 1], footerView: footerView)
+            cell.configure(commentModel: commentCollection.commentArray[indexPath.row - 1], footerView: footerView)
             footerView.configureForCommentToComment()
             footerView.backgroundColor = .yellow
             cell.footerBaseView.likeButton.tag = indexPath.row - 1
             cell.footerBaseView.commentIconButton.tag = indexPath.row - 1
-            if self.commentArray[indexPath.row - 1].likeIDArray!.count > 0{
-            for i in 0...self.commentArray[indexPath.row  - 1].likeIDArray!.count - 1{
-                if self.commentArray[indexPath.row - 1].likeIDArray![i].contains(Auth.auth().currentUser!.uid) == true{
+            if commentCollection.commentArray[indexPath.row - 1].likeIDArray!.count > 0{
+                for i in 0...commentCollection.commentArray[indexPath.row  - 1].likeIDArray!.count - 1{
+                    if commentCollection.commentArray[indexPath.row - 1].likeIDArray![i].contains(Auth.auth().currentUser!.uid) == true{
                     cell.footerBaseView.likeButton.setImage(UIImage(named: "like"), for: .normal)
                 }else{
                     cell.footerBaseView.likeButton.setImage(UIImage(named: "notLike"), for: .normal)
                 }            }}
             cell.footerBaseView.likeButton.addTarget(self, action: #selector(tapLikeButton(sender:)), for: .touchUpInside)
-            cell.footerBaseView.likeCountLabel.text = "\(self.commentArray[indexPath.row - 1].likeIDArray!.count)"
+            cell.footerBaseView.likeCountLabel.text = "\(self.commentCollection.commentArray[indexPath.row - 1].likeIDArray!.count)"
 
             return cell
         }
@@ -112,7 +111,7 @@ class STContentsVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
       
         var checkFlag = Bool()
 
-        if self.commentArray[sender.tag].likeIDArray?.contains(Auth.auth().currentUser!.uid) == true{
+        if self.commentCollection.commentArray[sender.tag].likeIDArray?.contains(Auth.auth().currentUser!.uid) == true{
             checkFlag = true
 
         }else{
@@ -120,15 +119,13 @@ class STContentsVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
 
         }
         
-        sendDBModel.sendLikeContentsToComment(category: (contentsModel?.category)!, contentID: self.commentArray[sender.tag].contentID!, checkLike: checkFlag, commentModel: self.commentArray[sender.tag], likeIDArray: self.commentArray[sender.tag].likeIDArray!)
+        sendDBModel.sendLikeContentsToComment(category: (contentsModel?.category)!, contentID: self.commentCollection.commentArray[sender.tag].contentID!, checkLike: checkFlag, commentModel: self.commentCollection.commentArray[sender.tag], likeIDArray: self.commentCollection.commentArray[sender.tag].likeIDArray!)
         
     }
     
     @objc func tapCommentButton(sender:STButton){
 
         let uuid = UUID().uuidString
-        //uuidをcommentの後ろのdocumentIDにして重複OKにする
-        
         if (contentsModel?.commentIDArray)!.count > 0{
 
             contentsModel?.commentIDArray?.append(Auth.auth().currentUser!.uid)
@@ -139,35 +136,22 @@ class STContentsVC: UIViewController,UITableViewDelegate,UITableViewDataSource,D
         }
     }
 
-    func likeOrNot(likeContents: [LikeContents], cell: STCommentCell, indexPath: IndexPath) {
-     
-        print(cell.footerBaseView.likeButton.tag,indexPath.row)
-        if cell.footerBaseView.likeButton.tag == indexPath.row - 1{
-            
-            cell.footerBaseView.likeCountLabel.text = String(likeContents.count)
-            
-            //ここが問題 自分がこのLike配列の中にいるかどうかチェック
-            let check = likeContents.filter{ $0.userID == Auth.auth().currentUser!.uid}.count > 0
-            if check == true{
-                cell.footerBaseView.likeButton.setImage(UIImage(named: "like"), for: .normal)
-            }else{
-                cell.footerBaseView.likeButton.setImage(UIImage(named: "notLike"), for: .normal)
-            }
-        }
-        
+//    func likeOrNot(likeContents: [LikeContents], cell: STCommentCell, indexPath: IndexPath) {
+//
+//        print(cell.footerBaseView.likeButton.tag,indexPath.row)
+//        if cell.footerBaseView.likeButton.tag == indexPath.row - 1{
+//
+//            cell.footerBaseView.likeCountLabel.text = String(likeContents.count)
+//
+//            //ここが問題 自分がこのLike配列の中にいるかどうかチェック
+//            let check = likeContents.filter{ $0.userID == Auth.auth().currentUser!.uid}.count > 0
+//            if check == true{
+//                cell.footerBaseView.likeButton.setImage(UIImage(named: "like"), for: .normal)
+//            }else{
+//                cell.footerBaseView.likeButton.setImage(UIImage(named: "notLike"), for: .normal)
+//            }
+//        }
+//
     }
-    
-    func loadComment(commentArray: [CommentContent]) {
-        self.commentArray = []
-        self.commentArray = commentArray
-        tableView.reloadData()
-    }
-    
 
-
-    
-    func loadContents(contentsArray: [ContentsModel]) {
-        
-    }
-    
 }

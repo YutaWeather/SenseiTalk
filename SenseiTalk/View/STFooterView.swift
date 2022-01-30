@@ -22,8 +22,10 @@ class STFooterView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-//        self.frame = CGRect(x: 0, y: 0, width: self.frame.size.width, height: 80)
-        
+//        likeButton.setImage(UIImage(named: "notLike"), for: .normal)
+//        likeCountLabel.text = "0"
+//        layoutUIForCommentToComment()
+
     }
     
     required init?(coder: NSCoder) {
@@ -116,7 +118,7 @@ class STFooterView: UIView {
         let padding:CGFloat = 5
         NSLayoutConstraint.activate([
             likeButton.leadingAnchor.constraint(equalTo: self.trailingAnchor,constant: -70),
-            likeButton.topAnchor.constraint(equalTo: self.topAnchor),
+            likeButton.topAnchor.constraint(equalTo: self.topAnchor,constant: padding),
             likeButton.widthAnchor.constraint(equalToConstant: 30),
             likeButton.heightAnchor.constraint(equalToConstant: 30),
             
@@ -133,7 +135,6 @@ class STFooterView: UIView {
     
     func configure(){
 
-        self.backgroundColor = .blue
         likeButton.setImage(UIImage(named: "notLike"), for: .normal)
         commentIconButton.setImage(UIImage(named: "commentIcon"), for: .normal)
         likeCountLabel.text = "0"
@@ -141,9 +142,14 @@ class STFooterView: UIView {
         layoutUI()
     }
     
+    func configureForComment(){
+        likeButton.setImage(UIImage(named: "notLike"), for: .normal)
+        likeCountLabel.text = "0"
+        layoutUIForCommentToComment()
+    }
+    
     func configureForTimeLine(){
 
-        self.backgroundColor = .blue
         likeButton.setImage(UIImage(named: "notLike"), for: .normal)
         commentIconButton.setImage(UIImage(named: "commentIcon"), for: .normal)
         likeCountLabel.text = "0"
@@ -151,13 +157,21 @@ class STFooterView: UIView {
         layoutUIForTimeLine()
     }
     
-    //コメントのコメントに対するリプライUI
-    func configureForCommentToComment(){
-
-        self.backgroundColor = .blue
+    func configureForProfile(){
         likeButton.setImage(UIImage(named: "notLike"), for: .normal)
         likeCountLabel.text = "0"
+//        layoutUIForTimeLine()
         layoutUIForCommentToComment()
+
     }
     
+    //コメントのコメントに対するリプライUI
+//    func configureForCommentToComment(){
+//
+//        self.backgroundColor = .blue
+//        likeButton.setImage(UIImage(named: "notLike"), for: .normal)
+//        likeCountLabel.text = "0"
+//        layoutUIForCommentToComment()
+//    }
+//
 }

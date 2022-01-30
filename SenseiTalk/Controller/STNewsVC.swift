@@ -18,6 +18,14 @@ class STNewsVC: UIViewController,UITableViewDelegate,UITableViewDataSource,DoneJ
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.isNavigationBarHidden = false
+        tabBarController?.tabBar.isHidden = false
+
+    }
+
+    
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         tableView.frame = view.bounds
@@ -26,6 +34,7 @@ class STNewsVC: UIViewController,UITableViewDelegate,UITableViewDataSource,DoneJ
 
     func configure(){
         view.backgroundColor = .white
+        title = "ニュース"
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(ContentsCell.self, forCellReuseIdentifier: ContentsCell.identifier)
@@ -56,6 +65,14 @@ class STNewsVC: UIViewController,UITableViewDelegate,UITableViewDataSource,DoneJ
         cell.configure(newsContentsModel: self.newsContentsArray[indexPath.row])
         
         return cell
+        
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let newsDetailVC = STNewsDetailVC()
+        newsDetailVC.newsUrl = self.newsContentsArray[indexPath.row].url!
+        self.navigationController?.pushViewController(newsDetailVC, animated: true)
         
     }
     

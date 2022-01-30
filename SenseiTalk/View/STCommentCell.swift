@@ -14,6 +14,7 @@ class STCommentCell: UITableViewCell {
     var userNameLabel = STTitleLabel(textAlignment: .left, fontSize: 10)
     var titleLabel = STTitleLabel(textAlignment: .left, fontSize: 12)
     var footerBaseView = STFooterView()
+    let footerView = STFooterView()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -38,6 +39,18 @@ class STCommentCell: UITableViewCell {
         footerBaseView.backgroundColor = .yellow
         footerBaseView.translatesAutoresizingMaskIntoConstraints = false
         layoutUIForTimeline(footerView:footerBaseView)
+    }
+    
+    
+    //footerViewをセル内に移植
+    func configure(commentModel:CommentContent){
+        urlToImageView.sd_setImage(with: URL(string: (commentModel.userModel?.profileImageURL)!))
+        userNameLabel.text = commentModel.userModel?.userName
+        titleLabel.text = commentModel.comment
+        footerView.configureForComment()
+        footerView.backgroundColor = .orange
+        footerView.translatesAutoresizingMaskIntoConstraints = false
+        layoutUIForTimeline(footerView:footerView)
     }
     
     func layoutUIForTimeline(footerView:STFooterView){
@@ -68,7 +81,7 @@ class STCommentCell: UITableViewCell {
             footerView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             footerView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor),
             footerView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            footerView.heightAnchor.constraint(equalToConstant: 25),
+            footerView.heightAnchor.constraint(equalToConstant: 40),
             footerView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
 
         ])

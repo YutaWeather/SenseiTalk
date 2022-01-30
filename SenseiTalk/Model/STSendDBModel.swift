@@ -78,7 +78,7 @@ class STSendDBModel{
         )
 
         //自分のCollectionにも入れる
-        self.db.collection("Users").document((contentModel.userModel?.userID)!).collection("userContent").document(contentID).setData(
+        self.db.collection("Users").document((contentModel.userModel?.userID)!).collection("myContents").document(contentID).setData(
             ["likeID":checkLikeIDArray],merge: true
         )
 

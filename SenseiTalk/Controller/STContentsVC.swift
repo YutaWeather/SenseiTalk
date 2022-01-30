@@ -28,7 +28,6 @@ class STContentsVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
         self.navigationController?.isNavigationBarHidden = false
         tabBarController?.tabBar.isHidden = true
         configure()
-
     }
 
     func configure(){
@@ -40,9 +39,9 @@ class STContentsVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
         tableView.register(ContentsCell.self, forCellReuseIdentifier: ContentsCell.identifier)
         tableView.register(STCommentCell.self, forCellReuseIdentifier: STCommentCell.identifier)
         headerView.configure(contentsModel: contentsModel!)
-        view.addSubview(headerView)
-        view.addSubview(tableView)
-        view.addSubview(textFooterView)
+//        view.addSubview(headerView)
+//        view.addSubview(tableView)
+//        view.addSubview(textFooterView)
 
         textFooterView.configure()
         textFooterView.postButton.addTarget(self, action: #selector(tapCommentButton(sender:)), for: .touchUpInside)
@@ -51,6 +50,10 @@ class STContentsVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
             
             self.tableView.reloadData()
         }
+        
+        view.addSubview(headerView)
+        view.addSubview(tableView)
+        view.addSubview(textFooterView)
         
     }
     
@@ -70,7 +73,7 @@ class STContentsVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
- 
+        print(commentCollection.commentArray.debugDescription)
         return 1 + self.commentCollection.commentArray.count
     }
     
@@ -85,22 +88,25 @@ class STContentsVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
             
         default:
             let cell = tableView.dequeueReusableCell(withIdentifier: STCommentCell.identifier, for: indexPath) as! STCommentCell
-            let footerView = STFooterView()
-            cell.configure(commentModel: commentCollection.commentArray[indexPath.row - 1], footerView: footerView)
-            footerView.configureForCommentToComment()
-            footerView.backgroundColor = .yellow
-            cell.footerBaseView.likeButton.tag = indexPath.row - 1
-            cell.footerBaseView.commentIconButton.tag = indexPath.row - 1
-            if commentCollection.commentArray[indexPath.row - 1].likeIDArray!.count > 0{
-                for i in 0...commentCollection.commentArray[indexPath.row  - 1].likeIDArray!.count - 1{
-                    if commentCollection.commentArray[indexPath.row - 1].likeIDArray![i].contains(Auth.auth().currentUser!.uid) == true{
-                    cell.footerBaseView.likeButton.setImage(UIImage(named: "like"), for: .normal)
-                }else{
-                    cell.footerBaseView.likeButton.setImage(UIImage(named: "notLike"), for: .normal)
-                }            }}
-            cell.footerBaseView.likeButton.addTarget(self, action: #selector(tapLikeButton(sender:)), for: .touchUpInside)
-            cell.footerBaseView.likeCountLabel.text = "\(self.commentCollection.commentArray[indexPath.row - 1].likeIDArray!.count)"
+            cell.contentView.isUserInteractionEnabled = false
+            cell.configure(commentModel: commentCollection.commentArray[indexPath.row - 1])
+            cell.footerView.likeButton.tag = indexPath.row - 1
+            cell.footerView.commentIconButton.tag = indexPath.row - 1
 
+            if commentCollection.commentArray[indexPath.row - 1].likeIDArray!.count > 0{
+                for i in 0...commentCollection.commentArray[indexPath.row - 1].likeIDArray!.count - 1{
+                    if commentCollection.commentArray[indexPath.row - 1].likeIDArray![i].contains(Auth.auth().currentUser!.uid) == true{
+                        cell.footerView.likeButton.setImage(UIImage(named: "like"), for: .normal)
+                    }else{
+                        cell.footerView.likeButton.setImage(UIImage(named: "notLike"), for: .normal)
+                    }
+                }
+            }else{
+                cell.footerView.likeButton.setImage(UIImage(named: "notLike"), for: .normal)
+            }
+            cell.footerView.likeButton.addTarget(self, action: #selector(tapLikeButton(sender:)), for: .touchUpInside)
+            cell.footerView.likeCountLabel.text = "\(self.commentCollection.commentArray[indexPath.row - 1].likeIDArray!.count)"
+            
             return cell
         }
         
@@ -152,6 +158,6 @@ class STContentsVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
 //            }
 //        }
 //
-    }
+//    }
 
 }

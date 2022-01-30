@@ -14,11 +14,44 @@ class STUserDataCollection{
     var likeIDArray = [String]()
     var commentIDArray = [String]()
     var contentsArray: [ContentsModel] = [] //取得した記事を格納する配列
+    var userModel:UserModel?
     var lastDocument: DocumentSnapshot?
     //分割して取得していくので、最後に取得したドキュメントのスナップショットを保持する
     
     var checkLastDocument:DocumentSnapshot?
     
+    
+    //ユーザーのプロフィール情報を受信
+    func fetchUserProfileData(userID:String,completed:@escaping() -> Void){
+        
+        let db = Firestore.firestore()
+        db.collection("Users").document(userID).getDocument { querySnapShot, error in
+            
+            if error != nil{
+                completed()
+                return
+            }
+            
+            guard let snapShot = querySnapShot else{
+                completed()
+                return
+            }
+            
+            let data = snapShot.data()
+            
+            if let userName = data!["userName"] as? String,let profileImageURL = data!["profileImageURL"] as? String,let userID = data!["userID"] as? String{
+
+                self.userModel = UserModel(userName: userName, profileImageURL:profileImageURL , userID: userID)
+
+            }
+            
+            completed()
+            
+        }
+        
+    }
+    
+    //ユーザーのコンテンツ情報を受信
     func fetchUserDataCollection(userID:String,limit:Int,completed:@escaping() -> Void){
         
         let db = Firestore.firestore()
@@ -125,5 +158,8 @@ class STUserDataCollection{
         }
         
     }
+    
+    
+    
     
 }

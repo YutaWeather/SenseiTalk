@@ -137,35 +137,36 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
             switch self.contentsCollection.contentsArray[indexPath.row].category{
             case String(pageNum):                
         let cell = tableView.dequeueReusableCell(withIdentifier: ContentsCell.identifier, for: indexPath) as! ContentsCell
+                cell.contentView.isUserInteractionEnabled = false
+//                let footerView = STFooterView()
+//                footerView.configureForTimeLine()
+//                footerView.backgroundColor = .yellow
+//                cell.configureContents(contentsModel: self.contentsCollection.contentsArray[indexPath.row], footerView: footerView)
+                cell.configureContents(contentsModel: self.contentsCollection.contentsArray[indexPath.row])
                 
-                let footerView = STFooterView()
-                footerView.configureForTimeLine()
-                footerView.backgroundColor = .yellow
-                cell.configureContents(contentsModel: self.contentsCollection.contentsArray[indexPath.row], footerView: footerView)
-
                 cell.tapGesture.view!.tag = indexPath.row
                 cell.tapGesture.addTarget(self, action: #selector(tapImageView(sender:)))
-                cell.footerBaseView.likeButton.tag = indexPath.row
-                cell.footerBaseView.commentIconButton.tag = indexPath.row
+                cell.footerView.likeButton.tag = indexPath.row
+                cell.footerView.commentIconButton.tag = indexPath.row
                 
                 if self.contentsCollection.contentsArray[indexPath.row].commentIDArray!.count > 0{
 
-                cell.footerBaseView.commentCountLabel.text =
+                cell.footerView.commentCountLabel.text =
                     String(self.contentsCollection.contentsArray[indexPath.row].commentIDArray!.count)
                 }
                 if self.contentsCollection.contentsArray[indexPath.row].likeIDArray!.count > 0{
                 for i in 0...self.contentsCollection.contentsArray[indexPath.row].likeIDArray!.count - 1{
 
                     if self.contentsCollection.contentsArray[indexPath.row].likeIDArray![i].contains(myUserID) == true{
-                        cell.footerBaseView.likeButton.setImage(UIImage(named: "like"), for: .normal)
+                        cell.footerView.likeButton.setImage(UIImage(named: "like"), for: .normal)
                     }else{
-                        cell.footerBaseView.likeButton.setImage(UIImage(named: "notLike"), for: .normal)
+                        cell.footerView.likeButton.setImage(UIImage(named: "notLike"), for: .normal)
                     }
                 }
                     
                 }
-                cell.footerBaseView.likeCountLabel.text = "\(self.contentsCollection.contentsArray[indexPath.row].likeIDArray!.count)"
-                cell.footerBaseView.likeButton.addTarget(self, action: #selector(tapLikeButton(sender:)), for: .touchUpInside)
+                cell.footerView.likeCountLabel.text = "\(self.contentsCollection.contentsArray[indexPath.row].likeIDArray!.count)"
+                cell.footerView.likeButton.addTarget(self, action: #selector(tapLikeButton(sender:)), for: .touchUpInside)
                 
                 return cell
                 
@@ -200,17 +201,17 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
         let contentsVC = STContentsVC()
         contentsVC.contentsModel = self.contentsCollection.contentsArray[indexPath.row]
 
-        self.commentArray = []
-        if self.commentArray.count > 0{
-            for i in 0...self.commentArrays.count - 1{
-                if self.commentArrays[i].contains(where: { $0.contentID == self.contentsCollection.contentsArray[indexPath.row].contentID }) == true{
-                    self.commentArray = self.commentArrays[i]
-                }
-            }
-        }
+//        self.commentArray = []
+//        if self.commentArray.count > 0{
+//            for i in 0...self.commentArrays.count - 1{
+//                if self.commentArrays[i].contains(where: { $0.contentID == self.contentsCollection.contentsArray[indexPath.row].contentID }) == true{
+//                    self.commentArray = self.commentArrays[i]
+//                }
+//            }
+//        }
+//
         
-        
-        contentsVC.commentArray = self.commentArray
+//        contentsVC.commentArray = self.commentArray
         self.navigationController?.pushViewController(contentsVC, animated: true)
         
     }
@@ -223,25 +224,25 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
         self.navigationController?.pushViewController(profileVC, animated: true)
     }
     
-    func likeOrNot(likeContents: [LikeContents],cell:ContentsCell,indexPath:IndexPath) {
-        
-        print(cell.footerBaseView.likeButton.tag,indexPath.row)
-        if cell.footerBaseView.likeButton.tag == indexPath.row{
-            
-            cell.footerBaseView.likeCountLabel.text = String(likeContents.count)
-            
-            //ここが問題 自分がこのLike配列の中にいるかどうかチェック
-            if Auth.auth().currentUser?.uid.isEmpty != true{
-                let check = likeContents.filter{ $0.userID == Auth.auth().currentUser?.uid}.count > 0
-                if check == true{
-                    cell.footerBaseView.likeButton.setImage(UIImage(named: "like"), for: .normal)
-                }else{
-                    cell.footerBaseView.likeButton.setImage(UIImage(named: "notLike"), for: .normal)
-                }
-            }
-        }
-        
-    }
+//    func likeOrNot(likeContents: [LikeContents],cell:ContentsCell,indexPath:IndexPath) {
+//
+//        print(cell.footerBaseView.likeButton.tag,indexPath.row)
+//        if cell.footerBaseView.likeButton.tag == indexPath.row{
+//
+//            cell.footerBaseView.likeCountLabel.text = String(likeContents.count)
+//
+//            //ここが問題 自分がこのLike配列の中にいるかどうかチェック
+//            if Auth.auth().currentUser?.uid.isEmpty != true{
+//                let check = likeContents.filter{ $0.userID == Auth.auth().currentUser?.uid}.count > 0
+//                if check == true{
+//                    cell.footerBaseView.likeButton.setImage(UIImage(named: "like"), for: .normal)
+//                }else{
+//                    cell.footerBaseView.likeButton.setImage(UIImage(named: "notLike"), for: .normal)
+//                }
+//            }
+//        }
+//
+//    }
     
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

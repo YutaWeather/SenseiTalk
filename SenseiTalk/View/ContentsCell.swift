@@ -15,8 +15,9 @@ class ContentsCell: UITableViewCell {
     var subTitleLabel = STTitleLabel(textAlignment: .left, fontSize: 10)
     var urlToImageView = STImageView(frame: .zero)
     var userNameLabel = STTitleLabel(textAlignment: .left, fontSize: 10)
-    var footerBaseView = STFooterView()
+//    var footerBaseView = STFooterView()
     var tapGesture = UITapGestureRecognizer()
+    var footerView = STFooterView()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -30,12 +31,11 @@ class ContentsCell: UITableViewCell {
         layoutUIForNews()
     }
     
-    func configureContents(contentsModel:ContentsModel,footerView:STFooterView){
-        
-        footerBaseView = footerView
-        footerBaseView.translatesAutoresizingMaskIntoConstraints = false
+//    func configureContents(contentsModel:ContentsModel,footerView:STFooterView){
+    func configureContents(contentsModel:ContentsModel){
+        footerView.configureForTimeLine()
+        footerView.translatesAutoresizingMaskIntoConstraints = false
 
-        layoutUIForTimeline(footerView:footerBaseView)
         
         urlToImageView.sd_setImage(with: URL(string: (contentsModel.userModel?.profileImageURL)!))
         urlToImageView.isUserInteractionEnabled = true
@@ -43,8 +43,10 @@ class ContentsCell: UITableViewCell {
         userNameLabel.text = contentsModel.userModel?.userName
         titleLabel.text = contentsModel.title
         subTitleLabel.text = contentsModel.body
-        
+        layoutUIForTimeline(footerView:footerView)
+
     }
+    
     
     func configure(contentsModel:ContentsModel){
         
@@ -58,9 +60,6 @@ class ContentsCell: UITableViewCell {
 
     func layoutUIForContents(){
         addSubview(subTitleLabel)
-//        addSubview(footerBaseView)
-//        footerBaseView.backgroundColor = .yellow
-
         let padding:CGFloat = 20
         NSLayoutConstraint.activate([
             subTitleLabel.leadingAnchor.constraint(equalTo:self.leadingAnchor,constant: padding),
@@ -78,14 +77,13 @@ class ContentsCell: UITableViewCell {
     }
     
     func layoutUIForTimeline(footerView:STFooterView){
-        footerBaseView.frame = footerView.frame
+
         addSubview(urlToImageView)
         addSubview(userNameLabel)
         addSubview(titleLabel)
         addSubview(subTitleLabel)
-        addSubview(footerBaseView)
-//        footerView.frame = self.frame
-        footerBaseView.backgroundColor = .yellow
+        addSubview(footerView)
+        footerView.backgroundColor = .yellow
         
         let padding:CGFloat = 10
         NSLayoutConstraint.activate([
@@ -111,17 +109,17 @@ class ContentsCell: UITableViewCell {
             subTitleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor,constant: -padding),
             subTitleLabel.heightAnchor.constraint(equalToConstant: 80),
             
-            footerBaseView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            footerBaseView.topAnchor.constraint(equalTo: subTitleLabel.bottomAnchor),
-            footerBaseView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            footerBaseView.heightAnchor.constraint(equalToConstant: 25),
-            footerBaseView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+            footerView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            footerView.topAnchor.constraint(equalTo: subTitleLabel.bottomAnchor),
+            footerView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            footerView.heightAnchor.constraint(equalToConstant: 30),
+            footerView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
 
             
         ])
         
     }
-
+    
     func layoutUIForNews(){
         addSubview(urlToImageView)
         addSubview(titleLabel)

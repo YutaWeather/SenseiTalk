@@ -22,18 +22,20 @@ class STUserDataCollection{
     func fetchUserDataCollection(userID:String,limit:Int,completed:@escaping() -> Void){
         
         let db = Firestore.firestore()
-        print(userID)
-        print(Auth.auth().currentUser!.uid)
         db.collection("Users").document(userID).collection("myContents").order(by: "date").limit(to:5).addSnapshotListener { querySnapshot, error in
+
             if error != nil{
                 completed()
                 return
             }
+
             self.contentsArray.removeAll()
+
             guard let snapShot = querySnapshot else{
                 completed()
                 return
             }
+
             self.lastDocument = snapShot.documents.last
 
             for doc in snapShot.documents{
@@ -41,10 +43,13 @@ class STUserDataCollection{
                     if let userName = data["userName"] as? String,let userID = data["userID"] as? String,let profileImageURL = data["profileImageURL"] as? String,let category = data["category"] as? String,let title = data["title"] as? String,let body = data["body"] as? String,let contentID = data["contentID"] as? String,let date = data["date"] as? Double{
                         let userModel = UserModel(userName: userName, profileImageURL: profileImageURL, userID: userID)
                         if data["likeID"] as? [String] != nil && data["commentID"] as? [String] != nil{
+                            
                             self.likeIDArray = data["likeID"] as! [String]
                             self.commentIDArray = data["commentID"] as! [String]
+                            
                             let contentsModel = ContentsModel(userModel: userModel, category: category, title: title, body: body,contentID:contentID, likeIDArray: self.likeIDArray, commentIDArray: self.commentIDArray)
                             self.contentsArray.append(contentsModel)
+                            
                         }else if data["likeID"] as? [String] != nil && data["commentID"] as? [String] == nil{
                             self.likeIDArray = data["likeID"] as! [String]
                             let contentsModel = ContentsModel(userModel: userModel, category: category, title: title, body: body,contentID:contentID, likeIDArray: self.likeIDArray, commentIDArray: [])

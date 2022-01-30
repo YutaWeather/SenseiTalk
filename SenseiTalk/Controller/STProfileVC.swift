@@ -43,8 +43,6 @@ class STProfileVC: UIViewController,UITableViewDelegate,UITableViewDataSource,Do
             userID = Auth.auth().currentUser!.uid
         }
         
-        print(userID)
-        
         userDataCollection.fetchUserDataCollection(userID: userID, limit: 4) { [unowned self] in
             let userModel:UserModel = KeyChainConfig.getKeyData(key: "userData")
             if userID == Auth.auth().currentUser!.uid{

@@ -9,12 +9,11 @@ import UIKit
 import Firebase
 import SDWebImage
 
-class STProfileVC: UIViewController,UITableViewDelegate,UITableViewDataSource,DoneLoad,UITabBarDelegate {
+class STProfileVC: UIViewController,UITableViewDelegate,UITableViewDataSource,UITabBarDelegate {
     
     let profileImageView = STImageView(frame: .zero)
     let userNameLabel = STTitleLabel(textAlignment: .center, fontSize: 15)
     var timeLineTableView = UITableView()
-    //    let loadDBModel = STLoadDBModel()
     var contentsArray = [ContentsModel]()
     var userID = String()
     var sendDBModel = STSendDBModel()
@@ -112,7 +111,7 @@ class STProfileVC: UIViewController,UITableViewDelegate,UITableViewDataSource,Do
             if self.userDataCollection.contentsArray[indexPath.row].likeIDArray!.count > 0{
                 for i in 0...self.userDataCollection.contentsArray[indexPath.row].likeIDArray!.count - 1{
                     
-                    if self.userDataCollection.contentsArray[indexPath.row].likeIDArray![i].contains(userID) == true{
+                    if self.userDataCollection.contentsArray[indexPath.row].likeIDArray![i].contains(Auth.auth().currentUser!.uid) == true{
                         
                         cell.footerView.likeButton.setImage(UIImage(named: "like"), for: .normal)
                         
@@ -174,32 +173,4 @@ class STProfileVC: UIViewController,UITableViewDelegate,UITableViewDataSource,Do
         
     }
     
-    func loadContents(contentsArray: [ContentsModel]) {
-        //        self.contentsArray = []
-        //        self.contentsArray = contentsArray
-        //        print(contentsArray.debugDescription)
-        //        let userModel:UserModel = KeyChainConfig.getKeyData(key: "userData")
-        //        if userID == Auth.auth().currentUser!.uid{
-        //            userNameLabel.text = userModel.userName
-        //            profileImageView.sd_setImage(with: URL(string: userModel.profileImageURL!))
-        //
-        //        }else{
-        //
-        //            userNameLabel.text = self.contentsArray[0].userModel?.userName
-        //            profileImageView.sd_setImage(with: URL(string: (self.contentsArray[0].userModel?.profileImageURL!)!), completed: nil)
-        //        }
-        //        print(self.contentsArray.debugDescription)
-        //        timeLineTableView.reloadData()
-    }
-    
-    
-    
-    func likeOrNot(likeContents: [LikeContents], cell: STCommentCell, indexPath: IndexPath) {
-        
-    }
-    
-    
-    func loadComment(commentArray: [CommentContent]) {
-        
-    }
 }

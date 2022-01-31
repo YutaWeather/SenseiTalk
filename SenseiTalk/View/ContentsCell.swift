@@ -24,9 +24,9 @@ class ContentsCell: UITableViewCell {
         // Initialization code
     }
     
-    func configure(newsContentsModel:NewsContentsModel){
-        urlToImageView.sd_setImage(with: URL(string: newsContentsModel.urlToImage!))
-        titleLabel.text = newsContentsModel.title
+    func configure(article:Article){
+        urlToImageView.sd_setImage(with: URL(string: article.urlToImage!))
+        titleLabel.text = article.title
         
         layoutUIForNews()
     }

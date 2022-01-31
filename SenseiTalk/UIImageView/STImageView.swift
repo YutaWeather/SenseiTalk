@@ -11,9 +11,7 @@ class STImageView: UIImageView {
     
     //プレースホルダーを宣言
     let placeholderImage = UIImage(named: "avatar-placeholder")!
-    //キャッシュを宣言
-    let cache = NetworkManager.shared.cache
-
+ 
     override init(frame: CGRect) {
         super.init(frame: frame)
         configure()

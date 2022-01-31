@@ -7,10 +7,10 @@
 
 import UIKit
 
-class STNewsVC: UIViewController,UITableViewDelegate,UITableViewDataSource,DoneJsonProtocol {
+class STNewsVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
     var tableView = UITableView()
-    var newsContentsArray = [NewsContentsModel]()
+    let newsManager = STNewsManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,14 +35,25 @@ class STNewsVC: UIViewController,UITableViewDelegate,UITableViewDataSource,DoneJ
     func configure(){
         view.backgroundColor = .white
         title = "ニュース"
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.register(ContentsCell.self, forCellReuseIdentifier: ContentsCell.identifier)
 
         view.addSubview(tableView)
-        let networkManager = NetworkManager()
-        networkManager.doneJsonProtocol = self
-        networkManager.analyticsStart()
+        newsManager.analyticsStart { error   in
+
+            if error != nil{
+                print(error.debugDescription)
+                return
+            }
+            
+
+            DispatchQueue.main.async {
+                self.tableView.delegate = self
+                self.tableView.dataSource = self
+                self.tableView.register(ContentsCell.self, forCellReuseIdentifier: ContentsCell.identifier)
+                self.tableView.reloadData()
+            }
+        
+        }
+        
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -56,13 +67,13 @@ class STNewsVC: UIViewController,UITableViewDelegate,UITableViewDataSource,DoneJ
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.newsContentsArray.count
+        return (newsManager.newsContentsModel?.articles!.count)!
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: ContentsCell.identifier, for: indexPath) as! ContentsCell
-        cell.configure(newsContentsModel: self.newsContentsArray[indexPath.row])
+        cell.configure(article: (newsManager.newsContentsModel?.articles![indexPath.row])!)
         
         return cell
         
@@ -71,17 +82,9 @@ class STNewsVC: UIViewController,UITableViewDelegate,UITableViewDataSource,DoneJ
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let newsDetailVC = STNewsDetailVC()
-        newsDetailVC.newsUrl = self.newsContentsArray[indexPath.row].url!
+        newsDetailVC.newsUrl = (newsManager.newsContentsModel?.articles![indexPath.row].url)!
         self.navigationController?.pushViewController(newsDetailVC, animated: true)
         
-    }
-    
-    
-    
-    func doneJsonAnalytics(newsContentsArray: [NewsContentsModel]) {
-        self.newsContentsArray = []
-        self.newsContentsArray = newsContentsArray
-        tableView.reloadData()
     }
     
     func errorString(errotMessage: String) {

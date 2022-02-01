@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Lottie
 
 class STNewsVC: UIViewController,UITableViewDelegate,UITableViewDataSource,TapCollectionViewCell{
     
@@ -13,8 +14,8 @@ class STNewsVC: UIViewController,UITableViewDelegate,UITableViewDataSource,TapCo
     let newsManager = STNewsManager()
     private let categoryArray = ["&category=business","&category=entertainment"]
     private let categoryURL = "https://newsapi.org/v2/top-headlines?country=jp&apiKey="
+    let animationView = AnimationView()
 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableViewConfigure()
@@ -41,6 +42,17 @@ class STNewsVC: UIViewController,UITableViewDelegate,UITableViewDataSource,TapCo
         view.backgroundColor = .white
         title = "ニュース"
         view.addSubview(tableView)
+        
+        
+        let animation = Animation.named("loading")
+
+        animationView.frame = CGRect(x:0, y: 0, width: view.frame.size.width, height: view.frame.size.height)
+        animationView.animation = animation
+        animationView.contentMode = .scaleAspectFit
+        animationView.loopMode = .loop
+        view.addSubview(animationView)
+        animationView.play()
+        
         //コレクションビュー用
         newsManager.analyticsStart(categoryURL: categoryArray[0]) { error in
             if error != nil{
@@ -49,11 +61,13 @@ class STNewsVC: UIViewController,UITableViewDelegate,UITableViewDataSource,TapCo
             }
                 //tableView用
                 self.newsManager.analyticsStart(categoryURL: "") { error in
+                  
                     if error != nil{
                         print(error.debugDescription)
                         return
                     }
                     DispatchQueue.main.async {
+                        self.animationView.removeFromSuperview()
                         self.tableView.delegate = self
                         self.tableView.dataSource = self
                         self.tableView.register(STNewsTableViewCell.self, forCellReuseIdentifier: STNewsTableViewCell.identifier)

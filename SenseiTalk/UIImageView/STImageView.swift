@@ -32,7 +32,7 @@ class STImageView: UIImageView {
     }
     
     private func configure(){
-        
+        self.contentMode = .scaleAspectFill
         self.layer.cornerRadius = 10
         self.clipsToBounds = true
         self.image = placeholderImage

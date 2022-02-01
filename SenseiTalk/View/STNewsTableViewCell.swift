@@ -48,12 +48,7 @@ class STNewsTableViewCell: UITableViewCell,UICollectionViewDelegate,UICollection
             collectionView!.collectionViewLayout = flowLayout
             self.contentView.addSubview(collectionView!)
             layoutCollectionView()
-//            DispatchQueue.main.async {
-//                self.collectionView?.reloadData()
-//            }
 
-
- 
         default:
             urlToImageView.sd_setImage(with: URL(string: categoryArticles[indexPath.row - 1].urlToImage!))
             titleLabel.text = categoryArticles[indexPath.row - 1].title
@@ -111,6 +106,7 @@ class STNewsTableViewCell: UITableViewCell,UICollectionViewDelegate,UICollection
     }
     
     func layoutUIForNews(){
+        
         addSubview(urlToImageView)
         addSubview(titleLabel)
         
@@ -119,12 +115,13 @@ class STNewsTableViewCell: UITableViewCell,UICollectionViewDelegate,UICollection
             
             urlToImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor,constant: padding),
             urlToImageView.topAnchor.constraint(equalTo: self.topAnchor,constant: padding/2),
-            urlToImageView.widthAnchor.constraint(equalToConstant: 50),
-            urlToImageView.heightAnchor.constraint(equalToConstant: self.frame.height - padding),
-       
+            urlToImageView.widthAnchor.constraint(equalToConstant: 200),
+            urlToImageView.heightAnchor.constraint(equalToConstant: 100),
+
 
             titleLabel.leadingAnchor.constraint(equalTo: urlToImageView.trailingAnchor,constant: padding),
-            titleLabel.topAnchor.constraint(equalTo: urlToImageView.topAnchor),
+            titleLabel.topAnchor.constraint(equalTo: self.topAnchor),
+            titleLabel.heightAnchor.constraint(equalToConstant: 100),
             titleLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor,constant: -padding),
             titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor,constant: -padding)
 

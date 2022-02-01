@@ -14,6 +14,8 @@ class STNewsCollectionViewCell: UICollectionViewCell {
     var urlToImageView = STImageView(frame: .zero)
 
     func configure(article:Article){
+        urlToImageView.image = nil
+        titleLabel.text = nil
         urlToImageView.sd_setImage(with: URL(string: article.urlToImage!))
         titleLabel.text = article.title
         
@@ -28,15 +30,12 @@ class STNewsCollectionViewCell: UICollectionViewCell {
         NSLayoutConstraint.activate([
             
             urlToImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor,constant: padding),
-//            urlToImageView.topAnchor.constraint(equalTo: self.topAnchor,constant: padding/2),
             urlToImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            urlToImageView.widthAnchor.constraint(equalToConstant: 50),
-//            urlToImageView.heightAnchor.constraint(equalToConstant: self.frame.height - padding),
-            urlToImageView.heightAnchor.constraint(equalToConstant: 50),
-
+            urlToImageView.widthAnchor.constraint(equalToConstant: 100),
+            urlToImageView.heightAnchor.constraint(equalToConstant: 100),
 
             titleLabel.leadingAnchor.constraint(equalTo: urlToImageView.trailingAnchor,constant: padding),
-            titleLabel.topAnchor.constraint(equalTo: urlToImageView.topAnchor,constant: -padding),
+            titleLabel.topAnchor.constraint(equalTo: urlToImageView.topAnchor,constant: padding),
             titleLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor,constant: -padding),
             titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor,constant: -padding)
 

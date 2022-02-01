@@ -15,7 +15,6 @@ class ContentsCell: UITableViewCell {
     var subTitleLabel = STTitleLabel(textAlignment: .left, fontSize: 10)
     var urlToImageView = STImageView(frame: .zero)
     var userNameLabel = STTitleLabel(textAlignment: .left, fontSize: 10)
-//    var footerBaseView = STFooterView()
     var tapGesture = UITapGestureRecognizer()
     var footerView = STFooterView()
     
@@ -24,20 +23,10 @@ class ContentsCell: UITableViewCell {
         // Initialization code
     }
     
-//    func configure(article:Article){
-//        urlToImageView.sd_setImage(with: URL(string: article.urlToImage!))
-//        titleLabel.text = article.title
-//
-//        layoutUIForNews()
-//    }
-    
-//    func configureContents(contentsModel:ContentsModel,footerView:STFooterView){
     
     func configureContents(contentsModel:ContentsModel){
         footerView.configureForTimeLine()
         footerView.translatesAutoresizingMaskIntoConstraints = false
-
-        
         urlToImageView.sd_setImage(with: URL(string: (contentsModel.userModel?.profileImageURL)!))
         urlToImageView.isUserInteractionEnabled = true
         urlToImageView.addGestureRecognizer(tapGesture)
@@ -67,13 +56,6 @@ class ContentsCell: UITableViewCell {
             subTitleLabel.topAnchor.constraint(equalTo: self.topAnchor,constant: padding),
             subTitleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor,constant: -padding),
             subTitleLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor,constant: -padding)
-//            subTitleLabel.heightAnchor.constraint(equalToConstant: 10),
-            
-//            footerBaseView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-//            footerBaseView.topAnchor.constraint(equalTo: subTitleLabel.bottomAnchor,constant: padding),
-//            footerBaseView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-//            footerBaseView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
-
         ])
     }
     
@@ -92,7 +74,6 @@ class ContentsCell: UITableViewCell {
             urlToImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor,constant: padding),
             urlToImageView.topAnchor.constraint(equalTo: self.topAnchor,constant: padding/2),
             urlToImageView.widthAnchor.constraint(equalToConstant: 50),
-//            urlToImageView.heightAnchor.constraint(equalToConstant: self.frame.height - padding),
             urlToImageView.heightAnchor.constraint(equalToConstant: 50),
 
             userNameLabel.leadingAnchor.constraint(equalTo: urlToImageView.trailingAnchor,constant: padding),
@@ -120,29 +101,7 @@ class ContentsCell: UITableViewCell {
         ])
         
     }
-//
-//    func layoutUIForNews(){
-//        addSubview(urlToImageView)
-//        addSubview(titleLabel)
-//
-//        let padding:CGFloat = 10
-//        NSLayoutConstraint.activate([
-//
-//            urlToImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor,constant: padding),
-//            urlToImageView.topAnchor.constraint(equalTo: self.topAnchor,constant: padding/2),
-//            urlToImageView.widthAnchor.constraint(equalToConstant: 50),
-//            urlToImageView.heightAnchor.constraint(equalToConstant: self.frame.height - padding),
-//
-//
-//            titleLabel.leadingAnchor.constraint(equalTo: urlToImageView.trailingAnchor,constant: padding),
-//            titleLabel.topAnchor.constraint(equalTo: urlToImageView.topAnchor),
-//            titleLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor,constant: -padding),
-//            titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor,constant: -padding)
-//
-//        ])
-//
-//    }
-    
+
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 

@@ -35,7 +35,6 @@ class STCommentCell: UITableViewCell {
         userNameLabel.text = commentModel.userModel?.userName
         titleLabel.text = commentModel.comment
         
-//        layoutUI()
         footerBaseView.backgroundColor = .yellow
         footerBaseView.translatesAutoresizingMaskIntoConstraints = false
         layoutUIForTimeline(footerView:footerBaseView)
@@ -48,7 +47,7 @@ class STCommentCell: UITableViewCell {
         userNameLabel.text = commentModel.userModel?.userName
         titleLabel.text = commentModel.comment
         footerView.configureForComment()
-        footerView.backgroundColor = .orange
+        footerView.backgroundColor = .white
         footerView.translatesAutoresizingMaskIntoConstraints = false
         layoutUIForTimeline(footerView:footerView)
     }
@@ -65,7 +64,6 @@ class STCommentCell: UITableViewCell {
             urlToImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor,constant: padding),
             urlToImageView.topAnchor.constraint(equalTo: self.topAnchor,constant: padding/2),
             urlToImageView.widthAnchor.constraint(equalToConstant: 50),
-//            urlToImageView.heightAnchor.constraint(equalToConstant: self.frame.height - padding),
             urlToImageView.heightAnchor.constraint(equalToConstant: 50),
 
             userNameLabel.leadingAnchor.constraint(equalTo: urlToImageView.trailingAnchor,constant: padding),
@@ -88,7 +86,6 @@ class STCommentCell: UITableViewCell {
     }
     
     func layoutUI(){
-//        commentCellにfooterViewをつける
         addSubview(urlToImageView)
         addSubview(userNameLabel)
         addSubview(titleLabel)
@@ -99,8 +96,6 @@ class STCommentCell: UITableViewCell {
             urlToImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor,constant: padding),
             urlToImageView.topAnchor.constraint(equalTo: self.topAnchor,constant: padding/2),
             urlToImageView.widthAnchor.constraint(equalToConstant: 50),
-//            urlToImageView.heightAnchor.constraint(equalToConstant: self.frame.height - padding),
-//
             urlToImageView.heightAnchor.constraint(equalToConstant: 50),
 
             userNameLabel.leadingAnchor.constraint(equalTo: urlToImageView.trailingAnchor,constant: padding),
@@ -112,11 +107,6 @@ class STCommentCell: UITableViewCell {
             titleLabel.topAnchor.constraint(equalTo: urlToImageView.bottomAnchor,constant: padding),
             titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor,constant: -padding),
             titleLabel.heightAnchor.constraint(equalToConstant: 15),
-//            titleLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor)
-            
-       
-
-            
         ])
 
         

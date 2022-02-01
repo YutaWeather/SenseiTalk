@@ -14,7 +14,6 @@ class STProfileVC: UIViewController,UITableViewDelegate,UITableViewDataSource,UI
     let profileImageView = STImageView(frame: .zero)
     let userNameLabel = STTitleLabel(textAlignment: .center, fontSize: 15)
     var timeLineTableView = UITableView()
-    var contentsArray = [ContentsModel]()
     var userID = String()
     var sendDBModel = STSendDBModel()
     fileprivate var userDataCollection: STUserDataCollection = STUserDataCollection()
@@ -147,8 +146,6 @@ class STProfileVC: UIViewController,UITableViewDelegate,UITableViewDataSource,UI
             
         }
         
-        print(self.userDataCollection.contentsArray.debugDescription)
-        
         sendDBModel.sendLikeContents(category: self.userDataCollection.contentsArray[sender.tag].category!, contentID: self.userDataCollection.contentsArray[sender.tag].contentID!,likeIDArray:self.userDataCollection.contentsArray[sender.tag].likeIDArray!, checkLike: checkFlag,contentModel:self.userDataCollection.contentsArray[sender.tag])
         
     }
@@ -157,10 +154,7 @@ class STProfileVC: UIViewController,UITableViewDelegate,UITableViewDataSource,UI
         let currentOffsetY = scrollView.contentOffset.y
         let maximumOffset = scrollView.contentSize.height - scrollView.frame.height
         let distanceToBottom = maximumOffset - currentOffsetY
-        print(distanceToBottom)
-        //========== ここから============
         if(distanceToBottom < 500 && self.userDataCollection.lastDocument != nil){
-            print("ここが呼ばれた回数だけcompleted()が呼ばれる、受信される　↑上の条件を変える")
             self.userDataCollection.fetchMoreUserDataCollection(userID: userID, limit: 4) {
                 [unowned self] in
                 
@@ -168,9 +162,6 @@ class STProfileVC: UIViewController,UITableViewDelegate,UITableViewDataSource,UI
                 
             }
         }
-        
-        //========== ここまで============
-        
     }
     
 }

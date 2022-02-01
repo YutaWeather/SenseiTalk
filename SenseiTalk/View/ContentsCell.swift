@@ -24,14 +24,15 @@ class ContentsCell: UITableViewCell {
         // Initialization code
     }
     
-    func configure(article:Article){
-        urlToImageView.sd_setImage(with: URL(string: article.urlToImage!))
-        titleLabel.text = article.title
-        
-        layoutUIForNews()
-    }
+//    func configure(article:Article){
+//        urlToImageView.sd_setImage(with: URL(string: article.urlToImage!))
+//        titleLabel.text = article.title
+//
+//        layoutUIForNews()
+//    }
     
 //    func configureContents(contentsModel:ContentsModel,footerView:STFooterView){
+    
     func configureContents(contentsModel:ContentsModel){
         footerView.configureForTimeLine()
         footerView.translatesAutoresizingMaskIntoConstraints = false
@@ -119,28 +120,28 @@ class ContentsCell: UITableViewCell {
         ])
         
     }
-    
-    func layoutUIForNews(){
-        addSubview(urlToImageView)
-        addSubview(titleLabel)
-        
-        let padding:CGFloat = 10
-        NSLayoutConstraint.activate([
-            
-            urlToImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor,constant: padding),
-            urlToImageView.topAnchor.constraint(equalTo: self.topAnchor,constant: padding/2),
-            urlToImageView.widthAnchor.constraint(equalToConstant: 50),
-            urlToImageView.heightAnchor.constraint(equalToConstant: self.frame.height - padding),
-       
-
-            titleLabel.leadingAnchor.constraint(equalTo: urlToImageView.trailingAnchor,constant: padding),
-            titleLabel.topAnchor.constraint(equalTo: urlToImageView.topAnchor),
-            titleLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor,constant: -padding),
-            titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor,constant: -padding)
-
-        ])
-        
-    }
+//
+//    func layoutUIForNews(){
+//        addSubview(urlToImageView)
+//        addSubview(titleLabel)
+//
+//        let padding:CGFloat = 10
+//        NSLayoutConstraint.activate([
+//
+//            urlToImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor,constant: padding),
+//            urlToImageView.topAnchor.constraint(equalTo: self.topAnchor,constant: padding/2),
+//            urlToImageView.widthAnchor.constraint(equalToConstant: 50),
+//            urlToImageView.heightAnchor.constraint(equalToConstant: self.frame.height - padding),
+//
+//
+//            titleLabel.leadingAnchor.constraint(equalTo: urlToImageView.trailingAnchor,constant: padding),
+//            titleLabel.topAnchor.constraint(equalTo: urlToImageView.topAnchor),
+//            titleLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor,constant: -padding),
+//            titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor,constant: -padding)
+//
+//        ])
+//
+//    }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)

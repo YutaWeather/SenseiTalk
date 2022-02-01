@@ -38,7 +38,6 @@ class STUserDataCollection{
             }
             
             let data = snapShot.data()
-            
             if let userName = data!["userName"] as? String,let profileImageURL = data!["profileImageURL"] as? String,let userID = data!["userID"] as? String{
 
                 self.userModel = UserModel(userName: userName, profileImageURL:profileImageURL , userID: userID)

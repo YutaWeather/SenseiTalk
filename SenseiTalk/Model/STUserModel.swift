@@ -24,8 +24,6 @@ struct ContentsModel{
     let contentID:String?
     let likeIDArray:[String]?
     var commentIDArray:[String]?
-
-    
     
 }
 
@@ -41,7 +39,6 @@ struct CommentContent{
     let contentID:String?
     let likeIDArray:[String]?
     let uuid:String?
-//    let commentIDArray:[String]?
 }
 
 

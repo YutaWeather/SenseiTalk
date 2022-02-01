@@ -14,9 +14,6 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
     var postButton = STButton()
     var pageNum = Int()
     let sendDBModel = STSendDBModel()
-    var commentArrays = [[CommentContent]]()
-    var commentArray = [CommentContent]()
-    var checkLike = false
     var myUserID = String()
     var topSafeArea: CGFloat!
     var bottomSafeArea: CGFloat!
@@ -71,26 +68,15 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
         self.navigationController?.pushViewController(postVC, animated: true)
         
     }
-    
+
     
     func setTableView(x:CGFloat){
         
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
-        
-        if #available(iOS 11.0, *) {
-            topSafeArea = view.safeAreaInsets.top
-            bottomSafeArea = view.safeAreaInsets.bottom
-        } else {
-            topSafeArea = topLayoutGuide.length
-            bottomSafeArea = bottomLayoutGuide.length
-        }
-        
-
         tableView.register(ContentsCell.self, forCellReuseIdentifier: ContentsCell.identifier)
         tableView.frame = CGRect(x: 0, y: 120, width: view.frame.size.width, height: view.frame.size.height)
-
         view.addSubview(tableView)
 
         contentsCollection.fetchContent(categroy: String(pageNum), limit:4) {  [unowned self] in
@@ -106,11 +92,7 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
                 self.tableView.reloadData()
             
         }
-        
-        
         view.addSubview(postButton)
-        
-        
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -213,31 +195,14 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
         let currentOffsetY = scrollView.contentOffset.y
         let maximumOffset = scrollView.contentSize.height - scrollView.frame.height
         let distanceToBottom = maximumOffset - currentOffsetY
-        print(distanceToBottom)
-        //========== ここから============
         if(distanceToBottom < 500 && self.contentsCollection.lastDocument != nil){
-        print("ここが呼ばれた回数だけcompleted()が呼ばれる、受信される　↑上の条件を変える")
             self.contentsCollection.fetchMoreContent(categroy: String(pageNum), limit: 4){ [unowned self] in
                 
                 self.tableView.reloadData()
                 
             }
         }
-        
-        //========== ここまで============
-        
     }
-    
-    func loadComment(commentArray: [CommentContent]) {
-        self.commentArray = []
-        self.commentArray = commentArray
-//        tableView.reloadData()
-    }
-
-    func likeOrNot(likeContents: [LikeContents], cell: STCommentCell, indexPath: IndexPath) {
-        
-    }
-
 
 }
 

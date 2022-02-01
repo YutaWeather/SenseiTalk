@@ -9,17 +9,11 @@ import UIKit
 import TabPageViewController
 import Firebase
 
-//class PageViewController: UIPageViewController,UIPageViewControllerDataSource {
 class PageViewController: TabPageViewController {
-
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
       
-//        let loginVC = STLoginVC()
-//        loginVC.modalPresentationStyle = .fullScreen
-//        present(loginVC, animated: true, completion: nil)
     }
     
     override init() {
@@ -43,10 +37,6 @@ class PageViewController: TabPageViewController {
         let image = UIImage(named: "avatar-placeholder")
         imageView.image = image
         self.navigationItem.titleView = imageView
-       
-        
-        
-
     }
     
     required init?(coder aDecoder: NSCoder) {

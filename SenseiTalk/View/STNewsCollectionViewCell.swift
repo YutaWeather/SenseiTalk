@@ -17,8 +17,10 @@ class STNewsCollectionViewCell: UICollectionViewCell {
         urlToImageView.image = nil
         titleLabel.text = nil
         if article.urlToImage != nil{
-            print(article.urlToImage?.debugDescription)
             urlToImageView.sd_setImage(with: URL(string: article.urlToImage!))
+        }else{
+            urlToImageView.image = UIImage(named: "noImage")
+
         }
         titleLabel.text = article.title
             

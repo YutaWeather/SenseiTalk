@@ -9,12 +9,18 @@ import UIKit
 import IQKeyboardManagerSwift
 import Firebase
 import KeychainSwift
+import Reachability
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+    
+    let reachability = try! Reachability()
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        checkNetworkState()
+        
         FirebaseApp.configure()
 //                ログアウト
 //        let firebaseAuth = Auth.auth()
@@ -30,7 +36,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         return true
     }
+    
+    func checkNetworkState(){
+        NotificationCenter.default.addObserver(self, selector: #selector(self.reachabilityChanged(note:)), name: .reachabilityChanged, object: reachability)
+               try? reachability.startNotifier()
+        
+        reachability.whenUnreachable = { reachability in
+            print(reachability.connection)
+        }
+        try? reachability.startNotifier()
+    }
+    
+    @objc func reachabilityChanged(note: Notification) {
+        let reachability = note.object as! Reachability
 
+         switch reachability.connection {
+         case .wifi:
+             print("Reachable via WiFi")
+         case .cellular:
+             print("Reachable via Cellular")
+         case .unavailable:
+           print("Network not reachable")
+             STAlertNotification.alert(text: NetWorkErrors.unSatisfied.title)
+         case .none:
+             break
+         }
+        
+    }
+    
     // MARK: UISceneSession Lifecycle
 
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {

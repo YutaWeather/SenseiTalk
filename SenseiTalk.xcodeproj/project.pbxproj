@@ -19,7 +19,6 @@
 		A4284D16278E866000F26AAC /* STUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4284D15278E866000F26AAC /* STUserModel.swift */; };
 		A4284D18278E8B8F00F26AAC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A4284D17278E8B8F00F26AAC /* GoogleService-Info.plist */; };
 		A4284D1A278FE05600F26AAC /* STPostVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4284D19278FE05500F26AAC /* STPostVC.swift */; };
-		A42AA81127AA5C0600FE236B /* intro3.json in Resources */ = {isa = PBXBuildFile; fileRef = A42AA80F27AA5C0600FE236B /* intro3.json */; };
 		A435B06D278D0B4600BFCAE3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A435B06C278D0B4600BFCAE3 /* AppDelegate.swift */; };
 		A435B06F278D0B4600BFCAE3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A435B06E278D0B4600BFCAE3 /* SceneDelegate.swift */; };
 		A435B071278D0B4600BFCAE3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A435B070278D0B4600BFCAE3 /* ViewController.swift */; };
@@ -51,6 +50,10 @@
 		A4AD4E2827A116D600F4C0D5 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4AD4E2727A116D600F4C0D5 /* Errors.swift */; };
 		A4AD4E2A27A11B6C00F4C0D5 /* STProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4AD4E2927A11B6C00F4C0D5 /* STProfileVC.swift */; };
 		A4D9CE7327AA699000266A8F /* load.json in Resources */ = {isa = PBXBuildFile; fileRef = A4D9CE7227AA699000266A8F /* load.json */; };
+		A4D9CE7527AA6D1200266A8F /* intro3.json in Resources */ = {isa = PBXBuildFile; fileRef = A4D9CE7427AA6D1200266A8F /* intro3.json */; };
+		A4D9CE7727AA6F5400266A8F /* STAlertNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4D9CE7627AA6F5400266A8F /* STAlertNotification.swift */; };
+		A4D9CE7927AA754800266A8F /* STConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4D9CE7827AA754800266A8F /* STConst.swift */; };
+		A4D9CE7D27AA7D6B00266A8F /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4D9CE7C27AA7D6B00266A8F /* Network.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -68,7 +71,6 @@
 		A4284D15278E866000F26AAC /* STUserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STUserModel.swift; sourceTree = "<group>"; };
 		A4284D17278E8B8F00F26AAC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A4284D19278FE05500F26AAC /* STPostVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STPostVC.swift; sourceTree = "<group>"; };
-		A42AA80F27AA5C0600FE236B /* intro3.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = intro3.json; path = ../../../../Downloads/intro3.json; sourceTree = "<group>"; };
 		A435B069278D0B4600BFCAE3 /* SenseiTalk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SenseiTalk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A435B06C278D0B4600BFCAE3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A435B06E278D0B4600BFCAE3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -102,6 +104,10 @@
 		A4AD4E2727A116D600F4C0D5 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		A4AD4E2927A11B6C00F4C0D5 /* STProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STProfileVC.swift; sourceTree = "<group>"; };
 		A4D9CE7227AA699000266A8F /* load.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = load.json; sourceTree = "<group>"; };
+		A4D9CE7427AA6D1200266A8F /* intro3.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = intro3.json; path = ../../../../Downloads/intro3.json; sourceTree = "<group>"; };
+		A4D9CE7627AA6F5400266A8F /* STAlertNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STAlertNotification.swift; sourceTree = "<group>"; };
+		A4D9CE7827AA754800266A8F /* STConst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STConst.swift; sourceTree = "<group>"; };
+		A4D9CE7C27AA7D6B00266A8F /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -234,6 +240,9 @@
 				A4977BD027A4D6DC005C0252 /* STUserDataCollection.swift */,
 				A457782227A755670064A258 /* STNewsManager.swift */,
 				A41BC3E627AA523C007A8323 /* STConstLottie.swift */,
+				A4D9CE7627AA6F5400266A8F /* STAlertNotification.swift */,
+				A4D9CE7827AA754800266A8F /* STConst.swift */,
+				A4D9CE7C27AA7D6B00266A8F /* Network.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -268,7 +277,7 @@
 				A41BC3E827AA59E7007A8323 /* intro0.json */,
 				A41BC3E927AA59EA007A8323 /* intro1.json */,
 				A41BC3EA27AA59ED007A8323 /* intro2.json */,
-				A42AA80F27AA5C0600FE236B /* intro3.json */,
+				A4D9CE7427AA6D1200266A8F /* intro3.json */,
 				A4D9CE7227AA699000266A8F /* load.json */,
 			);
 			path = Lottie;
@@ -336,7 +345,7 @@
 			files = (
 				A435B079278D0B4A00BFCAE3 /* LaunchScreen.storyboard in Resources */,
 				A41BC3ED27AA59ED007A8323 /* intro2.json in Resources */,
-				A42AA81127AA5C0600FE236B /* intro3.json in Resources */,
+				A4D9CE7527AA6D1200266A8F /* intro3.json in Resources */,
 				A4284D18278E8B8F00F26AAC /* GoogleService-Info.plist in Resources */,
 				A4D9CE7327AA699000266A8F /* load.json in Resources */,
 				A435B076278D0B4A00BFCAE3 /* Assets.xcassets in Resources */,
@@ -395,6 +404,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A4D9CE7D27AA7D6B00266A8F /* Network.swift in Sources */,
 				A45229E5279560510094C176 /* STCommentCell.swift in Sources */,
 				A4977BD127A4D6DC005C0252 /* STUserDataCollection.swift in Sources */,
 				A435B08B278D2F7F00BFCAE3 /* ContentsCell.swift in Sources */,
@@ -409,9 +419,11 @@
 				A4977BA327A3A5D5005C0252 /* STContentsCollection.swift in Sources */,
 				A4284D14278E854800F26AAC /* STSendDBModel.swift in Sources */,
 				A4AD4E2A27A11B6C00F4C0D5 /* STProfileVC.swift in Sources */,
+				A4D9CE7927AA754800266A8F /* STConst.swift in Sources */,
 				A435B06F278D0B4600BFCAE3 /* SceneDelegate.swift in Sources */,
 				A457782327A755670064A258 /* STNewsManager.swift in Sources */,
 				A435B093278D383C00BFCAE3 /* STTitleLabel.swift in Sources */,
+				A4D9CE7727AA6F5400266A8F /* STAlertNotification.swift in Sources */,
 				A48CB04E2796B59D00644270 /* STDetailContentVC.swift in Sources */,
 				A457782527A7CD940064A258 /* STNewsTableViewCell.swift in Sources */,
 				A4977BD327A613F1005C0252 /* STCommentCollection.swift in Sources */,

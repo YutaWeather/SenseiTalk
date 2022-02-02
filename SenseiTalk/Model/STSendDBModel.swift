@@ -63,8 +63,12 @@ class STSendDBModel{
         
     }
     
+//    //コンテンツに対するいいね機能
+//    func sendLikeContents(category:String,contentID:String,likeIDArray:[String],checkLike:Bool,contentModel:ContentsModel){
+
     //コンテンツに対するいいね機能
-    func sendLikeContents(category:String,contentID:String,likeIDArray:[String],checkLike:Bool,contentModel:ContentsModel){
+    func sendLikeContents(category:String,contentID:String,likeIDArray:[String],checkLike:Bool,contentModel:ContentsModel,completed:@escaping() -> Void){
+
         var checkLikeIDArray = likeIDArray
         //アプリ内からUserData取り出し
         let userModel:UserModel = KeyChainConfig.getKeyData(key: "userData")
@@ -81,6 +85,8 @@ class STSendDBModel{
         self.db.collection("Users").document((contentModel.userModel?.userID)!).collection("myContents").document(contentID).setData(
             ["likeID":checkLikeIDArray],merge: true
         )
+        
+        completed()
 
         
     }

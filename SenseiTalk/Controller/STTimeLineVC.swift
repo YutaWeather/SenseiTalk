@@ -32,7 +32,7 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
         self.navigationController?.isNavigationBarHidden = false
         tabBarController?.tabBar.isHidden = false
     }
-     
+    
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
@@ -56,7 +56,7 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
         postButton.addTarget(self, action: #selector(tapPost), for: .touchUpInside)
         postButton.setImage(UIImage(named: "plus"), for: .normal)
         view.backgroundColor = .white
-
+        
         setTableView(x: CGFloat(pageNum))
     }
     
@@ -68,7 +68,7 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
         self.navigationController?.pushViewController(postVC, animated: true)
         
     }
-
+    
     
     func setTableView(x:CGFloat){
         
@@ -78,18 +78,18 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
         tableView.register(ContentsCell.self, forCellReuseIdentifier: ContentsCell.identifier)
         tableView.frame = CGRect(x: 0, y: 120, width: view.frame.size.width, height: view.frame.size.height)
         view.addSubview(tableView)
-
+        
         contentsCollection.fetchContent(categroy: String(pageNum), limit:4) {  [unowned self] in
             
-                if Auth.auth().currentUser?.uid != nil{
-                    myUserID = Auth.auth().currentUser!.uid
-                }else{
-                    let loginVC = STLoginVC()
-                    loginVC.modalPresentationStyle = .fullScreen
-                    present(loginVC, animated: true, completion: nil)
-                }
-
-                self.tableView.reloadData()
+            if Auth.auth().currentUser?.uid != nil{
+                myUserID = Auth.auth().currentUser!.uid
+            }else{
+                let loginVC = STLoginVC()
+                loginVC.modalPresentationStyle = .fullScreen
+                present(loginVC, animated: true, completion: nil)
+            }
+            
+            self.tableView.reloadData()
             
         }
         view.addSubview(postButton)
@@ -107,19 +107,20 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
             default:
                 return 1
             }
-
+            
         }else{
             return 1
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-       
+
+        let cell = tableView.dequeueReusableCell(withIdentifier: ContentsCell.identifier, for: indexPath) as! ContentsCell
+        cell.contentView.isUserInteractionEnabled = false
+
         if self.contentsCollection.contentsArray.count > 0{
             switch self.contentsCollection.contentsArray[indexPath.row].category{
-            case String(pageNum):                
-        let cell = tableView.dequeueReusableCell(withIdentifier: ContentsCell.identifier, for: indexPath) as! ContentsCell
-                cell.contentView.isUserInteractionEnabled = false
+            case String(pageNum):
                 cell.configureContents(contentsModel: self.contentsCollection.contentsArray[indexPath.row])
                 
                 cell.tapGesture.view!.tag = indexPath.row
@@ -128,19 +129,19 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
                 cell.footerView.commentIconButton.tag = indexPath.row
                 
                 if self.contentsCollection.contentsArray[indexPath.row].commentIDArray!.count > 0{
-
-                cell.footerView.commentCountLabel.text =
+                    
+                    cell.footerView.commentCountLabel.text =
                     String(self.contentsCollection.contentsArray[indexPath.row].commentIDArray!.count)
                 }
                 if self.contentsCollection.contentsArray[indexPath.row].likeIDArray!.count > 0{
-                for i in 0...self.contentsCollection.contentsArray[indexPath.row].likeIDArray!.count - 1{
-
-                    if self.contentsCollection.contentsArray[indexPath.row].likeIDArray![i].contains(myUserID) == true{
-                        cell.footerView.likeButton.setImage(UIImage(named: "like"), for: .normal)
-                    }else{
-                        cell.footerView.likeButton.setImage(UIImage(named: "notLike"), for: .normal)
+                    for i in 0...self.contentsCollection.contentsArray[indexPath.row].likeIDArray!.count - 1{
+                        
+                        if self.contentsCollection.contentsArray[indexPath.row].likeIDArray![i].contains(myUserID) == true{
+                            cell.footerView.likeButton.setImage(UIImage(named: "like"), for: .normal)
+                        }else{
+                            cell.footerView.likeButton.setImage(UIImage(named: "notLike"), for: .normal)
+                        }
                     }
-                }
                     
                 }
                 cell.footerView.likeCountLabel.text = "\(self.contentsCollection.contentsArray[indexPath.row].likeIDArray!.count)"
@@ -162,23 +163,33 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
         //いいね送信
         var checkFlag = Bool()
         if self.contentsCollection.contentsArray[sender.tag].likeIDArray?.contains(Auth.auth().currentUser!.uid) == true{
-
-        checkFlag = true
-
+            
+            checkFlag = true
+            
         }else{
             checkFlag = false
-
+            
         }
+        
+        sendDBModel.sendLikeContents(category: String(pageNum), contentID: self.contentsCollection.contentsArray[sender.tag].contentID!,likeIDArray:self.contentsCollection.contentsArray[sender.tag].likeIDArray!, checkLike: checkFlag,contentModel:self.contentsCollection.contentsArray[sender.tag]) {
 
-        sendDBModel.sendLikeContents(category: String(pageNum), contentID: self.contentsCollection.contentsArray[sender.tag].contentID!,likeIDArray:self.contentsCollection.contentsArray[sender.tag].likeIDArray!, checkLike: checkFlag,contentModel:self.contentsCollection.contentsArray[sender.tag])
+            self.contentsCollection.fetchContent(categroy: String(self.pageNum), limit:4) {  [unowned self] in
+                
+                self.tableView.reloadData()
+                
+            }
 
+//            self.tableView.reloadData()
+            
+        }
+        
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let contentsVC = STContentsVC()
         contentsVC.contentsModel = self.contentsCollection.contentsArray[indexPath.row]
-
+        
         self.navigationController?.pushViewController(contentsVC, animated: true)
         
     }
@@ -187,7 +198,7 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
         
         let profileVC = STProfileVC()
         profileVC.userID = (self.contentsCollection.contentsArray[sender.view!.tag].userModel?.userID)!
-
+        
         self.navigationController?.pushViewController(profileVC, animated: true)
     }
     
@@ -203,6 +214,6 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
             }
         }
     }
-
+    
 }
 

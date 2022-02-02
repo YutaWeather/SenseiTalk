@@ -112,6 +112,9 @@ class STContentsVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
         
     }
                
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
 
     @objc func tapLikeButton(sender:STButton){
       
@@ -141,23 +144,5 @@ class STContentsVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
             sendDBModel.sendComment(category: (contentsModel?.category)!, contentID: (contentsModel?.contentID)!, comment: textFooterView.commentTextField.text!,uuid:uuid, commentIDArray:[Auth.auth().currentUser!.uid])
         }
     }
-
-//    func likeOrNot(likeContents: [LikeContents], cell: STCommentCell, indexPath: IndexPath) {
-//
-//        print(cell.footerBaseView.likeButton.tag,indexPath.row)
-//        if cell.footerBaseView.likeButton.tag == indexPath.row - 1{
-//
-//            cell.footerBaseView.likeCountLabel.text = String(likeContents.count)
-//
-//            //ここが問題 自分がこのLike配列の中にいるかどうかチェック
-//            let check = likeContents.filter{ $0.userID == Auth.auth().currentUser!.uid}.count > 0
-//            if check == true{
-//                cell.footerBaseView.likeButton.setImage(UIImage(named: "like"), for: .normal)
-//            }else{
-//                cell.footerBaseView.likeButton.setImage(UIImage(named: "notLike"), for: .normal)
-//            }
-//        }
-//
-//    }
 
 }

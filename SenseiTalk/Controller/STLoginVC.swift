@@ -7,6 +7,7 @@
 
 import UIKit
 import Firebase
+import Lottie
 
 class STLoginVC: STCameraVC,DoneSend {
 
@@ -14,12 +15,59 @@ class STLoginVC: STCameraVC,DoneSend {
     var userNameTextField = STTextField(textAlignment: .left, fontSize: 10)
     var createUserButton = STButton(backgroundColor: .systemBlue, title: "登録する")
     var tapGesture = UITapGestureRecognizer()
+    var introScrollView = UIScrollView()
+    let loadingView = AnimationView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configure()
+        self.configureIntroView()
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        introScrollView.frame = view.frame
+    }
+    
+    func configureIntroView(){
+
+        introScrollView.backgroundColor = .white
+        introScrollView.isPagingEnabled = true
+        introScrollView.contentSize = CGSize(width: view.frame.size.width * 4, height: view.frame.size.height)
+        introScrollView.frame = view.frame
+        view.addSubview(introScrollView)
+
+        for i in 0...3{
+            let onboardLabel = STTitleLabel(textAlignment: .center, fontSize: 20)
+            onboardLabel.frame = CGRect(x: CGFloat(i) * view.frame.size.width, y: view.frame.size.height - 150, width: view.frame.size.width, height: 30)
+            onboardLabel.text = STConstLottie.onboardStringArray[i]
+
+            let animationView = AnimationView()
+            let animation = Animation.named("\(STConstLottie.onboardFileArray[i])")
+            animationView.frame = CGRect(x: CGFloat(i) * self.view.frame.size.width, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height)
+            
+            animationView.animation = animation
+            animationView.contentMode = .scaleAspectFit
+            animationView.loopMode = .loop
+            animationView.play()
+
+            introScrollView.addSubview(animationView)
+            introScrollView.addSubview(onboardLabel)
+            
+            if i == 3{
+                let startButton = STButton(backgroundColor: .systemBlue, title: "はじめる")
+                startButton.frame = CGRect(x:CGFloat(i) * self.view.frame.size.width + view.frame.size.width/4, y: onboardLabel.frame.origin.y + 50, width: view.frame.size.width/2, height: 50)
+                startButton.addTarget(self, action: #selector(startTap), for: .touchUpInside)
+                introScrollView.addSubview(startButton)
+            }
+        }
+
+    }
+    
+    @objc func startTap(){
+        
+        self.introScrollView.removeFromSuperview()
+        configure()
+    }
     
     func layoutUI(){
         
@@ -62,6 +110,17 @@ class STLoginVC: STCameraVC,DoneSend {
     }
     
     @objc func register(){
+       
+        let animation = Animation.named("load")
+
+        loadingView.frame = CGRect(x:0, y: 0, width: view.frame.size.width, height: view.frame.size.height)
+        loadingView.backgroundColor = .white
+        loadingView.alpha = 0.5
+        loadingView.animation = animation
+        loadingView.contentMode = .scaleAspectFit
+        loadingView.loopMode = .loop
+        view.addSubview(loadingView)
+        loadingView.play()
         
         //firebase
         Auth.auth().signInAnonymously { (result, error) in
@@ -77,7 +136,7 @@ class STLoginVC: STCameraVC,DoneSend {
     }
     
     func doneSendData() {
-        
+        loadingView.removeFromSuperview()
         dismiss(animated: true, completion: nil)
        
     }

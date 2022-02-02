@@ -16,8 +16,12 @@ class STNewsCollectionViewCell: UICollectionViewCell {
     func configure(article:Article){
         urlToImageView.image = nil
         titleLabel.text = nil
-        urlToImageView.sd_setImage(with: URL(string: article.urlToImage!))
+        if article.urlToImage != nil{
+            print(article.urlToImage?.debugDescription)
+            urlToImageView.sd_setImage(with: URL(string: article.urlToImage!))
+        }
         titleLabel.text = article.title
+            
         
         layoutUIForNews()
     }

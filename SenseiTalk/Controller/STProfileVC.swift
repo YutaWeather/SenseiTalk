@@ -146,7 +146,10 @@ class STProfileVC: UIViewController,UITableViewDelegate,UITableViewDataSource,UI
             
         }
         
-        sendDBModel.sendLikeContents(category: self.userDataCollection.contentsArray[sender.tag].category!, contentID: self.userDataCollection.contentsArray[sender.tag].contentID!,likeIDArray:self.userDataCollection.contentsArray[sender.tag].likeIDArray!, checkLike: checkFlag,contentModel:self.userDataCollection.contentsArray[sender.tag])
+        sendDBModel.sendLikeContents(category: self.userDataCollection.contentsArray[sender.tag].category!, contentID: self.userDataCollection.contentsArray[sender.tag].contentID!,likeIDArray:self.userDataCollection.contentsArray[sender.tag].likeIDArray!, checkLike: checkFlag,contentModel:self.userDataCollection.contentsArray[sender.tag]) {
+            
+            self.timeLineTableView.reloadData()
+        }
         
     }
     

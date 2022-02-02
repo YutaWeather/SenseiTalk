@@ -74,7 +74,8 @@ class STCommentCell: UITableViewCell {
             titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor,constant: padding),
             titleLabel.topAnchor.constraint(equalTo: urlToImageView.bottomAnchor,constant: padding),
             titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor,constant: -padding),
-            titleLabel.heightAnchor.constraint(equalToConstant: 15),
+//            titleLabel.heightAnchor.constraint(equalToConstant: 15),
+            titleLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor,constant: -40),
 
             footerView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             footerView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor),

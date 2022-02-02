@@ -50,7 +50,12 @@ class STNewsTableViewCell: UITableViewCell,UICollectionViewDelegate,UICollection
             layoutCollectionView()
 
         default:
-            urlToImageView.sd_setImage(with: URL(string: categoryArticles[indexPath.row - 1].urlToImage!))
+            if categoryArticles[indexPath.row - 1].urlToImage != nil{
+                
+                urlToImageView.sd_setImage(with: URL(string: categoryArticles[indexPath.row - 1].urlToImage!))
+                
+            }
+
             titleLabel.text = categoryArticles[indexPath.row - 1].title
             layoutUIForNews()
         }

@@ -54,6 +54,8 @@ class STNewsTableViewCell: UITableViewCell,UICollectionViewDelegate,UICollection
                 
                 urlToImageView.sd_setImage(with: URL(string: categoryArticles[indexPath.row - 1].urlToImage!))
                 
+            }else{
+                urlToImageView.image = UIImage(named: "noImage")
             }
 
             titleLabel.text = categoryArticles[indexPath.row - 1].title
@@ -69,7 +71,7 @@ class STNewsTableViewCell: UITableViewCell,UICollectionViewDelegate,UICollection
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let size = collectionView.frame.height
         
-        return CGSize(width: size*2.5, height: size)
+        return CGSize(width: size, height: size)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

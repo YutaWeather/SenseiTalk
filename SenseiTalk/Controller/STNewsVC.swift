@@ -42,8 +42,6 @@ class STNewsVC: UIViewController,UITableViewDelegate,UITableViewDataSource,TapCo
         view.backgroundColor = .white
         title = "ニュース"
         view.addSubview(tableView)
-        
-        
         let animation = Animation.named("load")
 
         animationView.frame = CGRect(x:0, y: 0, width: view.frame.size.width, height: view.frame.size.height)
@@ -56,6 +54,8 @@ class STNewsVC: UIViewController,UITableViewDelegate,UITableViewDataSource,TapCo
         //コレクションビュー用
         newsManager.analyticsStart(categoryURL: categoryArray[0]) { error in
             if error != nil{
+                
+                STAlertNotification.alert(text:FetchErrors.someError.title)
                 print(error.debugDescription)
                 return
             }
@@ -64,6 +64,8 @@ class STNewsVC: UIViewController,UITableViewDelegate,UITableViewDataSource,TapCo
                   
                     if error != nil{
                         print(error.debugDescription)
+                        STAlertNotification.alert(text:FetchErrors.someError.title)
+         
                         return
                     }
                     DispatchQueue.main.async {
@@ -82,7 +84,7 @@ class STNewsVC: UIViewController,UITableViewDelegate,UITableViewDataSource,TapCo
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.row{
         case 0:
-            return 100
+            return view.frame.size.height/4
         default:
             return UITableView.automaticDimension
             
@@ -105,8 +107,6 @@ class STNewsVC: UIViewController,UITableViewDelegate,UITableViewDataSource,TapCo
               subview.removeFromSuperview()
         }
 
-//        cell.collectionView?.layoutIfNeeded()
-//        cell.collectionView?.reloadData()
         cell.tapCollectionViewCell = self
         cell.urlToImageView.image = nil
         cell.collectionView = nil
@@ -120,19 +120,11 @@ class STNewsVC: UIViewController,UITableViewDelegate,UITableViewDataSource,TapCo
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let newsDetailVC = STNewsDetailVC()
-        print(newsManager.categoryNewsContentsModel?.articles![indexPath.row - 1].title!)
         newsDetailVC.newsUrl = (newsManager.categoryNewsContentsModel?.articles![indexPath.row - 1].url)!
         self.navigationController?.pushViewController(newsDetailVC, animated: true)
         
     }
     
-    func errorString(errotMessage: String) {
-        let alert = UIAlertController(title: errotMessage, message: "", preferredStyle: .alert)
-        let action = UIAlertAction(title: "OK", style: .default, handler: nil)
-        alert.addAction(action)
-        present(alert, animated: true, completion: nil)
-    }
-
     func tapCollectionViewCell(indexPath: IndexPath) {
         let newsDetailVC = STNewsDetailVC()
         newsDetailVC.newsUrl = (newsManager.newsContentsModel?.articles![indexPath.row].url)!

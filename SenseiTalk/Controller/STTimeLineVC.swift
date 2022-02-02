@@ -22,8 +22,7 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Do any additional setup after loading the view.
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -178,9 +177,6 @@ class STTimeLineVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
                 self.tableView.reloadData()
                 
             }
-
-//            self.tableView.reloadData()
-            
         }
         
     }

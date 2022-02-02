@@ -28,10 +28,11 @@ class PageViewController: TabPageViewController {
         timelineVC3.pageNum = 2
         timelineVC3.view.tag = 2
         
-
         tabItems = [(timelineVC1, "小学校"), (timelineVC2, "中学校"),(timelineVC3, "高校")]
+        self.isInfinity = true
         option.tabWidth = view.frame.width / CGFloat(tabItems.count)
         option.hidesTopViewOnSwipeType = .all
+        
         let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 5, height: 10))
         imageView.contentMode = .scaleAspectFit
         let image = UIImage(named: "avatar-placeholder")

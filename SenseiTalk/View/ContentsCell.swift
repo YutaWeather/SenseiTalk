@@ -17,6 +17,7 @@ class ContentsCell: UITableViewCell {
     var userNameLabel = STTitleLabel(textAlignment: .left, fontSize: 10)
     var tapGesture = UITapGestureRecognizer()
     var footerView = STFooterView()
+    var backView = UIView()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -40,6 +41,9 @@ class ContentsCell: UITableViewCell {
     
     func configure(contentsModel:ContentsModel){
         
+        backView.layer.cornerRadius = 10
+        backView.translatesAutoresizingMaskIntoConstraints = false
+        backView.backgroundColor = .yellow
         subTitleLabel.text = contentsModel.body
         
         layoutUIForContents()
@@ -49,13 +53,24 @@ class ContentsCell: UITableViewCell {
     
 
     func layoutUIForContents(){
+        addSubview(backView)
         addSubview(subTitleLabel)
         let padding:CGFloat = 20
+        let backPadding:CGFloat = 10
+
         NSLayoutConstraint.activate([
+                        
             subTitleLabel.leadingAnchor.constraint(equalTo:self.leadingAnchor,constant: padding),
             subTitleLabel.topAnchor.constraint(equalTo: self.topAnchor,constant: padding),
             subTitleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor,constant: -padding),
-            subTitleLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor,constant: -padding)
+            subTitleLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor,constant: -padding),
+            
+            backView.leadingAnchor.constraint(equalTo: self.leadingAnchor,constant: backPadding),
+            backView.topAnchor.constraint(equalTo: self.topAnchor,constant: backPadding),
+            backView.trailingAnchor.constraint(equalTo: self.trailingAnchor,constant: -backPadding),
+            backView.bottomAnchor.constraint(equalTo: self.bottomAnchor,constant: -backPadding)
+
+            
         ])
     }
     

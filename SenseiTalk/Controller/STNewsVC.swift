@@ -44,7 +44,7 @@ class STNewsVC: UIViewController,UITableViewDelegate,UITableViewDataSource,TapCo
         view.addSubview(tableView)
         
         
-        let animation = Animation.named("loading")
+        let animation = Animation.named("load")
 
         animationView.frame = CGRect(x:0, y: 0, width: view.frame.size.width, height: view.frame.size.height)
         animationView.animation = animation

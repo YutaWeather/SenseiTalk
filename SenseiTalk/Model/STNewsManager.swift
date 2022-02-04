@@ -12,7 +12,6 @@ import Alamofire
 class STNewsManager{
     
     private let baseURL = "https://newsapi.org/v2/top-headlines?country=jp&apiKey="
-    private let apiKey = "b13b44a1cca8430eb73c0c04c44c35e1"
     var setUpUrl = "https://newsapi.org/v2/top-headlines?pageSize=20&country=jp&apiKey="
 
     //キャッシュを宣言

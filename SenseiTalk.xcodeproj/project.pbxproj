@@ -41,6 +41,8 @@
 		A4977BD127A4D6DC005C0252 /* STUserDataCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4977BD027A4D6DC005C0252 /* STUserDataCollection.swift */; };
 		A4977BD327A613F1005C0252 /* STCommentCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4977BD227A613F1005C0252 /* STCommentCollection.swift */; };
 		A4977BD527A679D6005C0252 /* STNewsDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4977BD427A679D6005C0252 /* STNewsDetailVC.swift */; };
+		A49BD3E727AD121500D0F9CA /* KeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A49BD3E627AD121500D0F9CA /* KeyManager.swift */; };
+		A49BD3E927AD124900D0F9CA /* apiKey.plist in Resources */ = {isa = PBXBuildFile; fileRef = A49BD3E827AD124900D0F9CA /* apiKey.plist */; };
 		A4AC5915278FE40A00AADE0F /* STTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4AC5914278FE40A00AADE0F /* STTextView.swift */; };
 		A4AC5917278FEF3500AADE0F /* KeyChainConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4AC5916278FEF3500AADE0F /* KeyChainConfig.swift */; };
 		A4AC591B27910A4D00AADE0F /* STContentsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4AC591A27910A4D00AADE0F /* STContentsVC.swift */; };
@@ -95,6 +97,8 @@
 		A4977BD027A4D6DC005C0252 /* STUserDataCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STUserDataCollection.swift; sourceTree = "<group>"; };
 		A4977BD227A613F1005C0252 /* STCommentCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STCommentCollection.swift; sourceTree = "<group>"; };
 		A4977BD427A679D6005C0252 /* STNewsDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STNewsDetailVC.swift; sourceTree = "<group>"; };
+		A49BD3E627AD121500D0F9CA /* KeyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyManager.swift; sourceTree = "<group>"; };
+		A49BD3E827AD124900D0F9CA /* apiKey.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = apiKey.plist; sourceTree = "<group>"; };
 		A4AC5914278FE40A00AADE0F /* STTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STTextView.swift; sourceTree = "<group>"; };
 		A4AC5916278FEF3500AADE0F /* KeyChainConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChainConfig.swift; sourceTree = "<group>"; };
 		A4AC591A27910A4D00AADE0F /* STContentsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STContentsVC.swift; sourceTree = "<group>"; };
@@ -190,6 +194,7 @@
 				A45229E92796AE200094C176 /* Lottie */,
 				A435B077278D0B4A00BFCAE3 /* LaunchScreen.storyboard */,
 				A435B07A278D0B4A00BFCAE3 /* Info.plist */,
+				A49BD3E827AD124900D0F9CA /* apiKey.plist */,
 				A4284D17278E8B8F00F26AAC /* GoogleService-Info.plist */,
 			);
 			path = SenseiTalk;
@@ -243,6 +248,7 @@
 				A4D9CE7627AA6F5400266A8F /* STAlertNotification.swift */,
 				A4D9CE7827AA754800266A8F /* STConst.swift */,
 				A4D9CE7C27AA7D6B00266A8F /* Network.swift */,
+				A49BD3E627AD121500D0F9CA /* KeyManager.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -350,6 +356,7 @@
 				A4D9CE7327AA699000266A8F /* load.json in Resources */,
 				A435B076278D0B4A00BFCAE3 /* Assets.xcassets in Resources */,
 				A435B074278D0B4600BFCAE3 /* Main.storyboard in Resources */,
+				A49BD3E927AD124900D0F9CA /* apiKey.plist in Resources */,
 				A41BC3EC27AA59ED007A8323 /* intro1.json in Resources */,
 				A41BC3EB27AA59ED007A8323 /* intro0.json in Resources */,
 			);
@@ -437,6 +444,7 @@
 				A4284D10278E753600F26AAC /* STButton.swift in Sources */,
 				A435B08D278D30A200BFCAE3 /* NewsContentsModel.swift in Sources */,
 				A4AD4E2427A0DA5E00F4C0D5 /* PageViewController.swift in Sources */,
+				A49BD3E727AD121500D0F9CA /* KeyManager.swift in Sources */,
 				A41BC3E727AA523C007A8323 /* STConstLottie.swift in Sources */,
 				A435B084278D0BC400BFCAE3 /* STLoginVC.swift in Sources */,
 				A4AC5921279159E900AADE0F /* STFooterView.swift in Sources */,

@@ -13,18 +13,19 @@ class STNewsManager{
     
     private let baseURL = "https://newsapi.org/v2/top-headlines?country=jp&apiKey="
     var setUpUrl = "https://newsapi.org/v2/top-headlines?pageSize=20&country=jp&apiKey="
-
+    var newsURLWithApiKey = String()
     //キャッシュを宣言
     let cache = NSCache<NSString, UIImage>()
     var newsContentsModel:NewsContentsModel?
     var categoryNewsContentsModel:NewsContentsModel?
     
     func analyticsStart(categoryURL:String,completed:@escaping(String?) -> Void){
-
-        let urlString = baseURL + apiKey
+        if let APIKEY = KeyManager().getValue(key: "apiKey") as? String {
+            
+        let urlString = newsURLWithApiKey + APIKEY
         if categoryURL.isEmpty != true{
             
-            setUpUrl = setUpUrl + apiKey + categoryURL
+            setUpUrl = setUpUrl + APIKEY + categoryURL
             guard let url = URL(string: setUpUrl) else { return }
             URLSession.shared.dataTask(with: url) { data, request, error in
                 
@@ -58,8 +59,9 @@ class STNewsManager{
             }.resume()
         }
         
-
+        }
         
     }
+    
     
 }

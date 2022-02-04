@@ -61,7 +61,7 @@ class STContentsVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         
-        let padding:CGFloat = 20
+        let padding:CGFloat = 22
         headerView.frame = CGRect(x: 0, y: (self.navigationController?.navigationBar.frame.size.height)! + padding, width: view.frame.size.width, height: 100)
         textFooterView.frame = CGRect(x: 0, y: view.frame.size.height - 80, width: view.frame.size.width, height: 80)
         tableView.frame = CGRect(x: 0, y: headerView.frame.origin.y + headerView.frame.size.height, width: view.frame.size.width, height: view.frame.size.height - headerView.frame.size.height - (self.navigationController?.navigationBar.frame.size.height)! - textFooterView.frame.size.height - padding)

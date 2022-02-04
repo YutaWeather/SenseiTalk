@@ -22,6 +22,8 @@ class STNewsVC: UIViewController,UITableViewDelegate,UITableViewDataSource,TapCo
         
     }
     
+    
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.isNavigationBarHidden = false

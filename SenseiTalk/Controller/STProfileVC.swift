@@ -20,13 +20,13 @@ class STProfileVC: UIViewController,UITableViewDelegate,UITableViewDataSource,UI
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        configure()
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.isNavigationBarHidden = false
-        configure()
         
     }
     

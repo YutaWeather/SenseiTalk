@@ -20,14 +20,14 @@ class STContentsVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        configure()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.isNavigationBarHidden = false
         tabBarController?.tabBar.isHidden = true
-        configure()
+        
     }
 
     func configure(){
